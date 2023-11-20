@@ -1,6 +1,9 @@
 <?php
 
 use App\Livewire\Home;
+use App\Livewire\EmpRegister;
+use App\Livewire\EmpAccountDetails;
+use App\Livewire\EmpFamilyDetails;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +19,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class);
 
-Route::get('/emp-register', function () {
-    return view('livewire.emp-register');
-});
+Route::get('/emp-register', EmpRegister::class)->name('emp-register');
+Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
+Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
