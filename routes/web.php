@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/HrLogin', HrLogin::class)->name('hr-login');
 Route::middleware(['auth:hr'])->group(function () {
     Route::get('/', Home::class);
+    Route::get('/emp-register', EmpRegister::class)->name('emp-register');
+    Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
+    Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
 });
-Route::get('/emp-register', EmpRegister::class)->name('emp-register');
-Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
-Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
