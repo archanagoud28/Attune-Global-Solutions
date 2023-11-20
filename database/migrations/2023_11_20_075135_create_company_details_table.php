@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('company_details', function (Blueprint $table) {
-            $table->string('company_id')->primary(); // Primary key
+            $table->id();
+            $table->string('company_id')->unique();
             $table->string('company_name');
             $table->string('company_address1');
             $table->string('company_address2');
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->string('company_logo');
             $table->string('contact_email');
             $table->string('contact_phone');
+            $table->string('ceo_name');
             $table->timestamps();
         });
     }

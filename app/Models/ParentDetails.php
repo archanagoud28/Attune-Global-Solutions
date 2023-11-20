@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ParentDetails extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
         'emp_id',
         'father_first_name',
@@ -41,6 +42,6 @@ class ParentDetails extends Model
     ];
     public function employee()
     {
-        return $this->belongsTo(EmployeeDetails::class, 'emp_id', 'emp_id');
+        return $this->belongsTo(EmpDetails::class, 'emp_id', 'emp_id');
     }
 }
