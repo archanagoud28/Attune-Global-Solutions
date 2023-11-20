@@ -7,9 +7,13 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('images/Attune_Logo.jpg') }}">
     <title>Attune Global Solutions</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <livewire:styles/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         img {
             max-width: 100%;
@@ -24,8 +28,8 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            margin-right: 10px;
-            margin-left: 10px;
+            margin-right: 15px;
+            margin-left: 15px;
         }
 
         .fas {
@@ -34,7 +38,7 @@
 
         body {
             margin: 0;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
         .container-fluid {
@@ -51,12 +55,10 @@
             left: 0;
             height: 100%;
             width: 17%;
-            overflow-y: auto;
         }
 
         .col-md-10 {
             margin-left: 17%;
-            padding-left: 15px;
         }
 
         .row-header {
@@ -74,7 +76,8 @@
 
         .row-content {
             background-color: rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
+            margin-top: 20px;
+           
         }
 
         .overflow-auto {
@@ -85,9 +88,12 @@
 </head>
 
 <body>
+    @guest
+    @livewire('hr-login')
+    @else
     <div class="container-fluid">
         <div class="col-md-2">
-            <img src="https://www.attuneglobal.net/images/logo.jpg" style="width: 190px; height: 50px; margin: 15px auto;" alt="">
+            <img src="https://www.attuneglobal.net/images/logo.jpg" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
             <a class="menu-link" href="#"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
             <a class="menu-link" href="#"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
             <a class="menu-link" href="#"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
@@ -98,9 +104,12 @@
         </div>
 
         <div class="col-md-10">
-            <div class="row-header">
-                <h4>Attune Global Solutions</h4>
+            <div class="row-header d-flex justify-content-between align-items-center">
+                <h4 class="text-center mb-0">Attune Global Solutions</h4>
+              @livewire('log-out')
             </div>
+
+
 
             <div class="row-content">
                 <div class="overflow-auto">
@@ -109,6 +118,9 @@
             </div>
         </div>
     </div>
+    
+    @livewireScripts
+    @endguest
 </body>
 
 </html>

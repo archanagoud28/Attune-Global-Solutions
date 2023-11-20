@@ -20,7 +20,10 @@ return new class extends Migration
             $table->date('company_registration_date');
             $table->string('company_logo');
             $table->string('contact_email');
+<<<<<<< HEAD:database/migrations/2023_11_20_075917_create_company_details_table.php
+=======
             $table->string('contact_phone');
+>>>>>>> 4c8120c558cdb34f471931314f074c89da814ee7:database/migrations/2023_11_20_075135_create_company_details_table.php
             $table->string('ceo_name');
             $table->timestamps();
         });
