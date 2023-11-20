@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Home;
+use App\Livewire\HrLogin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', Home::class);
-
+Route::get('/HrLogin', HrLogin::class)->name('hr-login');
+Route::middleware(['auth:hr'])->group(function () {
+    Route::get('/', Home::class);
+});

@@ -18,6 +18,7 @@ class CompanyDetails extends Model
         'company_registration_date',
         'company_logo',
         'contact_email',
-        'contact_phone'
+        'contact_phone',
+        'ceo_name'
     ];
 }
