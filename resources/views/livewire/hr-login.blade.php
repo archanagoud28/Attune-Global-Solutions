@@ -83,7 +83,7 @@
                     @endif
                     <form wire:submit.prevent="empLogin" class="login-form-with-shadow">
                         <div class="logo text-center mb-1" style="padding-top: 20px;">
-                            <img src="https://www.attuneglobal.net/images/logo.jpg" alt="Company Logo" width="200" height="100">
+                            <img src="{{asset('images/vendorbloom2.png')}}" alt="Company Logo" width="200" height="100">
                         </div>
                         <br>
                         @if ($error)
@@ -105,7 +105,7 @@
                         </div>
 
                         <div class="form-group" style="text-align: center; margin-top: 8%;">
-                            <input style="background-color: black; font-size: small; width: 25%;" type="submit" class="btn btn-primary" value="Login" />
+                            <input style="background-color: rgb(2, 17, 79); font-size: small; width: 25%;" type="submit" class="btn btn-primary" value="Login" />
                         </div>
                     </form>
                 </div>
@@ -122,15 +122,15 @@
                         <!-- The slideshow/carousel -->
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="{{ asset('images/communication.png') }}" class="d-block w-100" alt="Los Angeles">
+                                <img style="border-radius: 5px;" src="{{ asset('/images/Home Images-01.png') }}" class="d-block w-100" alt="Los Angeles">
                                 <div class="carousel-caption" style="bottom: 0px; padding-bottom: 0px; color: #007bff;"></div>
                             </div>
                             <div class="carousel-item">
-                                <img src="{{ asset('images/tasks.png') }}" class="d-block w-100" alt="Chicago">
+                                <img style="border-radius: 5px;" src="{{ asset('/images/Home Images-02.png') }}" class="d-block w-100" alt="Chicago">
                                 <div class="carousel-caption" style="bottom: 0px; padding-bottom: 0px; color: #007bff;"></div>
                             </div>
                             <div class="carousel-item">
-                                <img src="{{ asset('images/Working.png') }}" class="d-block w-100" alt="New York">
+                                <img style="border-radius: 5px;" src="{{ asset('/images/Home Images-03.png') }}" class="d-block w-100" alt="New York">
                                 <div class="carousel-caption" style="bottom: 0px; padding-bottom: 0px; color: #007bff;"></div>
                             </div>
                         </div>
