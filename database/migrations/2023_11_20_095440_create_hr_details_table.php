@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('hr_details', function (Blueprint $table) {
             $table->id();
             $table->string('company_id'); // Use constrained to reference the correct table
+            $table->string('hr_id'); // Use constrained to reference the correct table
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone');

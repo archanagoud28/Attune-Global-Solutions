@@ -10,24 +10,24 @@ class HrLogin extends Component
 {
     public $error = '';
     public $form = [
-        'email' => '',
+        'hr_id' => '',
         'password' => '',
     ];
     public function empLogin()
     {
         $this->validate([
-            "form.email" => 'required',
+            "form.hr_id" => 'required',
             "form.password" => "required"
         ]);
         if (Auth::guard('hr')->attempt($this->form)) {
-            $mailId = Auth::guard('hr')->user()->email;
+            $mailId = Auth::guard('hr')->user()->hr_id;
 
-            Session::put('email', $mailId);
+            Session::put('hr_id', $mailId);
             Session::put('lastActivityTime', now());
             session()->flash('Success', 'You are logged in successfully!');
             return redirect('/');
         } else {
-            $this->error = "HR Mail or Password Wrong!!";
+            $this->error = "HR ID or Password Wrong!!";
         }
     }
 

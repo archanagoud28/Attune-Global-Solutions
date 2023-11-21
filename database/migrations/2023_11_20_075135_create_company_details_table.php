@@ -20,8 +20,8 @@ return new class extends Migration
             $table->date('company_registration_date');
             $table->string('company_logo');
             $table->string('contact_email');
-         $table->string('contact_phone');
- $table->string('ceo_name');
+            $table->string('contact_phone');
+            $table->string('ceo_name');
             $table->timestamps();
         });
     }
