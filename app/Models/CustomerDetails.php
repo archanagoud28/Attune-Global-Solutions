@@ -11,6 +11,7 @@ class CustomerDetails extends Model
     protected $primaryKey = 'customer_id';
     protected $fillable = [
         'customer_id',
+        'customer_profile',
         'company_id',      // Foreign key linking to the IT company
         'customer_name',   // Full name of the customer
         'email',           // Email address of the customer
