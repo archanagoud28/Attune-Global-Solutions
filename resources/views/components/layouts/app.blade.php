@@ -81,7 +81,7 @@
         }
 
         .overflow-auto {
-            height: 2000px;
+            height: auto;
             overflow: auto;
         }
     </style>
