@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\ContractorPage;
 use App\Livewire\Home;
 use App\Livewire\HrLogin;
 use App\Livewire\EmpRegister;
@@ -7,6 +8,7 @@ use App\Livewire\EmpAccountDetails;
 use App\Livewire\EmpFamilyDetails;
 use App\Livewire\EmployeePage;
 use App\Livewire\HomePage;
+use App\Livewire\VendorPage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,4 +32,6 @@ Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-
 Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
 Route::get('/employee-page', EmployeePage::class)->name('employee-page');
 Route::get('/home-page', HomePage::class)->name('home-page');
+Route::get('/contractor-page', ContractorPage::class)->name('contractor-page');
+Route::get('/vendor-page', VendorPage::class)->name('vendor-page');
 });
