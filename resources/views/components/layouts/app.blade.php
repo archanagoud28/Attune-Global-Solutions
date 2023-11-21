@@ -99,6 +99,17 @@
     @else
     <div class="container-fluid">
         <div class="col-md-2">
+
+            <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+            <a class="menu-link" href="#"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
+            <a class="menu-link" href="vendor-page"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
+            <a class="menu-link" href="employee-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
+            <a class="menu-link" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
+            <a class="menu-link" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Purchase Orders</span></a><br>
+            <a class="menu-link" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
+            <a class="menu-link" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a>
+            <a class="menu-link" href="#"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
+
             <img src="{{ asset('/images/logonobg.png') }}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
             <a class="menu-link @if(request()->is('/')) active @endif" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
             <a class="menu-link @if(request()->is('vendors')) active @endif" href="#"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
@@ -108,12 +119,20 @@
             <a class="menu-link @if(request()->is('bills')) active @endif" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
             <a class="menu-link @if(request()->is('invoice')) active @endif" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a> <br>
             <a class="menu-link @if(request()->is('time-sheets')) active @endif" href="#"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
+
         </div>
 
         <div class="col-md-10">
             <div class="row-header d-flex justify-content-between align-items-center">
+
+                {{-- <h4 style="color: white;" class="text-center mb-0">Attune Global Solutions</h4> --}}
+                <div style="margin-left:90%;">
+                    @livewire('log-out')
+                </div>
+
                 <h4 style="color: white; margin-left:40%" class="text-center mb-0">Vendor Bloom</h4>
                 @livewire('log-out')
+
             </div>
 
 
