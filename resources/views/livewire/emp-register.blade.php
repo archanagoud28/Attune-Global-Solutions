@@ -1,40 +1,40 @@
-<style>
-.form-group{
-    display:flex;
-    flex-direction:row;
-    justify-content:space-between;
-    font-size:0.875rem;
-    align-items:center;
-    margin-top:10px;
-    margin-bottom:10px;
-}
-.form-group label{
-    font-weight:500;
-    color:#47515B;
-    margin-bottom:10px;
-}
-.emp{
-    display:flex;
-    flex-direction:column;
-    padding:5px;
-    justify-content:space-between;
-    margin:0 auto;
-    gap:7px;
-}
-.employee-details{
-    border:1px solid #ccc;
-    padding:5px 10px;
-    border-radius:10px;
-    background:#fff;
-}
-</style>
 <div>
+    <style>
+        .form-group{
+            display:flex;
+            flex-direction:row;
+            justify-content:space-between;
+            font-size:0.875rem;
+            align-items:center;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+        .form-group label{
+            font-weight:500;
+            color:#47515B;
+            margin-bottom:10px;
+        }
+        .emp{
+            display:flex;
+            flex-direction:column;
+            padding:5px;
+            justify-content:space-between;
+            margin:0 auto;
+            gap:7px;
+        }
+        .employee-details{
+            border:1px solid #ccc;
+            padding:5px 10px;
+            border-radius:10px;
+            background:#fff;
+        }
+        </style>
     <div class="container" style="padding:0px;margin:30px 0;">
         @if (session()->has('emp_success'))
         <div class="emp-success" style="width:608px;text-align: center; color: green; padding: 10px; border-radius: 10px; margin: 0 auto; background-color: lightgreen; display: flex; justify-content: center; align-items: center;">
             <b>{{ session('emp_success') }}</b>
         </div>
- 
+
         <script>
             setTimeout(function() {
                 document.querySelector('.emp-success').style.display = 'none';
@@ -48,13 +48,13 @@
                         <h5 class="mb-0" style="text-align: center;color:white;font-family:Montserrat">Employee Registration Form</h5>
                     </div>
                     <div class="card-body">
-                        <form wire:submit.prevent="register" enctype="multipart/form-data">
+             <form wire:submit.prevent="register" enctype="multipart/form-data">
                         <div class="emp-info" style="display:flex; flex-direction:column;">
                         <div class="details-emp" style=" display:flex; flex-direction:row;padding:0; gap:0px; margin-top:10px;">
                                 <div class="col-md-6" >
                                 <div class="emp" >
-                               <div class=" employee-details" > 
-                                <div style="margin:5px 0 20px 0"><h5>Employee Details</h5></div>  
+                               <div class=" employee-details" >
+                                <div style="margin:5px 0 20px 0"><h5>Employee Details</h5></div>
                                  <div class="form-group" >
                                   <label for="id">Employee ID :</label>
                                    <input type="text" class="form-control" wire:model="id" style="width:72%;">
@@ -66,13 +66,13 @@
                                 <input type="text" class="form-control" wire:model="first_name" style="width:72%;">
                                 @error('first_name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
- 
+
                             <div class="form-group" >
                                 <label for="last_name">Last Name :</label>
                                 <input type="text" class="form-control" wire:model="last_name" style="width:72%;">
                                 @error('last_name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            
+
                             <div class="form-group" >
                                         <label for="mobile_number">Phone Number :</label>
                                         <input type="text" class="form-control" wire:model="mobile_number" style="width:72%;">
@@ -108,36 +108,24 @@
                                     <input type="text" class="form-control" wire:model="aadhar_no" style="width:72%;">
                                     @error('aadhar_no') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
- 
+
                                 <!-- Password -->
                                 <div class="form-group" >
                                     <label for="password">Password :</label>
                                     <input type="password" class="form-control" wire:model="password" style="width:72%;">
                                     @error('password') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
- 
- 
+
+
                                 {{-- Upload Employee Image --}}
                                 <div class="form-group" >
                                     <label for="image">Employee Image :</label>
                                     <input type="file" class="form-control-file" wire:model="image" style="width:72%;">
                                     @error('image') <span class="text-danger">{{ $message }}</span> @enderror
- 
+
                                 </div>
- 
- 
-                                <div>
-                                   
-                                    <!-- Display the saved image -->
-                                    <img height="50" width="50" src="" alt="Saved Image" class="img-preview">
-                                    <span></span>
-                               
-                                    <!-- Display the temporary image -->
-                                    <img height="50" width="50" src="" alt="Temporary Image" class="img-preview">
-                                    <span></span>
-                                
-                                </div>
- 
+
+
                                 <div class="form-group" >
                                     <label>Gender :</label><br>
                                     <div class="form-check form-check-inline"style="margin-top:10px;" >
@@ -154,7 +142,7 @@
                                 </div>
                                </div>
                                  <div class="employee-details">
-                                <div style="margin:5px 0 20px 0"><h5>Job Details</h5></div>  
+                                <div style="margin:5px 0 20px 0"><h5>Job Details</h5></div>
 
                                  <div class="form-group">
                                     <label for="hire_date">Hire Date :</label>
@@ -181,8 +169,8 @@
                                     <input type="text" class="form-control" wire:model="employee_status" style="width:72%;">
                                     @error('employee_status') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-                               
-                              
+
+
                                 <div class="form-group" >
                                     <label for="aadhar_no">Job Location :</label>
                                     <input type="text" class="form-control" wire:model="job_location" style="width:72%;">
@@ -222,18 +210,18 @@
                                 </div>
                                 <div>
                                     @error('inter_emp') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div> 
+                                </div>
                                  </div>
-                                
-                              
+
+
                                </div>
-                                   
+
                                 </div>
                                <!-- second column -->
                                <div class="col-md-6" >
                                 <div class="emp" >
-                               <div class=" employee-details" >     
-                               <div style="margin:5px 0 20px 0"><h5>Employee Address</h5></div>  
+                               <div class=" employee-details" >
+                               <div style="margin:5px 0 20px 0"><h5>Employee Address</h5></div>
                                <div class="form-group" >
                                     <label for="address">Address :</label>
                                     <input type="text" class="form-control" wire:model="address" style="width:75%;">
@@ -261,14 +249,14 @@
                                 </div>
                                </div>
                                <div class="employee-details">
-                                         <div style="margin:5px 0 20px 0"><h5>Employee Personal Details</h5></div>  
+                                         <div style="margin:5px 0 20px 0"><h5>Employee Personal Details</h5></div>
 
                                 <div class="form-group" >
                                         <label for="date_of_birth">Date of Birth :</label>
                                         <input type="date" class="form-control" wire:model="date_of_birth" max="{{ date('Y-m-d') }}" style="width:75%;">
                                         @error('date_of_birth') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
-    
+
                                     <div class="form-group">
                                     <label for="blood_group">Blood Group :</label>
                                     <input type="text" class="form-control" wire:model="blood_group" style="width:75%;">
@@ -297,7 +285,7 @@
                                 </div>
                                 <div>
                                     @error('marital_status') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div> 
+                                </div>
                                 <div class="form-group" >
                                     <label for="spouse">Spouse :</label>
                                     <input type="text" class="form-control" wire:model="spouse" style="width:75%;">
@@ -316,11 +304,11 @@
                                 </div>
                                 <div>
                                     @error('physically_challenge') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>              
-                                
+                                </div>
+
                                </div>
                                <div class="employee-details">
-                                    <div style="margin:5px 0 20px 0"><h5>Other Details</h5></div>  
+                                    <div style="margin:5px 0 20px 0"><h5>Other Details</h5></div>
                                         <div class="form-group" >
                                                 <label for="nick_name">Nick Name:</label>
                                                 <input type="text" class="form-control" wire:model="nick_name"  style="width:72%;">
@@ -369,29 +357,12 @@
                                 </div>
                                 </div>
                              </div>
-                             
+
                         </div>
-                        
+
                                 <div style="text-align: center; margin-top:20px;">
                                 <!-- Your Livewire component content -->
-                                <button type="submit" wire:loading.attr="disabled" class="btn btn-primary">Save</button>
-                                <p wire:loading>Loading...</p>
-                                <p wire:loading.remove></p>
-                            </div>
-                            <div wire:debug></div>
-                            <style>
-                                button[wire\:loading] {
-                                    opacity: 0.5;
-                                    /* Reduce opacity during loading */
-                                    cursor: not-allowed;
-                                    /* Change cursor during loading */
-                                }
- 
-                                p {
-                                    color: green;
-                                    font-weight: bold;
-                                }
-                            </style>
+                                <button type="submit" class="btn btn-primary">Save</button>
                         </form>
                     </div>
                 </div>
@@ -406,12 +377,12 @@
             color: #fff;
             /* Change to your desired color */
         }
- 
+
         /* Custom CSS classes for the "Loading" text */
         .text-loading {
             color: #ff9900;
             /* Change to your desired color */
         }
     </style>
- 
+
 </div>
