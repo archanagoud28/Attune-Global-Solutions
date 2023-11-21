@@ -57,6 +57,7 @@ class EmpDetails extends Model
         'twitter',
         'linked_in',
         'company_id',
-        'is_starred'
+        'is_starred',
+        'skill_set'
     ];
 }
