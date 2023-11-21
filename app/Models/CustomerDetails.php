@@ -20,20 +20,6 @@ class CustomerDetails extends Model
         'address',         // Physical address of the customer
         'notes',           // Additional notes or comments about the customer
     ];
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $maxId = static::maxId() + 1;
-            $model->customer_id = 'CUST' . str_pad($maxId, 4, '0', STR_PAD_LEFT);
-        });
-    }
-
-    public static function maxId()
-    {
-        return (int) static::max('customer_id');
-    }
     public function company()
     {
         return $this->belongsTo(CompanyDetails::class, 'company_id', 'company_id');
