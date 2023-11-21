@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="{{asset('/images/fav.png')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('public/images/fav.png')}}">
     <title>Attune Global Solutions</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -99,21 +102,25 @@
     @else
     <div class="container-fluid">
         <div class="col-md-2">
-            <img src="{{ asset('/images/logonobg.png') }}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-            <a class="menu-link @if(request()->is('/')) active @endif" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
-            <a class="menu-link @if(request()->is('vendors')) active @endif" href="#"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
-            <a class="menu-link @if(request()->is('employees')) active @endif" href="/employee-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
-            <a class="menu-link @if(request()->is('contractors')) active @endif" href="#"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
-            <a class="menu-link @if(request()->is('purchase-orders')) active @endif" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Purchase Orders</span></a><br>
-            <a class="menu-link @if(request()->is('bills')) active @endif" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
-            <a class="menu-link @if(request()->is('invoice')) active @endif" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a> <br>
-            <a class="menu-link @if(request()->is('time-sheets')) active @endif" href="/time-sheet-display"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
+
+            <img src="{{asset('public/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+            <a class="menu-link" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
+            <a class="menu-link" href="vendor-page"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
+            <a class="menu-link" href="employee-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
+            <a class="menu-link" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
+            <a class="menu-link" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Purchase Orders</span></a><br>
+            <a class="menu-link" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
+            <a class="menu-link" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a> <br>
+            <a class="menu-link" href="/time-sheet-display"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
+
         </div>
 
         <div class="col-md-10">
             <div class="row-header d-flex justify-content-between align-items-center">
+
                 <h4 style="color: white; margin-left:40%" class="text-center mb-0">Vendor Bloom</h4>
                 @livewire('log-out')
+
             </div>
 
 

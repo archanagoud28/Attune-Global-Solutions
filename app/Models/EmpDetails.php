@@ -60,4 +60,54 @@ class EmpDetails extends Model
         'is_starred',
         'skill_set'
     ];
+
+
+    protected $guarded = ['emp_id']; // Make sure 'emp_id' is not mass assignable
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->emp_id)) {
+                $model->emp_id = $model->generateEmpId();
+            }
+        });
+    }
+
+    // private function generateEmpId()
+    // {
+    //     // Find the maximum emp_id for the given company_name
+    //     $maxEmpId = self::where('company_name', $this->company_name)->max('emp_id');
+
+    //     // Extract the numeric part of the max emp_id, increment it by 1, and pad it with zeros
+    //     $numericPart = (int) substr($maxEmpId, 4) + 1;
+    //     $paddedNumericPart = str_pad($numericPart, 4, '0', STR_PAD_LEFT);
+
+    //     // Combine company_name and padded numeric part to create the new emp_id
+    //     return strtoupper(substr($this->company_name, 0, 3)) . '-' . $paddedNumericPart;
+    // }
+
+
+
+    private function generateEmpId()
+{
+    // Find the maximum emp_id for the given company_name
+    $maxEmpId = self::where('company_name', $this->company_name)->max('emp_id');
+
+    // Set the starting numeric part
+    $startNumericPart = 1001;
+
+    // Extract the numeric part of the max emp_id, increment it, and pad it with zeros
+    $numericPart = 1; // Default value if $maxEmpId is null
+    if (!is_null($maxEmpId) && is_string($maxEmpId)) {
+        $numericPart = max((int) substr($maxEmpId, 4) + 1, $startNumericPart);
+    }
+    $paddedNumericPart = str_pad($numericPart, 4, '0', STR_PAD_LEFT);
+
+    // Combine company_name and padded numeric part to create the new emp_id
+    return strtoupper(substr($this->company_name, 0, 3)) . '-' . $paddedNumericPart;
 }
+
+}
+

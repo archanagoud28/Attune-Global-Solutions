@@ -6,6 +6,7 @@ use Livewire\Component;
 
 class TimeSheetDisplay extends Component
 {
+    public $tab="timeSheet";
     public function render()
     {
         return view('livewire.time-sheet-display');
