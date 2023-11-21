@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Customers;
 use App\Livewire\Home;
 use App\Livewire\HrLogin;
 use App\Livewire\EmpRegister;
@@ -22,9 +23,8 @@ Route::middleware(['checkAuth'])->group(function () {
     Route::get('/HrLogin', HrLogin::class)->name('hr-login');
 });
 Route::middleware(['auth:hr'])->group(function () {
-    Route::get('/', Home::class);
-Route::get('/emp-register', EmpRegister::class)->name('emp-register');
-Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
-Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
-
+    Route::get('/', Customers::class);
+    Route::get('/emp-register', EmpRegister::class)->name('emp-register');
+    Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
+    Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
 });
