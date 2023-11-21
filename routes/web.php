@@ -6,6 +6,8 @@ use App\Livewire\HrLogin;
 use App\Livewire\EmpRegister;
 use App\Livewire\EmpAccountDetails;
 use App\Livewire\EmpFamilyDetails;
+use App\Livewire\EmployeePage;
+use App\Livewire\HomePage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,8 +25,13 @@ Route::middleware(['checkAuth'])->group(function () {
     Route::get('/HrLogin', HrLogin::class)->name('hr-login');
 });
 Route::middleware(['auth:hr'])->group(function () {
-    Route::get('/', Customers::class);
+    Route::get('/customers', Customers::class);
     Route::get('/emp-register', EmpRegister::class)->name('emp-register');
     Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
     Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
+    Route::get('/emp-register', EmpRegister::class)->name('emp-register');
+    Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
+    Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
+    Route::get('/employee-page', EmployeePage::class)->name('employee-page');
+    Route::get('/', HomePage::class)->name('home-page');
 });

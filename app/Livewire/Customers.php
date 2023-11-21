@@ -46,11 +46,15 @@ class Customers extends Component
         ]);
         session()->flash('success', 'Customer added successfully.');
         $this->show = false;
-
+    }
+    public $viewMode;
+    public function toggleView()
+    {
+        $this->viewMode = ($this->viewMode === 'table') ? 'grid' : 'table';
     }
     public function render()
     {
-        $this->customers = CustomerDetails::orderBy('created_at', 'desc')->get();
+        $this->customers = CustomerDetails::with('company')->orderBy('created_at', 'desc')->get();
 
         return view('livewire.customers');
     }
