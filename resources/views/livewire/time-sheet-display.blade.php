@@ -5,12 +5,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Employee Information</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
  
 <body>
-  <div class="container mt-4">
-   
+  <div class="container" style="margin-top:40px;">
     <div class="form-row">
       <div class="col-md-3 mb-3">
         <label for="selectMonth">Month</label>
@@ -91,7 +89,6 @@
     </table>
   </div>
  
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
  
 </html>

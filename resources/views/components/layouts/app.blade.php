@@ -107,11 +107,10 @@
 
         <div class="col-md-10">
             <div class="row-header d-flex justify-content-between align-items-center">
-                <h4 style="color: white;" class="text-center mb-0">Attune Global Solutions</h4>
+             <div style="margin-left:90%;">
                 @livewire('log-out')
             </div>
-
-
+            </div>
 
             <div class="row-content">
                 <div class="overflow-auto" >

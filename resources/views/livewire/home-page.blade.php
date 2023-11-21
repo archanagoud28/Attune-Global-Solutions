@@ -35,14 +35,16 @@
         color:#003767;
       }
       .btn{
-        background:#fff;
+        background:#003767;
         border:1px solid #003767;
         font-size:0.875rem;
         font-weight:500;
-        color:#003767;
+        color:#fff;
+        width:100px;
       }
       .view-container{
         display:flex;
+        padding:0;
         margin-top:30px;
       }
       .view{
@@ -60,15 +62,18 @@
          display:flex;
          flex-direction:column;
         align-items:center;
-        gap:10px;
+      }
+      .vendor-icon{
+        font-weight:600;
       }
       .vendors{
-        background:#003767;
-        color:#fff;
+        background:#fff;
+        color:#003767;
         border:1px solid #003767;
         border-radius:4px;
         font-size:0.725rem;
         font-weight:600;
+        width:50px;
       }
     </style>
 
@@ -93,23 +98,14 @@
             eventSource.close();
         };
     </script>
-      <div class="main-cont">
-        <div class="text">
-            <h6>Welcome Bandari Divya, your dashboard is ready!</h6>
-            <p>Great Job, your affiliate dashboard is ready to go!You can view profiles,vendors,customers and purchase orders.</p>
-            <button class="btn ">View Profile</button>
-        </div>
-        <div class="image">
-            <img src="https://img.freepik.com/free-vector/modern-business-team-working-open-office-space_74855-5541.jpg" alt="" style="width:300px;height:200px;">
-        </div>
-    </div>
+
     <!-- row containers -->
     <div class="view-container">
          <div class="col-md-3">
             <div class="view">
                 <h6>Customers</h6>
                 <div class="vendor-icon">
-                    <i class="fas fa-university"></i>
+                    <p>10</p>
                    <button class="vendors">View</button>
               </div>
             </div>
@@ -118,7 +114,7 @@
             <div class="view">
                 <h6>Vendors</h6>
                 <div class="vendor-icon">
-                    <i class="fas fa-university"></i>
+                    <p>10</p>
                    <button class="vendors">View</button>
               </div>
             </div>
@@ -127,7 +123,7 @@
             <div class="view">
                <h6>Employees</h6>
                <div class="vendor-icon">
-                    <i class="fas fa-users"></i>
+                    <p>120</p>
                    <button class="vendors">View</button>
               </div>
             </div>
@@ -136,11 +132,21 @@
             <div class="view">
                 <h6>Contractors</h6>
                 <div class="vendor-icon">
-                    <i class="fas fa-university"></i>
+                    <p>20</p>
                    <button class="vendors">View</button>
               </div>
             </div>
          </div>
+    </div>
+    <div class="main-cont">
+        <div class="text">
+            <h6>Welcome Bandari Divya, your dashboard is ready!</h6>
+            <p>Great Job, your affiliate dashboard is ready to go!You can view profiles,vendors,customers and purchase orders.</p>
+            <button class="btn ">View Profile</button>
+        </div>
+        <div class="image">
+            <img src="https://img.freepik.com/free-vector/modern-business-team-working-open-office-space_74855-5541.jpg" alt="" style="width:300px;height:200px;">
+        </div>
     </div>
 </div>
 </div>
