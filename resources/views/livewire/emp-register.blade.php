@@ -1,34 +1,35 @@
 <div>
-    <style>
-        .form-group{
-            display:flex;
-            flex-direction:row;
-            justify-content:space-between;
-            font-size:0.875rem;
-            align-items:center;
-            margin-top:10px;
-            margin-bottom:10px;
-        }
-        .form-group label{
-            font-weight:500;
-            color:#47515B;
-            margin-bottom:10px;
-        }
-        .emp{
-            display:flex;
-            flex-direction:column;
-            padding:5px;
-            justify-content:space-between;
-            margin:0 auto;
-            gap:7px;
-        }
-        .employee-details{
-            border:1px solid #ccc;
-            padding:5px 10px;
-            border-radius:10px;
-            background:#fff;
-        }
-        </style>
+<style>
+.form-group{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    font-size:0.875rem;
+    align-items:center;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.form-group label{
+    font-weight:500;
+    color:#47515B;
+    margin-bottom:10px;
+}
+.emp{
+    display:flex;
+    flex-direction:column;
+    padding:5px;
+    justify-content:space-between;
+    margin:0 auto;
+    gap:7px;
+}
+.employee-details{
+    border:1px solid #ccc;
+    padding:5px 10px;
+    border-radius:10px;
+    background:#fff;
+}
+</style>
+<div>
     <div class="container" style="padding:0px;margin:30px 0;">
         @if (session()->has('emp_success'))
         <div class="emp-success" style="width:608px;text-align: center; color: green; padding: 10px; border-radius: 10px; margin: 0 auto; background-color: lightgreen; display: flex; justify-content: center; align-items: center;">
@@ -384,5 +385,9 @@
             /* Change to your desired color */
         }
     </style>
+
+</div>
+
+</div>
 
 </div>

@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <livewire:styles />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         img {
@@ -75,7 +76,7 @@
         }
 
         .row-content {
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: #fcfcfc;
             margin-top: 20px;
 
         }
@@ -113,7 +114,7 @@
 
 
             <div class="row-content">
-                <div class="overflow-auto">
+                <div class="overflow-auto" >
                     {{$slot}}
                 </div>
             </div>
@@ -122,6 +123,9 @@
 
     @livewireScripts
     @endguest
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
