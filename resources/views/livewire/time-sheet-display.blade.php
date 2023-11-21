@@ -1,0 +1,99 @@
+<div>
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Information</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+ 
+<body>
+  <div class="container mt-4">
+   
+    <div class="form-row">
+      <div class="col-md-3 mb-3">
+        <label for="selectMonth">Month</label>
+        <select class="form-control" id="selectMonth">
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+          <!-- Add options for all months -->
+         
+        </select>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="selectYear">Year</label>
+        <select class="form-control" id="selectYear">
+          <!-- Add options for years as needed -->
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <!-- Add more years if necessary -->
+        </select>
+      </div>
+    </div>
+ 
+    <h2>Employee Time Sheet</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Icon</th>
+          <th>Name</th>
+          <th>Company</th>
+          <th>Week</th>
+          <th>Month</th>
+           
+          <th>Time Sheet by Employee</th>
+          <th>Time Sheet Approved by Manager</th>
+          <th>Invoice raised (Y/N)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dummy Records -->
+        <!-- Repeat this block for each record -->
+        <!-- Replace image path, names, and other data accordingly -->
+        <tr>
+          <td><img src="path_to_icon_image_1" alt="Icon" width="50" height="50"></td>
+          <td>John Doe</td>
+          <td>ABC Company</td>
+          <td>Week 1</td>
+          <td>January</td>
+           
+          <td>Submitted</td>
+          <td>Approved</td>
+          <td>Yes</td>
+        </tr>
+        <!-- Repeat the above block for additional records (19 more times) -->
+        <!-- Example record 2 -->
+        <tr>
+          <td><img src="path_to_icon_image_2" alt="Icon" width="50" height="50"></td>
+          <td>Jane Smith</td>
+          <td>XYZ Corporation</td>
+          <td>Week 2</td>
+          <td>January</td>
+           
+          <td>Pending</td>
+          <td>Not Approved</td>
+          <td>No</td>
+        </tr>
+        <!-- Repeat this block with different data for other records -->
+        <!-- Total 20 records -->
+      </tbody>
+    </table>
+  </div>
+ 
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+ 
+</html>
+ 
+</div>
