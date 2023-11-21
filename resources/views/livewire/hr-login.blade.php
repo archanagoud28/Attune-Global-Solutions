@@ -5,8 +5,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="{{ asset('images/Attune_Logo.jpg') }}">
-        <title>Attune Global Solutions</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
@@ -83,7 +81,7 @@
                     @endif
                     <form wire:submit.prevent="empLogin" class="login-form-with-shadow">
                         <div class="logo text-center mb-1" style="padding-top: 20px;">
-                            <img src="{{asset('images/vendorbloom2.png')}}" alt="Company Logo" width="200" height="100">
+                            <img src="{{asset('/images/vendorbloom2.png')}}" alt="Company Logo" width="200" height="100">
                         </div>
                         <br>
                         @if ($error)
