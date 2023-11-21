@@ -77,11 +77,11 @@
         .row-content {
             background-color: rgba(0, 0, 0, 0.1);
             margin-top: 20px;
-           
+
         }
 
         .overflow-auto {
-            height: 2000px;
+            height: auto;
             overflow: auto;
         }
     </style>
@@ -118,7 +118,7 @@
             </div>
         </div>
     </div>
-    
+
     @livewireScripts
     @endguest
 </body>
