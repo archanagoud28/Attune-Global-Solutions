@@ -7,8 +7,14 @@
             gap: 20px;
         }
 
+        .customer-details div {
+            margin-bottom: 0;
+            /* Set margin-bottom to 0 for each div within customer-details */
+        }
+
+
         .customer-card {
-            background-color:white;
+            background-color: white;
             border: 1px solid #ddd;
             padding: 10px;
             border-radius: 5px;
@@ -121,68 +127,6 @@
         {{ session('success') }}
     </div>
     @endif
-    @if($viewMode === 'table')
-    <!-- Render Table View -->
-    <table class="table table-striped table-bordered">
-        <div class="container">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Profile</th>
-                        <th>ID</th>
-                        <th>Company ID</th>
-                        <th>Company Name</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($customers as $customer)
-                    <tr>
-                        <td><img style="height: 50px;width:50px" src="{{ asset('storage/' . $customer->customer_profile) }}" height="50" width="50"></td>
-                        <td>{{ $customer->customer_id }}</td>
-                        <td>{{ $customer->company_id }}</td>
-                        <td>{{ $customer->company->company_name }}</td>
-                        <td>{{ $customer->customer_name }}</td>
-                        <td>{{ $customer->email }}</td>
-                        <td>{{ $customer->phone }}</td>
-                        <td>{{ $customer->address }}</td>
-                        <td>{{ $customer->notes }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <!-- resources/views/livewire/customer-form.blade.php -->
-        </div>
-    </table>
-    @else
-    <!-- Render Grid View -->
-    <div class="grid-container">
-        <div class="container">
-            <div class="customer-grid">
-                @foreach ($customers as $customer)
-                <div class="customer-card">
-                    <img src="{{ asset('storage/' . $customer->customer_profile) }}" alt="Customer Profile" class="customer-profile">
-                    <div class="customer-details">
-                        <p><strong>ID:</strong> {{ $customer->customer_id }}</p>
-                        <p><strong>Company ID:</strong> {{ $customer->company_id }}</p>
-                        <p><strong>Company Name:</strong> {{ $customer->company->company_name }}</p>
-                        <p><strong>Name:</strong> {{ $customer->customer_name }}</p>
-                        <p><strong>Email:</strong> {{ $customer->email }}</p>
-                        <p><strong>Phone:</strong> {{ $customer->phone }}</p>
-                        <p><strong>Address:</strong> {{ $customer->address }}</p>
-                        <p><strong>Notes:</strong> {{ $customer->notes }}</p>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-
-    </div>
-    @endif
     @if($show=="true")
     <div class="modal" tabindex="-1" role="dialog" style="display: block;overflow-y:auto">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -249,6 +193,69 @@
     </div>
     <div class="modal-backdrop fade show blurred-backdrop"></div>
     @endif
+    @if($viewMode === 'table')
+    <!-- Render Table View -->
+    <table class="table table-striped table-bordered">
+        <div class="container">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Profile</th>
+                        <th>ID</th>
+                        <th>Company ID</th>
+                        <th>Company Name</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($customers as $customer)
+                    <tr>
+                        <td><img style="height: 50px;width:50px" src="{{ asset('storage/' . $customer->customer_profile) }}" height="50" width="50"></td>
+                        <td>{{ $customer->customer_id }}</td>
+                        <td>{{ $customer->company_id }}</td>
+                        <td>{{ $customer->company->company_name }}</td>
+                        <td>{{ $customer->customer_name }}</td>
+                        <td>{{ $customer->email }}</td>
+                        <td>{{ $customer->phone }}</td>
+                        <td>{{ $customer->address }}</td>
+                        <td>{{ $customer->notes }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <!-- resources/views/livewire/customer-form.blade.php -->
+        </div>
+    </table>
+    @else
+    <!-- Render Grid View -->
+    <div class="grid-container">
+        <div class="container">
+            <div class="customer-grid">
+                @foreach ($customers as $customer)
+                <div class="customer-card">
+                    <img src="{{ asset('storage/' . $customer->customer_profile) }}" alt="Customer Profile" class="customer-profile">
+                    <div class="customer-details">
+                        <div><strong>ID:</strong> {{ $customer->customer_id }}</div>
+                        <div><strong>Comdivany ID:</strong> {{ $customer->company_id }}</div>
+                        <div><strong>Comdivany Name:</strong> {{ $customer->company->company_name }}</div>
+                        <div><strong>Name:</strong> {{ $customer->customer_name }}</div>
+                        <div><strong>Email:</strong> {{ $customer->email }}</div>
+                        <div><strong>Phone:</strong> {{ $customer->phone }}</div>
+                        <div><strong>Address:</strong> {{ $customer->address }}</div>
+                        <div><strong>Notes:</strong> {{ $customer->notes }}</div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
+    </div>
+    @endif
+
 
 
 </div>

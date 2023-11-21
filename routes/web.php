@@ -8,6 +8,8 @@ use App\Livewire\EmpAccountDetails;
 use App\Livewire\EmpFamilyDetails;
 use App\Livewire\EmployeePage;
 use App\Livewire\HomePage;
+use App\Livewire\PurchaseOrder;
+use App\Livewire\TimeSheetDisplay;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,4 +36,10 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
     Route::get('/employee-page', EmployeePage::class)->name('employee-page');
     Route::get('/', HomePage::class)->name('home-page');
+    Route::get('/emp-register', EmpRegister::class)->name('emp-register');
+    Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
+    Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
+    Route::get('/employee-page', EmployeePage::class)->name('employee-page');
+    Route::get('/time-sheet-display', TimeSheetDisplay::class)->name('time-sheet-display');
+    Route::get('/purchase-order', PurchaseOrder::class)->name('purchase-order');
 });

@@ -100,7 +100,7 @@
  
     <!-- row containers -->
     <div class="view-container">
-         <div class="col-md-3">
+         <div style="padding: 5px;" class="col-md-3">
             <div class="view">
                 <h6>Customers</h6>
                 <div class="vendor-icon">
@@ -109,7 +109,7 @@
               </div>
             </div>
          </div>
-         <div class="col-md-3">
+         <div style="padding: 5px;" class="col-md-3">
             <div class="view">
                 <h6>Vendors</h6>
                 <div class="vendor-icon">
@@ -118,7 +118,7 @@
               </div>
             </div>
          </div>
-         <div class="col-md-3">
+         <div style="padding: 5px;" class="col-md-3">
             <div class="view">
                <h6>Employees</h6>
                <div class="vendor-icon">
@@ -127,7 +127,7 @@
               </div>
             </div>
          </div>
-         <div class="col-md-3">
+         <div style="padding: 5px;" class="col-md-3">
             <div class="view">
                 <h6>Contractors</h6>
                 <div class="vendor-icon">
