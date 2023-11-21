@@ -107,7 +107,7 @@
             <a class="menu-link @if(request()->is('purchase-orders')) active @endif" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Purchase Orders</span></a><br>
             <a class="menu-link @if(request()->is('bills')) active @endif" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
             <a class="menu-link @if(request()->is('invoice')) active @endif" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a> <br>
-            <a class="menu-link @if(request()->is('time-sheets')) active @endif" href="#"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
+            <a class="menu-link @if(request()->is('time-sheets')) active @endif" href="/time-sheet-display"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
         </div>
 
         <div class="col-md-10">
