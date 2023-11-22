@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('customer_details', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_id')->unique();
+            $table->string('customer_id')->nullable()->default(null)->unique();
             $table->string('customer_name');
             $table->string('customer_company_name');
             $table->string('customer_profile');
@@ -24,22 +27,24 @@ return new class extends Migration
                 ->references('company_id')
                 ->on('company_details')
                 ->onDelete('restrict')
-                ->onUpdate('cascade');
+                ->onUpdate('restrict');
             $table->timestamps();
         });
+
 
         $triggerSQL = <<<SQL
         CREATE TRIGGER generate_customer_id BEFORE INSERT ON customer_details FOR EACH ROW
         BEGIN
-            DECLARE max_id INT;
+            -- Check if hr_id is NULL
+            IF NEW.customer_id IS NULL THEN
+                -- Find the maximum hr_id value in the hr_details table
+                SET @max_id := IFNULL((SELECT MAX(CAST(SUBSTRING(customer_id, 3) AS UNSIGNED)) + 1 FROM customer_details), 100000);
 
-            -- Find the maximum customer_id value in the customer_details table
-            SELECT IFNULL(MAX(CAST(SUBSTRING(customer_id, 5) AS UNSIGNED)) + 1, 1) INTO max_id FROM customer_details;
-
-            -- Increment the max_id and assign it to the new customer_id
-            SET NEW.customer_id = CONCAT("CUST", LPAD(max_id, 4, "0"));
+                -- Increment the max_id and assign it to the new hr_id
+                SET NEW.customer_id = CONCAT('33', LPAD(@max_id, 6, '0'));
+            END IF;
         END;
-        SQL;
+    SQL;
 
         DB::unprepared($triggerSQL);
     }

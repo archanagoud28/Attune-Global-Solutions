@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CustomerDetails extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'customer_id';
+    protected $primaryKey = 'id';
     public $incrementing = false;
     protected $fillable = [
         'customer_id',

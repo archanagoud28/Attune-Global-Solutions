@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('vendor_details', function (Blueprint $table) {
             $table->id();
-            $table->string('vendor_id')->unique(); // Unique instead of primary
+            $table->string('vendor_id')->nullable()->default(null)->unique(); // Unique instead of primary
             $table->string('vendor_name');
             $table->string('vendor_image');
             $table->string('contact_person');
@@ -57,6 +57,23 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->timestamps();
         });
+
+        $triggerSQL = <<<SQL
+        CREATE TRIGGER generate_vendor_id BEFORE INSERT ON vendor_details FOR EACH ROW
+        BEGIN
+            -- Check if vendor_id is NULL
+            IF NEW.vendor_id IS NULL THEN
+                -- Find the maximum vendor_id value in the emp_details table
+                SET @max_id := IFNULL((SELECT MAX(CAST(SUBSTRING(vendor_id, 3) AS UNSIGNED)) + 1 FROM  vendor_details), 100000);
+
+                -- Increment the max_id and assign it to the new vendor_id
+                SET NEW.vendor_id = CONCAT('55', LPAD(@max_id, 6, '0'));
+            END IF;
+        END;
+    SQL;
+
+    DB::unprepared($triggerSQL);
+
 }
 
 
