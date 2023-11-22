@@ -1,8 +1,9 @@
 <div>
     <style>
       .container{
-        margin-top:30px;
-        padding:0;
+        margin-top:20px;
+        padding:10px 15px;;
+        background:#fcfcfc;
       }
       .calender{
         margin-top:40px;
@@ -44,6 +45,7 @@
       }
       .view-container{
         display:flex;
+        padding:0;
         margin-top:30px;
       }
       .view{

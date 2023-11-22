@@ -13,12 +13,12 @@ class CustomerDetails extends Model
     protected $fillable = [
         'customer_id',
         'customer_profile',
-        'company_id',      // Foreign key linking to the IT company
-        'customer_name',   // Full name of the customer
-        'email',           // Email address of the customer
-        'phone',           // Phone number of the customer
-        'address',         // Physical address of the customer
-        'notes',           // Additional notes or comments about the customer
+        'company_id',     
+        'customer_name',  
+        'email',         
+        'phone',          
+        'address',         
+        'notes',           
     ];
     public function company()
     {
