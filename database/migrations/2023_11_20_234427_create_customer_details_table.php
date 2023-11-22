@@ -43,9 +43,7 @@ return new class extends Migration
     END;
 SQL;
 
-DB::unprepared($triggerSQL);
-
-
+        DB::unprepared($triggerSQL);
     }
 
     /**
