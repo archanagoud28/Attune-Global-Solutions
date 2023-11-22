@@ -43,9 +43,7 @@ return new class extends Migration
         });
 
 
-
-
-        $triggerSQL = <<<SQL
+$triggerSQL = <<<SQL
     CREATE TRIGGER generate_contractor_id BEFORE INSERT ON contractors_details FOR EACH ROW
     BEGIN
         -- Check if contractor_id is NULL
