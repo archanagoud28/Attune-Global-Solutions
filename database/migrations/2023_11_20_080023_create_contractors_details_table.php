@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('contractors_details', function (Blueprint $table) {
             $table->id();
-            $table->string('contractor_id')->unique();
+            $table->string('contractor_id')->nullable()->default(null)->unique();
             $table->string('client_name');
             $table->text('client_address')->nullable();
             $table->string('it_company_name');
@@ -41,6 +41,27 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->timestamps();
         });
+
+
+
+
+        $triggerSQL = <<<SQL
+    CREATE TRIGGER generate_contractor_id BEFORE INSERT ON contractors_details FOR EACH ROW
+    BEGIN
+        -- Check if contractor_id is NULL
+        IF NEW.contractor_id IS NULL THEN
+            -- Find the maximum contractor_id value in the contractors_details table
+            SET @max_id := IFNULL((SELECT MAX(CAST(SUBSTRING(contractor_id, 3) AS UNSIGNED)) + 1 FROM contractors_details), 100000);
+
+            -- Increment the max_id and assign it to the new contractor_id
+            SET NEW.contractor_id = CONCAT('33', LPAD(@max_id, 6, '0'));
+        END IF;
+    END;
+SQL;
+
+DB::unprepared($triggerSQL);
+
+
     }
 
     /**
