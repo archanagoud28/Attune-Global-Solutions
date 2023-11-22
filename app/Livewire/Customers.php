@@ -71,7 +71,8 @@ class Customers extends Component
         $this->address = $this->selected_customer->address;
         $this->notes = $this->selected_customer->notes;
     }
-    public function closeEdit(){
+    public function closeEdit()
+    {
         $this->edit = false;
     }
 
@@ -111,6 +112,13 @@ class Customers extends Component
         // Reset the Livewire properties and set edit mode to false
         $this->reset();
         $this->edit = false;
+    }
+    public function updateStatus($customerId)
+    {
+        $customer = CustomerDetails::find($customerId);
+
+        $customer->status = $customer->status == 1 ? 0 : 1;
+        $customer->save();
     }
 
     public $viewMode;

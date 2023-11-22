@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('address');
             $table->text('notes')->nullable();
             $table->string('company_id');
+            $table->string('status')->default(1);
             $table->foreign('company_id')
                 ->references('company_id')
                 ->on('company_details')

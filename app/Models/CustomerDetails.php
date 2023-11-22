@@ -20,6 +20,7 @@ class CustomerDetails extends Model
         'phone',          
         'address',         
         'notes',           
+        'status',           
     ];
     public function company()
     {

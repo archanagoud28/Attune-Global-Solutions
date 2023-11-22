@@ -299,7 +299,7 @@
                         </div>
 
                         <div style="text-align: center; justify-content: center; align-items: center; display: flex; margin-top: 10px;">
-                            <button style="margin-left: 5%; font-size: 12px;" class="btn btn-success" type="submit">Submit</button>
+                            <button style="margin-left: 5%; font-size: 12px;" class="btn btn-success" type="submit">Update</button>
                             <button class="btn btn-danger" wire:click="closeEdit" type="button" style="font-size: 12px;">Cancel</button>
                         </div>
                     </form>
@@ -310,7 +310,7 @@
 
     <div class="modal-backdrop fade show blurred-backdrop"></div>
     @endif
-    @if($viewMode === 'table')
+    @if($viewMode == 'table')
     <!-- Render Table View -->
     <table class="table table-striped table-bordered">
         <div class="container">
@@ -334,8 +334,7 @@
                 <tbody>
                     @foreach ($customers as $index => $customer)
                     <tr>
-                        @if($edit=="true")
-                        <td><img style="height: 50px; width: 50px; background-color: green; border-radius: 50%; border: 2px solid rgb(2, 17, 79)" src="{{ asset('/storage/' . $customer->customer_profile) }}" height="50" width="50"></td>
+                        <td><img style="height: 50px; width: 50px; background-color: green; border-radius: 50%; border: 2px solid rgb(2, 17, 79)" src="{{ asset('/storage/' . $customer->customer_profile) }}" ></td>
                         <td>{{ $customer->customer_id }}</td>
                         <td>{{ $customer->customer_name }}</td>
                         <td>{{ $customer->customer_company_name }}</td>
@@ -346,8 +345,15 @@
                         <td>{{ $customer->phone }}</td>
                         <td>{{ $customer->address }}</td>
                         <td>{{ $customer->notes }}</td>
-                        <td><button wire:click="editCustomers('{{$customer->id}}')" style="background-color: blue;color:white;border-radius:5px;border:none;margin-bottom:5px">Edit</button><button style="background-color: green;color:white;border-radius:5px;border:none">Active</button></td>
-                        @endif
+                        <td>
+                            @if($customer->status==1)
+                            <button wire:click="editCustomers('{{$customer->id}}')" style="background-color: blue;color:white;border-radius:5px;border:none;margin-bottom:5px">Edit</button>
+                            <button wire:click="updateStatus('{{$customer->id}}')" style="background-color: green;color:white;border-radius:5px;border:none">Active</button>
+                            @else
+                            <button  style="background-color: lightblue;color:white;border-radius:5px;border:none;margin-bottom:5px" disabled>Edit</button>
+                            <button wire:click="updateStatus('{{$customer->id}}')" style="background-color: red;color:white;border-radius:5px;border:none">Inactive</button>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -370,8 +376,13 @@
                         <div style="text-align: center;">{{ $customer->phone }}</div>
                         <div style="text-align: center;">{{ $customer->address }}</div>
                         <p style="text-align: center;margin-top:8px">
-                            <button wire:click="editCustomers('{{ $customer->id }}')" style="background-color: blue;color:white;border-radius:5px;border:none">Edit</button>
-                            <button style="background-color: green;color:white;border-radius:5px;border:none">Active</button>
+                           @if($customer->status==1)
+                           <button wire:click="editCustomers('{{ $customer->id }}')" style="background-color: blue;color:white;border-radius:5px;border:none">Edit</button>
+                           <button wire:click="updateStatus('{{$customer->id}}')" style="background-color: green;color:white;border-radius:5px;border:none">Active</button>
+                           @else
+                           <button style="background-color: lightblue;color:white;border-radius:5px;border:none" disabled>Edit</button>
+                           <button wire:click="updateStatus('{{$customer->id}}')" style="background-color: red;color:white;border-radius:5px;border:none">Inactive</button>
+                           @endif
                         </p>
                     </div>
                 </div>

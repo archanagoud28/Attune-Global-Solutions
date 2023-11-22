@@ -16,6 +16,7 @@ use App\Livewire\HomePage;
 use App\Livewire\VendorPage;
 
 use App\Livewire\PurchaseOrder;
+use App\Livewire\SalesOrPurchaseOrders;
 use App\Livewire\TimeSheetDisplay;
 use App\Livewire\VendorRegister;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,7 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/vendor-page', VendorPage::class)->name('vendor-page');
     Route::get('/vendor-register', VendorRegister::class)->name('vendor-register');
     Route::get('/customers', Customers::class);
+    Route::get('/sales-or-purchase-orders', SalesOrPurchaseOrders::class);
     Route::get('/emp-register', EmpRegister::class)->name('emp-register');
     Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
     Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
