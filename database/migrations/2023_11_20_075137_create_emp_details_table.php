@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('emp_details', function (Blueprint $table) {
             $table->id();
-            $table->string('emp_id')->unique();
+            $table->string('emp_id')->nullable()->default(null)->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->date('date_of_birth');
@@ -70,18 +70,25 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        $triggerSQL = <<<SQL
+        CREATE TRIGGER generate_emp_id BEFORE INSERT ON emp_details FOR EACH ROW
+        BEGIN
+            -- Check if emp_id is NULL
+            IF NEW.emp_id IS NULL THEN
+                -- Find the maximum emp_id value in the emp_details table
+                SET @max_id := IFNULL((SELECT MAX(CAST(SUBSTRING(emp_id, 3) AS UNSIGNED)) + 1 FROM emp_details), 100000);
 
-    //     DB::unprepared('
-    //     CREATE TRIGGER set_employee_id BEFORE INSERT ON emp_details FOR EACH ROW
-    //     BEGIN
-    //         IF NEW.emp_id IS NULL THEN
-    //             SET NEW.emp_id = CONCAT(NEW.company_name, "-", LPAD((SELECT IFNULL(MAX(SUBSTRING_INDEX(emp_id, "-", -1) + 1), 1) FROM emp_details WHERE company_name = NEW.company_name), 4, "0"));
-    //         END IF;
-    //     END;
-    // ');
+                -- Increment the max_id and assign it to the new emp_id
+                SET NEW.emp_id = CONCAT('44', LPAD(@max_id, 6, '0'));
+            END IF;
+        END;
+    SQL;
 
-        // Add a unique constraint for mobile_number and alternate_mobile_number
-       // DB::unprepared('ALTER TABLE emp_details ADD CONSTRAINT unique_mobile_numbers UNIQUE (mobile_number, alternate_mobile_number)');
+    DB::unprepared($triggerSQL);
+
+
+
+
     }
 
     /**
