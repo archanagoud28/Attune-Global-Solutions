@@ -136,6 +136,7 @@
 
     @livewireScripts
     @endguest
+
 </body>
 
 </html>
