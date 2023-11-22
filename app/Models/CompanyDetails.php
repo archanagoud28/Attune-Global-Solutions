@@ -24,18 +24,19 @@ class CompanyDetails extends Model
 
 
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::creating(function ($model) {
-            // If company_id is not provided, generate a value in the format mmyyyyxxx (xxx is random)
-            if ($model->company_id === null) {
-                $monthYear = date('my'); // Get the current month and year
-                $randomDigits = mt_rand(1, 999); // Generate random three-digit number
+    //     static::creating(function ($model) {
+    //         // If company_id is not provided, generate a value in the format mmyyyyxxx (xxx is random)
+    //         if ($model->company_id === null) {
+    //             $monthYear = date('my'); // Get the current month and year
+    //             $randomDigits = mt_rand(1, 999); // Generate random three-digit number
 
-                $model->company_id = $monthYear . str_pad($randomDigits, 3, '0', STR_PAD_LEFT);
-            }
-        });
-    }
+    //             $model->company_id = $monthYear . str_pad($randomDigits, 3, '0', STR_PAD_LEFT);
+    //         }
+    //     });
+    // }
+
 }

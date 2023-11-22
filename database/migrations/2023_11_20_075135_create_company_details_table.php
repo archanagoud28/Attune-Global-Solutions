@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
@@ -24,6 +24,17 @@ return new class extends Migration
             $table->string('ceo_name');
             $table->timestamps();
         });
+
+  DB::unprepared('
+        CREATE TRIGGER generate_company_id
+        BEFORE INSERT ON company_details
+        FOR EACH ROW
+        BEGIN
+            IF NEW.company_id IS NULL THEN
+                SET NEW.company_id = CONCAT(DATE_FORMAT(NOW(), "%m%Y"), LPAD(FLOOR(RAND() * 1000), 3, "0"));
+            END IF;
+        END;
+    ');
     }
 
     /**

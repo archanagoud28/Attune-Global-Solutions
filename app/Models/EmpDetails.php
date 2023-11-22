@@ -61,19 +61,22 @@ class EmpDetails extends Model
         'skill_set'
     ];
 
-
-    protected $guarded = ['emp_id']; // Make sure 'emp_id' is not mass assignable
-
-    protected static function boot()
+    public function company()
     {
-        parent::boot();
-
-        static::creating(function ($model) {
-            if (empty($model->emp_id)) {
-                $model->emp_id = $model->generateEmpId();
-            }
-        });
+        return $this->belongsTo(CompanyDetails::class, 'company_id', 'company_id');
     }
+    // protected $guarded = ['emp_id']; // Make sure 'emp_id' is not mass assignable
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::creating(function ($model) {
+    //         if (empty($model->emp_id)) {
+    //             $model->emp_id = $model->generateEmpId();
+    //         }
+    //     });
+    // }
 
     // private function generateEmpId()
     // {
@@ -90,24 +93,24 @@ class EmpDetails extends Model
 
 
 
-    private function generateEmpId()
-{
-    // Find the maximum emp_id for the given company_name
-    $maxEmpId = self::where('company_name', $this->company_name)->max('emp_id');
+//     private function generateEmpId()
+// {
+//     // Find the maximum emp_id for the given company_name
+//     $maxEmpId = self::where('company_name', $this->company_name)->max('emp_id');
 
-    // Set the starting numeric part
-    $startNumericPart = 1001;
+//     // Set the starting numeric part
+//     $startNumericPart = 1001;
 
-    // Extract the numeric part of the max emp_id, increment it, and pad it with zeros
-    $numericPart = 1; // Default value if $maxEmpId is null
-    if (!is_null($maxEmpId) && is_string($maxEmpId)) {
-        $numericPart = max((int) substr($maxEmpId, 4) + 1, $startNumericPart);
-    }
-    $paddedNumericPart = str_pad($numericPart, 4, '0', STR_PAD_LEFT);
+//     // Extract the numeric part of the max emp_id, increment it, and pad it with zeros
+//     $numericPart = 1; // Default value if $maxEmpId is null
+//     if (!is_null($maxEmpId) && is_string($maxEmpId)) {
+//         $numericPart = max((int) substr($maxEmpId, 4) + 1, $startNumericPart);
+//     }
+//     $paddedNumericPart = str_pad($numericPart, 4, '0', STR_PAD_LEFT);
 
-    // Combine company_name and padded numeric part to create the new emp_id
-    return strtoupper(substr($this->company_name, 0, 3)) . '-' . $paddedNumericPart;
-}
+//     // Combine company_name and padded numeric part to create the new emp_id
+//     return strtoupper(substr($this->company_name, 0, 3)) . '-' . $paddedNumericPart;
+// }
 
 }
 
