@@ -173,11 +173,17 @@
                             @error('customer_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
 
-                        <div>
+                        <div style="margin-bottom:10px">
                             <label for="company_id" style="font-size: 12px;">Company ID:</label>
-                            <input type="text" wire:model="company_id">
+                            <select wire:model="company_id">
+                                <option value="">Select Company</option>
+                                @foreach($companies as $company)
+                                <option value="{{ $company->company_id }}">{{ $company->company_id }}</option>
+                                @endforeach
+                            </select>
                             @error('company_id') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
+
 
                         <div>
                             <label for="customer_name" style="font-size: 12px;">Customer Name:</label>
@@ -185,6 +191,11 @@
                             @error('customer_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
 
+                        <div>
+                            <label for="customer_company_name" style="font-size: 12px;">Customer Company Name:</label>
+                            <input type="text" wire:model="customer_company_name">
+                            @error('customer_company_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                        </div>
                         <div>
                             <label for="email" style="font-size: 12px;">Email:</label>
                             <input type="email" wire:model="email">
@@ -231,6 +242,7 @@
                         <th>Profile</th>
                         <th>Customer ID</th>
                         <th>Customer Name</th>
+                        <th>Customer Company Name</th>
                         <th>Company ID</th>
                         <th>Company Name</th>
                         <th>Name</th>
@@ -247,6 +259,7 @@
                         <td><img style="height: 50px;width:50px;background-color:green;border-radius:50%;border:2px solid rgb(2, 17, 79)" src="{{ asset('/storage/' . $customer->customer_profile) }}" height="50" width="50"></td>
                         <td>{{ $customer->customer_id }}</td>
                         <td>{{ $customer->customer_name }}</td>
+                        <td>{{ $customer->customer_company_name }}</td>
                         <td>{{ $customer->company_id }}</td>
                         <td>{{ $customer->company->company_name }}</td>
                         <td>{{ $customer->customer_name }}</td>
@@ -254,7 +267,7 @@
                         <td>{{ $customer->phone }}</td>
                         <td>{{ $customer->address }}</td>
                         <td>{{ $customer->notes }}</td>
-                        <td><button style="background-color: blue;color:white;border-radius:5px;border:none;margin-bottom:5px">Edit</button><button style="background-color: green;color:white;border-radius:5px;border:none">Active</button></td>
+                        <td><button wire:click="editCustomers('{{$customer->customer_id}}')" style="background-color: blue;color:white;border-radius:5px;border:none;margin-bottom:5px">Edit</button><button style="background-color: green;color:white;border-radius:5px;border:none">Active</button></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -272,7 +285,7 @@
                     <img src="{{ asset('/storage/' . $customer->customer_profile) }}" alt="Customer Profile" class="customer-profile">
                     <div class="customer-details">
                         <div style="text-align: center;"><strong>{{ $customer->customer_name }}</strong> </div>
-                        <div style="text-align: center;font-size:14px;color:#0056b3">{{ $customer->company->company_name }}</div>
+                        <div style="text-align: center;font-size:14px;color:#0056b3">{{ $customer->company->customer_company_name }}</div>
                         <div style="text-align: center;">{{ $customer->email }}</div>
                         <div style="text-align: center;">{{ $customer->phone }}</div>
                         <div style="text-align: center;">{{ $customer->address }}</div>
