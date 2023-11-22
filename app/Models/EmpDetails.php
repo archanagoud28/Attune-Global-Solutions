@@ -90,10 +90,7 @@ class EmpDetails extends Model
     //     // Combine company_name and padded numeric part to create the new emp_id
     //     return strtoupper(substr($this->company_name, 0, 3)) . '-' . $paddedNumericPart;
     // }
-    public function company()
-    {
-        return $this->belongsTo(CompanyDetails::class, 'company_id', 'company_id');
-    }
+    
 
 
 
