@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="{{asset('public/images/fav.png')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('/images/fav.png')}}">
     <title>Attune Global Solutions</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -103,7 +103,7 @@
     <div class="container-fluid">
         <div class="col-md-2">
 
-            <img src="{{asset('public/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+            <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
             <a class="menu-link" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
             <a class="menu-link" href="vendor-page"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
             <a class="menu-link" href="employee-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
