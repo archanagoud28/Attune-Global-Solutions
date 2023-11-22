@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +24,7 @@
             display: block;
             margin: auto;
         }
-
+ 
         .menu-link {
             font-size: 12px;
             color: white;
@@ -34,28 +34,28 @@
             margin-right: 15px;
             margin-left: 15px;
         }
-
+ 
         .menu-link:hover,
         .menu-link.active {
             color: orange;
         }
-
-
+ 
+ 
         .fas {
             width: 25px;
         }
-
+ 
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
         }
-
+ 
         .container-fluid {
             padding: 0;
             margin: 0;
             display: flex;
         }
-
+ 
         .col-md-2 {
             background-color: rgb(2, 17, 79);
             color: white;
@@ -65,11 +65,11 @@
             height: 100%;
             width: 17%;
         }
-
+ 
         .col-md-10 {
             margin-left: 17%;
         }
-
+ 
         .row-header {
             background-color: rgb(2, 17, 79);
             height: 50px;
@@ -82,20 +82,20 @@
             justify-content: center;
             align-items: center;
         }
-
+ 
         .row-content {
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: #fff;
             margin-top: 20px;
-
+ 
         }
-
+ 
         .overflow-auto {
             height: auto;
             overflow: auto;
         }
     </style>
 </head>
-
+ 
 <body>
     @guest
     @livewire('hr-login')
@@ -112,7 +112,7 @@
             <a class="menu-link" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a> <br>
             <a class="menu-link" href="/time-sheet-display"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
         </div>
-
+ 
         <div class="col-md-10">
             <div class="row-header d-flex justify-content-between align-items-center" style=" z-index: 1000;">
                 <h4 style="color: white; margin-left:40%" class="text-center mb-0">Vendor Bloom</h4>
@@ -126,10 +126,12 @@
             </div>
         </div>
     </div>
-
+ 
     @livewireScripts
     @endguest
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
+ 
 </html>

@@ -44,15 +44,9 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/home-page', HomePage::class)->name('home-page');
     Route::get('/contractor-page', ContractorPage::class)->name('contractor-page');
     Route::get('/vendor-page', VendorPage::class)->name('vendor-page');
-    Route::get('/emp-register', EmpRegister::class)->name('emp-register');
-    Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
-    Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
-    Route::get('/employee-page', EmployeePage::class)->name('employee-page');
-    Route::get('/home-page', HomePage::class)->name('home-page');
-    Route::get('/contractor-page', ContractorPage::class)->name('contractor-page');
-    Route::get('/vendor-page', VendorPage::class)->name('vendor-page');
     Route::get('/vendor-register', VendorRegister::class)->name('vendor-register');
     Route::get('/customers', Customers::class);
+<<<<<<< HEAD
     Route::get('/sales-or-purchase-orders', SalesOrPurchaseOrders::class);
     Route::get('/emp-register', EmpRegister::class)->name('emp-register');
     Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
@@ -66,6 +60,8 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
     Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
     Route::get('/employee-page', EmployeePage::class)->name('employee-page');
+=======
+>>>>>>> 637595e6343f6f5693bcc524fe88f97206783e36
     Route::get('/time-sheet-display', TimeSheetDisplay::class)->name('time-sheet-display');
     Route::get('/purchase-order', PurchaseOrder::class)->name('purchase-order');
 });
