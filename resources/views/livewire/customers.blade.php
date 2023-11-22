@@ -232,6 +232,84 @@
 
     <div class="modal-backdrop fade show blurred-backdrop"></div>
     @endif
+
+    @if($edit=="true")
+    <div class="modal" tabindex="-1" role="dialog" style="display: block; overflow-y: auto;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: rgb(2, 17, 79); height: 50px;">
+                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>Edit Customers Details</b></h5>
+                    <button wire:click="closeEdit" type="button" class="close" style="border:none" data-dismiss="modal" aria-label="Close">
+                        <span style="color:rgb(2, 17, 79)" aria-hidden="true" style="color: white;">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form wire:submit.prevent="updateCustomers">
+                        <div>
+                            <label for="customer_profile" style="font-size: 12px;">Customer Profile:</label>
+                            <input type="file" wire:model="customer_profile">
+                            @error('customer_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div style="margin-bottom:10px">
+                            <label for="company_id" style="font-size: 12px;">Company ID:</label>
+                            <select wire:model="company_id">
+                                <option value="">Select Company</option>
+                                @foreach($companies as $company)
+                                <option value="{{ $company->company_id }}">{{ $company->company_id }}</option>
+                                @endforeach
+                            </select>
+                            @error('company_id') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                        </div>
+
+
+                        <div>
+                            <label for="customer_name" style="font-size: 12px;">Customer Name:</label>
+                            <input type="text" wire:model="customer_name">
+                            @error('customer_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="customer_company_name" style="font-size: 12px;">Customer Company Name:</label>
+                            <input type="text" wire:model="customer_company_name">
+                            @error('customer_company_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                        </div>
+                        <div>
+                            <label for="email" style="font-size: 12px;">Email:</label>
+                            <input type="email" wire:model="email">
+                            @error('email') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="phone" style="font-size: 12px;">Phone:</label>
+                            <input type="text" wire:model="phone">
+                            @error('phone') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="address" style="font-size: 12px;">Address:</label>
+                            <textarea wire:model="address"></textarea>
+                            @error('address') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="notes" style="font-size: 12px;">Notes:</label>
+                            <textarea wire:model="notes"></textarea>
+                            @error('notes') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div style="text-align: center; justify-content: center; align-items: center; display: flex; margin-top: 10px;">
+                            <button style="margin-left: 5%; font-size: 12px;" class="btn btn-success" type="submit">Submit</button>
+                            <button class="btn btn-danger" wire:click="closeEdit" type="button" style="font-size: 12px;">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop fade show blurred-backdrop"></div>
+    @endif
     @if($viewMode === 'table')
     <!-- Render Table View -->
     <table class="table table-striped table-bordered">
@@ -254,9 +332,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($customers as $customer)
+                    @foreach ($customers as $index => $customer)
                     <tr>
-                        <td><img style="height: 50px;width:50px;background-color:green;border-radius:50%;border:2px solid rgb(2, 17, 79)" src="{{ asset('/storage/' . $customer->customer_profile) }}" height="50" width="50"></td>
+                        @if($edit=="true")
+                        <td><img style="height: 50px; width: 50px; background-color: green; border-radius: 50%; border: 2px solid rgb(2, 17, 79)" src="{{ asset('/storage/' . $customer->customer_profile) }}" height="50" width="50"></td>
                         <td>{{ $customer->customer_id }}</td>
                         <td>{{ $customer->customer_name }}</td>
                         <td>{{ $customer->customer_company_name }}</td>
@@ -267,7 +346,8 @@
                         <td>{{ $customer->phone }}</td>
                         <td>{{ $customer->address }}</td>
                         <td>{{ $customer->notes }}</td>
-                        <td><button wire:click="editCustomers('{{$customer->customer_id}}')" style="background-color: blue;color:white;border-radius:5px;border:none;margin-bottom:5px">Edit</button><button style="background-color: green;color:white;border-radius:5px;border:none">Active</button></td>
+                        <td><button wire:click="editCustomers('{{$customer->id}}')" style="background-color: blue;color:white;border-radius:5px;border:none;margin-bottom:5px">Edit</button><button style="background-color: green;color:white;border-radius:5px;border:none">Active</button></td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -280,16 +360,17 @@
     <div class="grid-container">
         <div class="container">
             <div class="customer-grid">
-                @foreach ($customers as $customer)
+                @foreach ($customers as $index => $customer)
                 <div class="customer-card">
-                    <img src="{{ asset('/storage/' . $customer->customer_profile) }}" alt="Customer Profile" class="customer-profile">
                     <div class="customer-details">
-                        <div style="text-align: center;"><strong>{{ $customer->customer_name }}</strong> </div>
-                        <div style="text-align: center;font-size:14px;color:#0056b3">{{ $customer->company->customer_company_name }}</div>
+                        <img src="{{ asset('/storage/' . $customer->customer_profile) }}" alt="Customer Profile" class="customer-profile">
+                        <div style="text-align: center;"><strong>{{ $customer->customer_name }}</strong></div>
+                        <div style="text-align: center; font-size:14px; color:#0056b3">{{ $customer->customer_company_name }}</div>
                         <div style="text-align: center;">{{ $customer->email }}</div>
                         <div style="text-align: center;">{{ $customer->phone }}</div>
                         <div style="text-align: center;">{{ $customer->address }}</div>
-                        <p style="text-align: center;margin-top:8px"> <button style="background-color: blue;color:white;border-radius:5px;border:none">Edit</button>
+                        <p style="text-align: center;margin-top:8px">
+                            <button wire:click="editCustomers('{{ $customer->id }}')" style="background-color: blue;color:white;border-radius:5px;border:none">Edit</button>
                             <button style="background-color: green;color:white;border-radius:5px;border:none">Active</button>
                         </p>
                     </div>
@@ -297,8 +378,8 @@
                 @endforeach
             </div>
         </div>
-
     </div>
+
     @endif
 
 
