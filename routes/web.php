@@ -17,7 +17,7 @@ use App\Livewire\VendorPage;
 
 use App\Livewire\PurchaseOrder;
 use App\Livewire\TimeSheetDisplay;
-
+use App\Livewire\VendorRegister;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,7 +44,7 @@ Route::get('/employee-page', EmployeePage::class)->name('employee-page');
 Route::get('/home-page', HomePage::class)->name('home-page');
 Route::get('/contractor-page', ContractorPage::class)->name('contractor-page');
 Route::get('/vendor-page', VendorPage::class)->name('vendor-page');
-
+Route::get('/vendor-register', VendorRegister::class)->name('vendor-register');
     Route::get('/customers', Customers::class);
     Route::get('/emp-register', EmpRegister::class)->name('emp-register');
     Route::get('/emp-account-details', EmpAccountDetails::class)->name('emp-account-details');
