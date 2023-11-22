@@ -13,6 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('customer_id')->unique();
             $table->string('customer_name');
+            $table->string('customer_company_name');
             $table->string('customer_profile');
             $table->string('email')->unique();
             $table->string('phone')->unique()->nullable();

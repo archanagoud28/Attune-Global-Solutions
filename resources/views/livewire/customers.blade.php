@@ -229,7 +229,8 @@
                 <thead>
                     <tr>
                         <th>Profile</th>
-                        <th>ID</th>
+                        <th>Customer ID</th>
+                        <th>Customer Name</th>
                         <th>Company ID</th>
                         <th>Company Name</th>
                         <th>Name</th>
@@ -245,6 +246,7 @@
                     <tr>
                         <td><img style="height: 50px;width:50px;background-color:green;border-radius:50%;border:2px solid rgb(2, 17, 79)" src="{{ asset('/storage/' . $customer->customer_profile) }}" height="50" width="50"></td>
                         <td>{{ $customer->customer_id }}</td>
+                        <td>{{ $customer->customer_name }}</td>
                         <td>{{ $customer->company_id }}</td>
                         <td>{{ $customer->company->company_name }}</td>
                         <td>{{ $customer->customer_name }}</td>
