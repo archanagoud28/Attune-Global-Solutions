@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('tax_id')->unique()->nullable();
             $table->string('registration_number')->unique()->nullable();
-            $table->date('contract_start_date'); // Change to date
-            $table->date('contract_end_date');   // Change to date
-            $table->decimal('contract_value', 10, 2); // Change to decimal
+            $table->date('contract_start_date')->nullable(); // Change to date
+            $table->date('contract_end_date')->nullable();   // Change to date
+            $table->decimal('contract_value', 10, 2)->nullable(); // Change to decimal
             $table->string('payment_terms')->nullable();
             $table->text('product_or_service_description')->nullable(); // Change to text
             $table->text('pricing_information')->nullable(); // Change to text
