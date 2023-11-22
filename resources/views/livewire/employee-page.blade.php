@@ -53,8 +53,9 @@
     text-align:start;
     padding:10px 15px;
 }
-h2{
+h4{
     margin-bottom:10px;
+    color:#002555;
 }
 .card-content{
     font-size:0.785rem;
@@ -107,7 +108,7 @@ h2{
         {{ $viewMode === 'table' ? 'Switch to Grid' : 'Switch to Table' }}
     </button>
 </div>
-  <h3>Employees</h3>
+  <h4>Employees List</h4>
   <div class="row">
   <div class="modal fade" id="purchaseOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -149,6 +150,12 @@ h2{
         </div>
     </div>
     <!-- tabular view -->
+    @if($employees->isEmpty())
+            <div class="container" style="border:1px solid #ccc; display:flex; flex-direction:column; width:80%;border-radius:10px;box-shadow:1px 1px 0px 0 rgba(0,0,0,0.1)">
+            <img src="https://img.freepik.com/premium-vector/add-user-concept-illustration_86047-677.jpg" alt="" style="width:400px; height:400px;">
+            <p style="color:#778899; text-align:center; font-weight:500;">No data found</p>
+            </div>
+        @else
     @if($viewMode === 'table')
     <!-- Render Table View -->
     <table class="table table-striped table-bordered">
@@ -185,6 +192,7 @@ h2{
     @else
       
     <!-- gerid view -->
+   
     @foreach ($employees as $employee)
                 <div class="col-md-3">
                     <div class="card">
@@ -209,5 +217,6 @@ h2{
         </div>
         {{ $employees->links() }}
     </div>
+    @endif
     @endif
 </div>

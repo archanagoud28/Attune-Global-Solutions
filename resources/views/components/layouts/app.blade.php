@@ -84,7 +84,7 @@
         }
  
         .row-content {
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: #fff;
             margin-top: 20px;
  
         }
@@ -116,7 +116,7 @@
         </div>
  
         <div class="col-md-10">
-            <div class="row-header d-flex justify-content-between align-items-center">
+            <div class="row-header d-flex justify-content-between align-items-center" style=" z-index: 1000;">
 
                 <h4 style="color: white; margin-left:40%" class="text-center mb-0">Vendor Bloom</h4>
                 @livewire('log-out')

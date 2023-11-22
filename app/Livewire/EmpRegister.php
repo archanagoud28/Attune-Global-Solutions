@@ -79,12 +79,23 @@ class EmpRegister extends Component
             'hire_date' => 'required|date',
             'employee_type' => 'required|string|max:255',
             'department' => 'required|string|max:255',
+            'manager_id' => 'required|string|max:255',
+            'report_to' => 'required|string|max:255',
+            'company_id' => 'required|string|max:255',
             'job_title' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
+        if ($this->image) {
+            // Check if an image is set
+            $imagePath = $this->image->store('images', 'public');
+        } else {
+            $imagePath = null;
+        }
          
          EmpDetails::create([
+           
+            'emp_id' => $this->emp_id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'date_of_birth' => $this->date_of_birth,
@@ -101,10 +112,37 @@ class EmpRegister extends Component
             'country' => $this->country,
             'hire_date' => $this->hire_date,
             'employee_type' => $this->employee_type,
+            'manager_id' => $this->manager_id,
+            'report_to' => $this->report_to,
             'department' => $this->department,
             'job_title' => $this->job_title,
-            'image' => $this->image->store('images', 'public'), // Example storage for image upload
-        ]);
+            'employee_status' => $this->employee_status,
+            'emergency_contact' => $this->emergency_contact,
+            'password' => $this->password,
+            'image' => $imagePath, // Example storage for image upload
+            'blood_group' => $this->blood_group,
+            'nationality' => $this->nationality,
+            'religion' => $this->religion,
+            'marital_status' => $this->marital_status,
+            'spouse' => $this->spouse,
+            'physically_challenge' => $this->physically_challenge,
+            'inter_emp' => $this->inter_emp,
+            'job_location' => $this->job_location,
+            'education' => $this->education,
+            'experience' => $this->experience,
+            'pan_no' => $this->pan_no,
+            'aadhar_no' => $this->aadhar_no,
+            'pf_no' => $this->pf_no,
+            'nick_name' => $this->nick_name,
+            'time_zone' => $this->time_zone,
+            'biography' => $this->biography,
+            'facebook' => $this->facebook,
+            'twitter' => $this->twitter,
+            'linked_in' => $this->linked_in,
+            'company_id' => $this->company_id,
+            'is_starred' => $this->is_starred,
+            'skill_set' => $this->skill_set,
+           ]);
 
 
         session()->flash('emp_success', 'Employee registered successfully!');
