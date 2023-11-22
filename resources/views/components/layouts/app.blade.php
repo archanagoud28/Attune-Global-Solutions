@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
             display: block;
             margin: auto;
         }
-
+ 
         .menu-link {
             font-size: 12px;
             color: white;
@@ -31,28 +31,28 @@
             margin-right: 15px;
             margin-left: 15px;
         }
-
+ 
         .menu-link:hover,
         .menu-link.active {
             color: orange;
         }
-
-
+ 
+ 
         .fas {
             width: 25px;
         }
-
+ 
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
         }
-
+ 
         .container-fluid {
             padding: 0;
             margin: 0;
             display: flex;
         }
-
+ 
         .col-md-2 {
             background-color: rgb(2, 17, 79);
             color: white;
@@ -62,11 +62,11 @@
             height: 100%;
             width: 17%;
         }
-
+ 
         .col-md-10 {
             margin-left: 17%;
         }
-
+ 
         .row-header {
             background-color: rgb(2, 17, 79);
             height: 50px;
@@ -79,56 +79,48 @@
             justify-content: center;
             align-items: center;
         }
-
+ 
         .row-content {
             background-color: rgba(0, 0, 0, 0.1);
             margin-top: 20px;
-
+ 
         }
-
+ 
         .overflow-auto {
             height: auto;
             overflow: auto;
         }
     </style>
 </head>
-
+ 
 <body>
     @guest
     @livewire('hr-login')
     @else
     <div class="container-fluid">
         <div class="col-md-2">
-
-            <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-            <a class="menu-link" href="#"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
-            <a class="menu-link" href="vendor-page"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
-            <a class="menu-link" href="employee-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
-            <a class="menu-link" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
-            <a class="menu-link" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Purchase Orders</span></a><br>
-            <a class="menu-link" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
-            <a class="menu-link" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a>
-            <a class="menu-link" href="#"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
-
-            <img src="{{ asset('/images/logonobg.png') }}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-            <a class="menu-link @if(request()->is('/')) active @endif" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
-            <a class="menu-link @if(request()->is('vendors')) active @endif" href="#"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
-            <a class="menu-link @if(request()->is('employees')) active @endif" href="/employee-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
-            <a class="menu-link @if(request()->is('contractors')) active @endif" href="#"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
+             <img src="{{ asset('/images/logonobg.png') }}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+            <a class="menu-link @if(request()->is('/')) active @endif" href="customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
+            <a class="menu-link @if(request()->is('vendors')) active @endif" href="vendor-page"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
+            <a class="menu-link @if(request()->is('employees')) active @endif" href="employee-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
+            <a class="menu-link @if(request()->is('contractors')) active @endif" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
             <a class="menu-link @if(request()->is('purchase-orders')) active @endif" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Purchase Orders</span></a><br>
             <a class="menu-link @if(request()->is('bills')) active @endif" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
             <a class="menu-link @if(request()->is('invoice')) active @endif" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a> <br>
             <a class="menu-link @if(request()->is('time-sheets')) active @endif" href="#"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
-
+ 
         </div>
-
+ 
         <div class="col-md-10">
-            <div class="row-header d-flex justify-content-between align-items-center">
-             <div style="margin-left:90%;">
-                @livewire('log-out')
+            <div class="row-header d-flex justify-content-between align-items-center" style="z-index: 1000;">
+ 
+                {{-- <h4 style="color: white;" class="text-center mb-0">Attune Global Solutions</h4> --}}
+                <div style="margin-left:88%;">
+                    @livewire('log-out')
+                </div>
+ 
             </div>
-            </div>
-
+ 
             <div class="row-content">
                 <div class="overflow-auto">
                     {{$slot}}
@@ -136,9 +128,13 @@
             </div>
         </div>
     </div>
-
+ 
     @livewireScripts
     @endguest
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
+ 
 </html>
+ 

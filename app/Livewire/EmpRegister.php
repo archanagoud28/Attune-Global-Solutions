@@ -12,7 +12,53 @@ class EmpRegister extends Component
 
     public $emp_id;
     public $first_name;
+    public $last_name;
+    public $date_of_birth;
+    public $gender;
+    public $email;
+    public $company_name;
+    public $company_email;
+    public $mobile_number;
+    public $alternate_mobile_number;
+    public $address;
+    public $city;
+    public $state;
+    public $postal_code;
+    public $country;
+    public $hire_date;
+    public $employee_type;
+    public $department;
+    public $job_title;
+    public $manager_id;
+    public $report_to;
+    public $employee_status;
+    public $emergency_contact;
+    public $password;
+    public $image;
+    public $blood_group;
+    public $nationality;
+    public $religion;
+    public $marital_status;
+    public $spouse;
+    public $physically_challenge;
+    public $inter_emp;
+    public $job_location;
+    public $education;
+    public $experience;
+    public $pan_no;
+    public $aadhar_no;
+    public $pf_no;
+    public $nick_name;
+    public $time_zone;
+    public $biography;
+    public $facebook;
+    public $twitter;
+    public $linked_in;
+    public $company_id;
+    public $is_starred;
+    public $skill_set;
 
+    
     public function register(){
         $this->validate([
             'emp_id' => 'required|unique:emp_details',
@@ -34,11 +80,10 @@ class EmpRegister extends Component
             'employee_type' => 'required|string|max:255',
             'department' => 'required|string|max:255',
             'job_title' => 'required|string|max:255',
-            // ... (other validations for remaining fields)
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Example validation for image upload
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
-         // Save the details to the database
+         
          EmpDetails::create([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -58,7 +103,6 @@ class EmpRegister extends Component
             'employee_type' => $this->employee_type,
             'department' => $this->department,
             'job_title' => $this->job_title,
-            // ... (other fields)
             'image' => $this->image->store('images', 'public'), // Example storage for image upload
         ]);
 

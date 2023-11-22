@@ -1,8 +1,9 @@
 <div>
     <style>
       .container{
-        margin-top:30px;
-        padding:0;
+        margin-top:20px;
+        padding:10px 15px;
+        background:#fcfcfc;
       }
       .calender{
         margin-top:40px;
@@ -10,10 +11,10 @@
         flex-direction:row;
         align-items:center;
         background:#fcfcfc;
-        margin-left:65%;
+        margin-left:68%;
         border:1px solid #ccc;
-        padding:10px 15px;
-        width:35%;
+        padding:5px ;
+        width:32%;
         border-radius:10px;
       }
       .main-cont{

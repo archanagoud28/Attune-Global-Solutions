@@ -37,10 +37,11 @@ h2{
         left: 0;
         font-weight:600;
         width: 100%;
+        color:#fff;
         font-size:0.785rem;
-        background-color: #e8e8e8;
+        background-color: #003767;
         text-align:center;
-        padding:5px 10px;
+        padding:15px 30px;
     }
 .btn{
     padding:2px;
@@ -94,7 +95,7 @@ h2{
       <div class="card">
         <img src="https://thumbs.dreamstime.com/b/businessman-icon-vector-male-avatar-profile-image-profile-businessman-icon-vector-male-avatar-profile-image-182095609.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px; ">
         <div class="card-body">
-          <p class="card-text"><strong>Mr. Joe Ucuzoglu</strong></p>
+          <p class="card-text">Mr. Joe Ucuzoglu</p>
          <div class="card-mid">
          <p class="card-content">Attune Global Solutions</p>
          <p class="card-content">Microsoft</p>
@@ -102,10 +103,7 @@ h2{
           <p class="card-content">Submitted CVS:<span>11</span></p>
          <p class="card-content">Shortlisted CVS:<span>08</span></p>
          </div>
-         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseOrderModal">
-         Purchase Order
-         </button>
-         <div class="pink-background" style="height: 25px;">Facebook</div>
+         <div class="pink-background" >Facebook</div>
         </div>
       </div>
     </div>
@@ -114,17 +112,15 @@ h2{
       <div class="card">
       <img src="https://static.vecteezy.com/system/resources/thumbnails/002/002/427/small/man-avatar-character-isolated-icon-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
         <div class="card-body">
-          <p class="card-text"><strong>Mr. Thierry Delaporte</strong></p>
+          <p class="card-text">Mr. Thierry Delaporte</p>
            <div class="card-mid">
            <p class="card-content">Attune Global Solutions</p>
             <p class="card-content">thierry.delaporte@ags.com</p>
             <p class="card-content">Submitted CVS:<span>11</span></p>
             <p class="card-content">Shortlisted CVS:<span>08</span></p>
            </div>
-           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseOrderModal">
-      Purchase Order
-    </button>
-         <div class="pink-background" style="height: 25px;">Delloite</div>
+
+         <div class="pink-background">Delloite</div>
         </div>
       </div>
     </div>
@@ -133,7 +129,7 @@ h2{
         <div class="card">
         <img src="https://thumbs.dreamstime.com/b/businessman-icon-vector-male-avatar-profile-image-profile-businessman-icon-vector-male-avatar-profile-image-182095609.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
           <div class="card-body">
-            <p class="card-text"><strong>Mr. Anil Kumar</strong></p>
+            <p class="card-text">Mr. Anil Kumar</p>
              <div class="card-mid">
              <p class="card-content">PayG</p>
             <p class="card-content">keki.mistry@payg.in</p>
@@ -141,7 +137,7 @@ h2{
             <p class="card-content">Shortlisted CVS:<span>08</span></p>
           </div>
 
-            <div class="pink-background" style="height: 25px;">Oracle</div>
+            <div class="pink-background" >Oracle</div>
           </div>
         </div>
       </div>
@@ -150,7 +146,7 @@ h2{
         <div class="card">
         <img src="https://static.vecteezy.com/system/resources/previews/005/026/528/non_2x/illustration-female-avatar-in-flat-style-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
         <div class="card-body">
-            <p class="card-text"><strong>Ms. Bhargavi</strong></p>
+            <p class="card-text">Ms. Bhargavi</p>
              <div class="card-mid">
              <p class="card-content">PayG</p>
             <p class="card-content">keki.mistry@payg.in</p>
@@ -158,7 +154,7 @@ h2{
             <p class="card-content">Shortlisted CVS:<span>08</span></p>
              </div>
 
-            <div class="pink-background" style="height: 25px;">Microsoft</div>
+            <div class="pink-background" >Microsoft</div>
           </div>
         </div>
       </div>

@@ -1,8 +1,9 @@
 <div><style>
 .card{
     margin-bottom:15px;
-    position: relative;
     height:400px;
+    z-index: 1; 
+    position: relative;
 }
 .card-body{
     line-height:1;
@@ -88,8 +89,8 @@ h2{
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-      <div class="card">
+    <div class="col-md-3" >
+      <div class="card" >
         <img src="https://thumbs.dreamstime.com/b/businessman-icon-vector-male-avatar-profile-image-profile-businessman-icon-vector-male-avatar-profile-image-182095609.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px; ">
         <div class="card-body">
           <p class="card-text"><strong>Mr. Joe Ucuzoglu</strong></p>

@@ -4,7 +4,49 @@
     margin-bottom:15px;
     position: relative;
     height:400px;
+    z-index: 1; 
 }
+#purchaseOrderModal {
+    z-index: 1100; /* Adjust the value as needed */
+}
+
+.table {
+            width: 100%;
+            font-size: 12px;
+            font-family: 'Roboto', sans-serif;
+            margin-bottom: 1rem;
+            color: #212529;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+            text-align: center;
+            width: 20%;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+            background-color: rgb(2, 17, 79);
+            color: white;
+        }
+
+        .table tbody+tbody {
+            border-top: 2px solid #dee2e6;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 123, 255, 0.05);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
 .card-body{
     line-height:1;
     margin:0;
@@ -46,8 +88,25 @@ h2{
     width:100px;
     font-size:0.825rem;
 }
+.add-emp{
+    background:#002555;
+    border:none;
+    color:white;
+    font-size:0.895rem;
+    padding:5px 10px;
+    margin-right:10px;
+    border-radius:7px;
+}
+#purchaseOrderModal {
+    z-index: 1100; /* Adjust the value as needed */
+}
 </style>
     <div class="container" style="padding: 10px 15px; margin: 30px auto;background:#fff;">
+    <div style="display:flex;justify-content:end; "><button class="add-emp"><a style="text-decoration:none; outline:none;color:white;" href="{{route('emp-register')}}">Add Employee</a></button>
+    <button class="add-emp"wire:click="toggleView">
+        {{ $viewMode === 'table' ? 'Switch to Grid' : 'Switch to Table' }}
+    </button>
+</div>
   <h3>Employees</h3>
   <div class="row">
   <div class="modal fade" id="purchaseOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -89,127 +148,66 @@ h2{
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-      <div class="card">
-        <img src="https://thumbs.dreamstime.com/b/businessman-icon-vector-male-avatar-profile-image-profile-businessman-icon-vector-male-avatar-profile-image-182095609.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px; ">
-        <div class="card-body">
-          <p class="card-text"><strong>Mr. Joe Ucuzoglu</strong></p>
-         <div class="card-mid">
-         <p class="card-content">Attune Global Solutions</p>
-         <p class="card-content">Microsoft</p>
-          <p class="card-content">joe.ucuzoglu@ags.com</p>
-          <p class="card-content">Join Date: <span>11 Nov, 2023</span></p>
-         <p class="card-content">End Date: <span>11 Dec, 2023</span></p>
-         </div>
-         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseOrderModal">
-         Purchase Order
-         </button>
-         <div class="pink-background" style="height: 25px;">UI Developer</div>
+    <!-- tabular view -->
+    @if($viewMode === 'table')
+    <!-- Render Table View -->
+    <table class="table table-striped table-bordered">
+        <div class="container">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Profile</th>
+                        <th>ID</th>
+                        <th>Company ID</th>
+                        <th>Company Name</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Skill set</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($employees as $customer)
+                    <tr>
+                        <td><img style="height: 50px;width:50px" src="{{ asset('storage/' . $customer->customer_profile) }}" height="50" width="50"></td>
+                        <td>{{ $customer->emp_id }}</td>
+                        <td>{{ $customer->company_id }}</td>
+                        <td>{{ $customer->company_name }}</td>
+                        <td>{{ $customer->first_name }} {{ $customer->last_name }}</td>
+                        <td>{{ $customer->email }}</td>
+                        <td>{{ $customer->phone }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <!-- resources/views/livewire/customer-form.blade.php -->
         </div>
-      </div>
+    </table>
+    @else
+      
+    <!-- gerid view -->
+    @foreach ($employees as $employee)
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="{{ $employee->image }}" class="card-img-top" 
+                            style="width:150px;height:150px; ">
+                        <div class="card-body">
+                            <p class="card-text"><strong>Mr. {{ $employee->first_name }} {{ $employee->last_name}}</strong></p>
+                            <div class="card-mid">
+                                <p class="card-content">{{ $employee->company_name }}</p>
+                                <p class="card-content">{{ $employee->email }}</p>
+                                <p class="card-content">Join Date: <span>{{ $employee->join_date }}</span></p>
+                                <p class="card-content">End Date: <span>{{ $employee->end_date }}</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseOrderModal">
+                                Purchase Order
+                            </button>
+                            <div class="pink-background" style="height: 25px;">{{ $employee->role }}</div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        {{ $employees->links() }}
     </div>
-   
-    <div class="col-md-3">
-      <div class="card">
-      <img src="https://static.vecteezy.com/system/resources/thumbnails/002/002/427/small/man-avatar-character-isolated-icon-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-        <div class="card-body">
-          <p class="card-text"><strong>Mr. Thierry Delaporte</strong></p>
-           <div class="card-mid">
-           <p class="card-content">Attune Global Solutions</p>
-            <p class="card-content">thierry.delaporte@ags.com</p>
-            <p class="card-content">Join Date: <span>15 Nov, 2023</span></p>
-           <p class="card-content">End Date:  <span>25 Dec, 2023</span></p>
-           </div>
-           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseOrderModal">
-      Purchase Order
-    </button>
-         <div class="pink-background" style="height: 25px;"> Full Stock Developer</div>
-        </div>
-      </div>
-    </div>
-   
-    <div class="col-md-3">
-        <div class="card">
-        <img src="https://thumbs.dreamstime.com/b/businessman-icon-vector-male-avatar-profile-image-profile-businessman-icon-vector-male-avatar-profile-image-182095609.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-          <div class="card-body">
-            <p class="card-text"><strong>Mr. Anil Kumar</strong></p>
-             <div class="card-mid">
-             <p class="card-content">PayG</p>
-            <p class="card-content">keki.mistry@payg.in</p>
-            <p class="card-content">Present:  <span class="bench" style="font-weight:600;">On Bench</span></p>
-             </div>
-           
-            <div class="pink-background" style="height: 25px;">PHP Developer</div>
-          </div>
-        </div>
-      </div>
-   
-      <div class="col-md-3">
-        <div class="card">
-        <img src="https://static.vecteezy.com/system/resources/previews/005/026/528/non_2x/illustration-female-avatar-in-flat-style-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-        <div class="card-body">
-            <p class="card-text"><strong>Ms. Bhargavi</strong></p>
-             <div class="card-mid">
-             <p class="card-content">PayG</p>
-            <p class="card-content">keki.mistry@payg.in</p>
-            <p class="card-content">Present:  <span class="bench" style="font-weight:600;">On Bench</span></p>
-             </div>
-           
-            <div class="pink-background" style="height: 25px;">Angular Developer</div>
-          </div>
-        </div>
-      </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
-      <div class="card">
-      <img src="https://static.vecteezy.com/system/resources/thumbnails/001/993/889/small/beautiful-latin-woman-avatar-character-icon-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-      <div class="card-body">
-            <p class="card-text"><strong>Ms. Keki Mistry</strong></p>
-              <div class="card-mid">
-              <p class="card-content">Attune Global Solutions</p>
-              <p class="card-content">keki.mistry@ags.com</p>
-               <p class="card-content">Present:  <span class="bench" style="font-weight:600;">On Bench</span></p>
-              </div>
-           
-            <div class="pink-background" style="height: 25px;">Backend Developer</div>
-          </div>
-      </div>
-    </div>
-   
-    <div class="col-md-3">
-      <div class="card">
-      <img src="https://static.vecteezy.com/system/resources/thumbnails/002/002/332/small/ablack-man-avatar-character-isolated-icon-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-      <div class="card-body">
-            <p class="card-text"><strong>Mr. Jagadish Kumar</strong></p>
-             <div class="card-mid">
-             <p class="card-content">Attune Global Solutions</p>
-            <p class="card-content">keki.mistry@payg.in</p>
-            <p class="card-content">Present:  <span class="bench" style="font-weight:600;">On Bench</span></p>
-             </div>
-           
-            <div class="pink-background" style="height: 25px;">Frontend Developer</div>
-          </div>
-      </div>
-    </div>
-
-   
-      <div class="col-md-3">
-        <div class="card">
-        <img src="https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-        <div class="card-body">
-            <p class="card-text"><strong>Mr. Nithin Mistry</strong></p>
-              <div class="card-mid">
-              <p class="card-content">Attune Global Solutions</p>
-            <p class="card-content">keki.mistry@ags.in</p>
-            <p class="card-content">Present:  <span class="bench" style="font-weight:600;">On Bench</span></p>
-              </div>
-           
-            <div class="pink-background" style="height: 25px;">UI/UX Developer</div>
-          </div>
-        </div>
-      </div>
-  </div>
-</div>
-
+    @endif
 </div>
