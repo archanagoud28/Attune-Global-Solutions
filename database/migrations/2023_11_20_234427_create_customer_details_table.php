@@ -28,20 +28,24 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        $triggerSQL = <<<SQL
-        CREATE TRIGGER generate_customer_id BEFORE INSERT ON customer_details FOR EACH ROW
-        BEGIN
-            DECLARE max_id INT;
 
+        $triggerSQL = <<<SQL
+    CREATE TRIGGER generate_customer_id BEFORE INSERT ON customer_details FOR EACH ROW
+    BEGIN
+        -- Check if customer_id is NULL
+        IF NEW.customer_id IS NULL THEN
             -- Find the maximum customer_id value in the customer_details table
-            SELECT IFNULL(MAX(CAST(SUBSTRING(customer_id, 5) AS UNSIGNED)) + 1, 1) INTO max_id FROM customer_details;
+            SET @max_id := IFNULL((SELECT MAX(CAST(SUBSTRING(customer_id, 3) AS UNSIGNED)) + 1 FROM customer_details), 100000);
 
             -- Increment the max_id and assign it to the new customer_id
-            SET NEW.customer_id = CONCAT("CUST", LPAD(max_id, 4, "0"));
-        END;
-        SQL;
+            SET NEW.customer_id = CONCAT('33', LPAD(@max_id, 6, '0'));
+        END IF;
+    END;
+SQL;
 
-        DB::unprepared($triggerSQL);
+DB::unprepared($triggerSQL);
+
+
     }
 
     /**
