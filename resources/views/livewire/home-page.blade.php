@@ -76,7 +76,7 @@
         width:50px;
       }
     </style>
-
+ 
     <div class="container">
     <div class="calender">
     <i class="fas fa-calendar-alt"></i>
@@ -84,24 +84,24 @@
             <?= date('l, F j, Y H:i:s'); ?>
         </time>
     </div>
-
+ 
     <script>
         const currentTimeElement = document.getElementById('current-time');
         const eventSource = new EventSource('time.php');
-
+ 
         eventSource.onmessage = function(event) {
             currentTimeElement.innerHTML = event.data;
         };
-
+ 
         eventSource.onerror = function(error) {
             console.error('EventSource failed:', error);
             eventSource.close();
         };
     </script>
-
+ 
     <!-- row containers -->
     <div class="view-container">
-         <div class="col-md-3">
+         <div style="padding: 5px;" class="col-md-3">
             <div class="view">
                 <h6>Customers</h6>
                 <div class="vendor-icon">
@@ -110,7 +110,7 @@
               </div>
             </div>
          </div>
-         <div class="col-md-3">
+         <div style="padding: 5px;" class="col-md-3">
             <div class="view">
                 <h6>Vendors</h6>
                 <div class="vendor-icon">
@@ -119,7 +119,7 @@
               </div>
             </div>
          </div>
-         <div class="col-md-3">
+         <div style="padding: 5px;" class="col-md-3">
             <div class="view">
                <h6>Employees</h6>
                <div class="vendor-icon">
@@ -128,7 +128,7 @@
               </div>
             </div>
          </div>
-         <div class="col-md-3">
+         <div style="padding: 5px;" class="col-md-3">
             <div class="view">
                 <h6>Contractors</h6>
                 <div class="vendor-icon">

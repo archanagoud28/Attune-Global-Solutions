@@ -13,7 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customer_details', function (Blueprint $table) {
-            $table->string('customer_id')->primary();
+            $table->id(); // Use the default auto-incremented ID column
+            $table->string('customer_id')->unique(); // Unique customer_id
             $table->string('customer_name');
             $table->string('customer_profile');
             $table->string('email')->unique();
@@ -22,14 +23,29 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->string('company_id');
             $table->foreign('company_id')
-                ->references('company_id') // Assuming the primary key of the companies table is 'id'
+                ->references('company_id')
                 ->on('company_details')
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
             $table->timestamps();
         });
-    }
 
+        // Create a trigger to automatically generate unique customer_id
+        $triggerSQL = <<<SQL
+        CREATE TRIGGER generate_customer_id BEFORE INSERT ON customer_details FOR EACH ROW
+        BEGIN
+            DECLARE max_id INT;
+
+            -- Find the maximum customer_id value in the customer_details table
+            SELECT IFNULL(MAX(CAST(SUBSTRING(customer_id, 5) AS UNSIGNED)) + 1, 1) INTO max_id FROM customer_details;
+
+            -- Increment the max_id and assign it to the new customer_id
+            SET NEW.customer_id = CONCAT("CUST", LPAD(max_id, 4, "0"));
+        END;
+        SQL;
+
+        DB::unprepared($triggerSQL);
+    }
 
     /**
      * Reverse the migrations.
