@@ -1,4 +1,4 @@
-
+ 
 <div>
 <style>
 .card{
@@ -24,13 +24,13 @@ h2{
     height:130px;
     margin-bottom:7px;
 }
-
+ 
 .card-content span{
     font-size:0.725rem;
     color:black;
     font-weight:500;
 }
-
+ 
     .pink-background {
         position: absolute;
         bottom: 0;
@@ -68,7 +68,7 @@ h2{
                                 <p><strong>Company Name:</strong> Microsoft</p>
                             </div>
                             <div class="col-md-6">
-
+ 
                                 <p><strong>Employee Name:</strong> John Doe</p>
                             </div>
                         </div>
@@ -107,7 +107,7 @@ h2{
         </div>
       </div>
     </div>
-
+ 
     <div class="col-md-3">
       <div class="card">
       <img src="https://static.vecteezy.com/system/resources/thumbnails/002/002/427/small/man-avatar-character-isolated-icon-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
@@ -119,12 +119,12 @@ h2{
             <p class="card-content">Submitted CVS:<span>11</span></p>
             <p class="card-content">Shortlisted CVS:<span>08</span></p>
            </div>
-
+ 
          <div class="pink-background">Delloite</div>
         </div>
       </div>
     </div>
-
+ 
     <div class="col-md-3">
         <div class="card">
         <img src="https://thumbs.dreamstime.com/b/businessman-icon-vector-male-avatar-profile-image-profile-businessman-icon-vector-male-avatar-profile-image-182095609.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
@@ -136,12 +136,12 @@ h2{
             <p class="card-content">Submitted CVS:<span>11</span></p>
             <p class="card-content">Shortlisted CVS:<span>08</span></p>
           </div>
-
+ 
             <div class="pink-background" >Oracle</div>
           </div>
         </div>
       </div>
-
+ 
       <div class="col-md-3">
         <div class="card">
         <img src="https://static.vecteezy.com/system/resources/previews/005/026/528/non_2x/illustration-female-avatar-in-flat-style-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
@@ -153,7 +153,7 @@ h2{
             <p class="card-content">Submitted CVS:<span>11</span></p>
             <p class="card-content">Shortlisted CVS:<span>08</span></p>
              </div>
-
+ 
             <div class="pink-background" >Microsoft</div>
           </div>
         </div>
@@ -161,5 +161,6 @@ h2{
   </div>
   </div>
 </div>
-
+ 
 </div>
+ 

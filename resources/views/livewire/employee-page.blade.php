@@ -73,15 +73,15 @@ h2{
 }
 
     .pink-background {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        font-weight:600;
-        width: 100%;
-        font-size:0.785rem;
-        background-color: #e8e8e8;
-        text-align:center;
-        padding:5px 10px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-weight: 600;
+      width: 100%;
+      font-size: 0.785rem;
+      background-color: #e8e8e8;
+      text-align: center;
+      padding: 5px 10px;
     }
 .btn{
     padding:2px;
@@ -111,41 +111,41 @@ h2{
   <div class="row">
   <div class="modal fade" id="purchaseOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Purchase Order</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p><strong>Company Name:</strong> Microsoft</p>
-                            </div>
-                            <div class="col-md-6">
-                                 
-                                <p><strong>Employee Name:</strong> John Doe</p>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <h4>Engagement Details:</h4>
-                                <p><strong>Engagement End Date:</strong>  1 month from the order</p>
-                                <p><strong>Nature of Job:</strong>  UI Developer</p>
-                                <p><strong>Number of Hours per Week:</strong>  12hrs</p>
-                                <p><strong>Basic Salary per Week:</strong>  7,000</p>
-                                <p><strong>Time Sheet Cycle:</strong>   15 days</p>
-                                <!-- You can add more details and customize the layout as needed -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"> Purchase Order</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p><strong>Company Name:</strong> Microsoft</p>
+                  </div>
+                  <div class="col-md-6">
+
+                    <p><strong>Employee Name:</strong> John Doe</p>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-md-12">
+                    <h4>Engagement Details:</h4>
+                    <p><strong>Engagement End Date:</strong> 1 month from the order</p>
+                    <p><strong>Nature of Job:</strong> UI Developer</p>
+                    <p><strong>Number of Hours per Week:</strong> 12hrs</p>
+                    <p><strong>Basic Salary per Week:</strong> 7,000</p>
+                    <p><strong>Time Sheet Cycle:</strong> 15 days</p>
+                    <!-- You can add more details and customize the layout as needed -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
     </div>
     <!-- tabular view -->

@@ -10,6 +10,7 @@ class Customers extends Component
 {
     use WithFileUploads;
     public $customers;
+    public $company_name;
     public $show = false;
 
     public  $customer_profile, $company_id, $customer_name, $email, $phone, $address, $notes;

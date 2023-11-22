@@ -7,15 +7,13 @@ use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('customer_details', function (Blueprint $table) {
-            $table->id(); // Use the default auto-incremented ID column
-            $table->string('customer_id')->unique(); // Unique customer_id
+            $table->id();
+            $table->string('customer_id')->unique();
             $table->string('customer_name');
+            $table->string('customer_company_name');
             $table->string('customer_profile');
             $table->string('email')->unique();
             $table->string('phone')->unique()->nullable();
@@ -30,7 +28,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Create a trigger to automatically generate unique customer_id
         $triggerSQL = <<<SQL
         CREATE TRIGGER generate_customer_id BEFORE INSERT ON customer_details FOR EACH ROW
         BEGIN
