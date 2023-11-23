@@ -6,6 +6,7 @@ use App\Models\CompanyDetails;
 use App\Models\CustomerDetails;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Auth;
 
 class Customers extends Component
 {
@@ -15,6 +16,35 @@ class Customers extends Component
     public $show = false;
 
     public  $customer_profile, $company_id, $customer_name, $email, $phone, $address, $notes, $customer_company_name;
+
+    public $selectedCustomer;
+    public function selectCustomer($customerId)
+    {
+        $this->selectedCustomer = CustomerDetails::where('customer_id', $customerId)->first();
+    }
+
+    public $filteredPeoples;
+    public $peopleFound;
+
+    public $searchTerm;
+    public function filter()
+    {
+        // Trim the search term to remove leading and trailing spaces
+        $trimmedSearchTerm = trim($this->searchTerm);
+
+        // Use Eloquent to filter records based on the search term
+        $this->filteredPeoples = CustomerDetails::where(function ($query) use ($trimmedSearchTerm) {
+            $query->where('customer_company_name', 'LIKE', '%' . $trimmedSearchTerm . '%')
+                ->orWhere('customer_id', 'LIKE', '%' . $trimmedSearchTerm . '%')
+                ->orWhere('customer_name', 'LIKE', '%' . $trimmedSearchTerm . '%')
+                ->orWhere('status', 'LIKE', '%' . $trimmedSearchTerm . '%');
+        })
+            ->get();
+
+        // Check if any records were found
+        $this->peopleFound = count($this->filteredPeoples) > 0;
+    }
+
 
     public function open()
     {
@@ -39,7 +69,7 @@ class Customers extends Component
         ]);
         $customerProfilePath = $this->customer_profile->store('customer_profiles', 'public');
         CustomerDetails::create([
-            'customer_profile' => $customerProfilePath,
+            'customer_company_logo' => $customerProfilePath,
             'company_id' => $this->company_id,
             'customer_name' => $this->customer_name,
             'customer_company_name' => $this->customer_company_name,
@@ -62,7 +92,7 @@ class Customers extends Component
         $this->selected_customer = CustomerDetails::find($customerId);
 
         // Assign values to Livewire properties
-        $this->customer_profile = $this->selected_customer->customer_profile;
+        $this->customer_profile = $this->selected_customer->customer_company_logo;
         $this->company_id = $this->selected_customer->company_id;
         $this->customer_name = $this->selected_customer->customer_name;
         $this->customer_company_name = $this->selected_customer->customer_company_name;
@@ -79,7 +109,6 @@ class Customers extends Component
     public function updateCustomers()
     {
         $this->validate([
-            'customer_profile' => 'required',
             'company_id' => 'required',
             'customer_name' => 'required',
             'email' => 'required',
@@ -88,17 +117,14 @@ class Customers extends Component
             'notes' => 'required',
             'customer_company_name' => 'required'
         ]);
-        // Find the customer by ID
         $customer = CustomerDetails::find($this->selectedCustomerId);
 
-        // Check if a new customer profile image is provided
-        if ($this->customer_profile) {
-            // Store the new customer profile image and update the path
+        if ($this->customer_profile instanceof \Illuminate\Http\UploadedFile) {
             $customerProfilePath = $this->customer_profile->store('customer_profiles', 'public');
-            $customer->update(['customer_profile' => $customerProfilePath]);
+            $customer->update(['customer_company_logo' => $customerProfilePath]);
         }
 
-        // Update other fields
+
         $customer->update([
             'company_id' => $this->company_id,
             'customer_name' => $this->customer_name,
@@ -117,21 +143,17 @@ class Customers extends Component
     {
         $customer = CustomerDetails::find($customerId);
 
-        $customer->status = $customer->status == 1 ? 0 : 1;
+        $customer->status = $customer->status == 'active' ? 'inactive' : 'active';
         $customer->save();
     }
 
-    public $viewMode;
-    public function toggleView()
-    {
-        $this->viewMode = ($this->viewMode === 'table') ? 'grid' : 'table';
-    }
+    public $allCustomers;
     public $companies;
     public function render()
     {
         $this->companies = CompanyDetails::all();
         $this->customers = CustomerDetails::with('company')->orderBy('created_at', 'desc')->get();
-
+        $this->allCustomers = $this->filteredPeoples ?: $this->customers;
         return view('livewire.customers');
     }
 }

@@ -1,6 +1,47 @@
-<div>
+<div style="padding:20px">
     <!-- Add this to your HTML file -->
     <style>
+        .customer-image {
+            border-radius: 2;
+            height: 100px;
+            width: 300px;
+            border: 1px solid black;
+            margin-top: 10px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 12px;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .container {
+            margin: 0 auto;
+            max-width: 100%;
+            margin-top: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        .profile-image,
+        .people-image,
+        .customer-profile {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5%;
+            border: 1px solid black;
+
+        }
+
+        .username {
+            font-size: 12px;
+            color: white;
+        }
+
         .modal {
             display: block;
             overflow-y: auto;
@@ -47,11 +88,9 @@
             font-size: 12px;
         }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            font-size: 12px;
-            background-color: #f8f9fa;
-            color: #343a40;
+        .row {
+            margin-right: 0;
+            margin-left: 0;
         }
 
         .customer-grid {
@@ -70,25 +109,8 @@
             transition: transform 0.3s ease-in-out;
         }
 
-
-
-        .customer-profile {
-            width: 120px;
-            height: 120px;
-            max-height: 120px;
-            max-width: 120px;
-            background-color: green;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid rgb(2, 17, 79);
-        }
-
         .customer-details {
             margin-top: 15px;
-        }
-
-        .container {
-            margin-top: 30px;
         }
 
         .table {
@@ -144,9 +166,6 @@
 
     <p style="margin-top: 50px;text-align:end;margin-right:25px">
         <button wire:click="open" class="button">ADD Customers</button>
-        <button wire:click="toggleView" style="padding:3px;background-color: blue;border-radius:5px;color:#fff;border:none">
-            {{ $viewMode === 'table' ? 'Switch to Grid' : 'Switch to Table' }}
-        </button>
     </p>
 
 
@@ -168,7 +187,7 @@
                 <div class="modal-body">
                     <form wire:submit.prevent="addCustomers">
                         <div>
-                            <label for="customer_profile" style="font-size: 12px;">Customer Profile:</label>
+                            <label for="customer_profile" style="font-size: 12px;">Customer Company Logo:</label>
                             <input type="file" wire:model="customer_profile">
                             @error('customer_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
@@ -246,9 +265,8 @@
                 <div class="modal-body">
                     <form wire:submit.prevent="updateCustomers">
                         <div>
-                            <label for="customer_profile" style="font-size: 12px;">Customer Profile:</label>
+                            <label for="customer_profile" style="font-size: 12px;">Customer Company Logo:</label>
                             <input type="file" wire:model="customer_profile">
-                            @error('customer_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
 
                         <div style="margin-bottom:10px">
@@ -310,89 +328,158 @@
 
     <div class="modal-backdrop fade show blurred-backdrop"></div>
     @endif
-    @if($viewMode == 'table')
-    <!-- Render Table View -->
-    <table class="table table-striped table-bordered">
-        <div class="container">
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Profile</th>
-                        <th>Customer ID</th>
-                        <th>Customer Name</th>
-                        <th>Customer Company Name</th>
-                        <th>Company ID</th>
-                        <th>Company Name</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Notes</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($customers as $index => $customer)
-                    <tr>
-                        <td><img style="height: 50px; width: 50px; background-color: green; border-radius: 50%; border: 2px solid rgb(2, 17, 79)" src="{{ asset('/storage/' . $customer->customer_profile) }}" ></td>
-                        <td>{{ $customer->customer_id }}</td>
-                        <td>{{ $customer->customer_name }}</td>
-                        <td>{{ $customer->customer_company_name }}</td>
-                        <td>{{ $customer->company_id }}</td>
-                        <td>{{ $customer->company->company_name }}</td>
-                        <td>{{ $customer->customer_name }}</td>
-                        <td>{{ $customer->email }}</td>
-                        <td>{{ $customer->phone }}</td>
-                        <td>{{ $customer->address }}</td>
-                        <td>{{ $customer->notes }}</td>
-                        <td>
-                            @if($customer->status==1)
-                            <button wire:click="editCustomers('{{$customer->id}}')" style="background-color: blue;color:white;border-radius:5px;border:none;margin-bottom:5px">Edit</button>
-                            <button wire:click="updateStatus('{{$customer->id}}')" style="background-color: green;color:white;border-radius:5px;border:none">Active</button>
-                            @else
-                            <button  style="background-color: lightblue;color:white;border-radius:5px;border:none;margin-bottom:5px" disabled>Edit</button>
-                            <button wire:click="updateStatus('{{$customer->id}}')" style="background-color: red;color:white;border-radius:5px;border:none">Inactive</button>
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <!-- resources/views/livewire/customer-form.blade.php -->
-        </div>
-    </table>
-    @else
-    <!-- Render Grid View -->
-    <div class="grid-container">
-        <div class="container">
-            <div class="customer-grid">
-                @foreach ($customers as $index => $customer)
-                <div class="customer-card">
-                    <div class="customer-details">
-                        <img src="{{ asset('/storage/' . $customer->customer_profile) }}" alt="Customer Profile" class="customer-profile">
-                        <div style="text-align: center;"><strong>{{ $customer->customer_name }}</strong></div>
-                        <div style="text-align: center; font-size:14px; color:#0056b3">{{ $customer->customer_company_name }}</div>
-                        <div style="text-align: center;">{{ $customer->email }}</div>
-                        <div style="text-align: center;">{{ $customer->phone }}</div>
-                        <div style="text-align: center;">{{ $customer->address }}</div>
-                        <p style="text-align: center;margin-top:8px">
-                           @if($customer->status==1)
-                           <button wire:click="editCustomers('{{ $customer->id }}')" style="background-color: blue;color:white;border-radius:5px;border:none">Edit</button>
-                           <button wire:click="updateStatus('{{$customer->id}}')" style="background-color: green;color:white;border-radius:5px;border:none">Active</button>
-                           @else
-                           <button style="background-color: lightblue;color:white;border-radius:5px;border:none" disabled>Edit</button>
-                           <button wire:click="updateStatus('{{$customer->id}}')" style="background-color: red;color:white;border-radius:5px;border:none">Inactive</button>
-                           @endif
-                        </p>
+
+
+    <!-- Everyone tab content -->
+    <div class="row" style="margin-top: 15px; width: 100%;">
+        <div class="col" style="width: 150px; background-color: rgb(2, 17, 79); border-radius: 5px; height: auto; margin-right: 20px; padding: 5px;">
+            <div class="container" style="margin-top: 15px">
+                <div class="row">
+                    <div class="col" style="margin: 0px; padding: 0px">
+                        <div class="input-group">
+                            <input wire:model="searchTerm" style="font-size: 10px; cursor: pointer; border-radius: 5px 0 0 5px;" type="text" class="form-control" placeholder="Search for Company Name or ID" aria-label="Search" aria-describedby="basic-addon1">
+                            <div class="input-group-append">
+                                <button wire:click="filter" style="height: 30px; border-radius: 0 5px 5px 0; background-color: #007BFF; color: #fff; border: none;" class="btn" type="button">
+                                    <i style="text-align: center;" class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="font-size: 13px;">
+                @if ($allCustomers->isEmpty())
+                <div class="container" style="text-align: center; color: gray;">No People Found</div>
+                @else
+                @foreach($allCustomers as $customer)
+                <div wire:click="selectCustomer('{{ $customer->customer_id }}')" class="container" style="height:auto;cursor: pointer; background-color: {{ $selectedCustomer && $selectedCustomer->customer_id == $customer->customer_id ? '#ccc' : 'white' }}; width: 500px; border-radius: 5px;padding:3px">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <img style="border-radius: 0%" class="profile-image" src="{{ asset('/storage/' . $customer->customer_company_logo) }}" alt="Profile Image">
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="username" style="font-size: 8px; color: black;">{{ $customer->customer_company_name }}</h6>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="username" style="font-size: 8px; color: black;">{{ $customer->customer_name }}</h6>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="mb-0" style=" color: black;font-size:8px">(#{{ $customer->customer_id }})</p>
+                        </div>
                     </div>
                 </div>
                 @endforeach
+                @endif
             </div>
         </div>
+
+        <!-- Details of the selected person -->
+        <div class="col-6" style="height:auto;width: 500px; background-color: #fff; border-radius: 5px;border:1px solid grey; padding: 5px">
+            @if ($selectedCustomer)
+            <div class="row" style="font-size: 13px;">
+                <div class="row">
+                    <div style="text-align: end;">
+                        @php
+                        $selectedPerson = $selectedCustomer ?? $customers->first();
+                        $isActive = $selectedPerson->status == 'active';
+                        @endphp
+                        <button class="action-button" style="background-color: {{ $isActive ? 'green' : 'green' }};border-radius:5px;border:none;color:white">ADD PO</button>
+                        <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'blue' : 'lightblue' }};border-radius:5px;border:none; color: white;">Edit</button>
+                        <button wire:click="updateStatus('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'green' : 'red' }};border-radius:5px;border:none; color: white;">{{ $isActive ? 'Active' : 'Inactive' }}</button>
+                    </div>
+                    <div class="row">
+                        <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->customer_company_logo) }}" alt="Profile Image">
+                    </div>
+                    <div class="col" style="margin-top: 50px; margin-right: 80px">
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <div style="flex: 1; margin-right: 20px;">
+                                <h2 style="font-size: 12px;"><strong>Customer Name</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($selectedPerson)->customer_name }}</p>
+
+                                <h2 style="font-size: 12px;"><strong>Customer ID</strong></h2>
+                                <p style="font-size: 12px;">(#{{ optional($selectedPerson)->customer_id }})</p>
+
+                                <h2 style="font-size: 12px;"><strong>Contact Details</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($selectedPerson)->phone }}</p>
+                                <h2 style="font-size: 12px;"><strong>Notes</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($selectedPerson)->notes }}</p>
+                            </div>
+
+                            <div style="flex: 1;">
+                                <h2 style="font-size: 12px;"><strong>Address</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($selectedPerson)->address }}</p>
+
+                                <h2 style="font-size: 12px;"><strong>Email</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($selectedPerson)->email }}</p>
+
+                                <h2 style="font-size: 12px;"><strong>Company Name</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($selectedPerson)->customer_company_name }}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            @elseif (!$customers->isEmpty())
+            <!-- Display details of the first person in the list -->
+            @php
+            $firstPerson = $customers->first();
+            $starredPerson = DB::table('customer_details')
+            ->where('customer_id', $firstPerson->customer_id)
+            ->first();
+            @endphp
+
+            <div class="row" style="font-size: 13px;">
+                <div class="row">
+                    <div style="text-align: end;">
+                        @if($firstPerson->status=='active')
+                        <button style="background-color:green ;border-radius:5px;border:none; color: white;">ADD PO</button>
+                        <button wire:click="editCustomers('{{ $firstPerson->id }}')" class="action-button" style="background-color:blue ;border-radius:5px;border:none; color: white;">Edit</button>
+                        <button wire:click="updateStatus('{{ $firstPerson->id }}')" class="action-button" style="background-color: green;border-radius:5px;border:none; color: white;">Active</button>
+                        @else
+                        <button style="background-color:green ;border-radius:5px;border:none; color: white;">ADD PO</button>
+                        <button class="action-button" style="background-color:lightblue ;border-radius:5px;border:none; color: white;" disabled>Edit</button>
+                        <button wire:click="updateStatus('{{ $firstPerson->id }}')" class="action-button" style="background-color: red;border-radius:5px;border:none; color: white;">Inactive</button>
+                        @endif
+                    </div>
+                    <div class="row">
+                        <img class="customer-image" src="{{ asset('storage/' . optional($firstPerson)->customer_company_logo) }}" alt="Profile Image">
+                    </div>
+                    <div class="col" style="margin-top: 50px; margin-right: 80px">
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <div style="flex: 1; margin-right: 20px;">
+                                <h2 style="font-size: 12px;"><strong>Customer Name</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($firstPerson)->customer_name }}</p>
+
+                                <h2 style="font-size: 12px;"><strong>Customer ID</strong></h2>
+                                <p style="font-size: 12px;">(#{{ optional($firstPerson)->customer_id }})</p>
+
+                                <h2 style="font-size: 12px;"><strong>Contact Details</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($firstPerson)->phone }}</p>
+                                <h2 style="font-size: 12px;"><strong>Notes</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($firstPerson)->notes }}</p>
+                            </div>
+
+                            <div style="flex: 1;">
+                                <h2 style="font-size: 12px;"><strong>Address</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($firstPerson)->address }}</p>
+
+                                <h2 style="font-size: 12px;"><strong>Email</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($firstPerson)->email }}</p>
+
+                                <h2 style="font-size: 12px;"><strong>Company Name</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($firstPerson)->customer_company_name }}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @endif
+
+        </div>
     </div>
-
-    @endif
-
-
-
+    <!-- End of Everyone tab content -->
 </div>
