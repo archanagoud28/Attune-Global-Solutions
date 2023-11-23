@@ -154,73 +154,7 @@
     <div style="text-align: center;" class="alert alert-success">
         {{ session('success') }}
     </div>
-    @endif
-    @if($show=="true")
-    <div class="modal" tabindex="-1" role="dialog" style="display: block; overflow-y: auto;">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: rgb(2, 17, 79); height: 50px;">
-                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>ADD Customers Details</b></h5>
-                    <button wire:click="close" type="button" class="close" style="border:none" data-dismiss="modal" aria-label="Close">
-                        <span style="color:rgb(2, 17, 79)" aria-hidden="true" style="color: white;">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form wire:submit.prevent="addCustomers">
-                        <div>
-                            <label for="customer_profile" style="font-size: 12px;">Customer Profile:</label>
-                            <input type="file" wire:model="customer_profile">
-                            @error('customer_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="company_id" style="font-size: 12px;">Company ID:</label>
-                            <input type="text" wire:model="company_id">
-                            @error('company_id') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="customer_name" style="font-size: 12px;">Customer Name:</label>
-                            <input type="text" wire:model="customer_name">
-                            @error('customer_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="email" style="font-size: 12px;">Email:</label>
-                            <input type="email" wire:model="email">
-                            @error('email') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="phone" style="font-size: 12px;">Phone:</label>
-                            <input type="text" wire:model="phone">
-                            @error('phone') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="address" style="font-size: 12px;">Address:</label>
-                            <textarea wire:model="address"></textarea>
-                            @error('address') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="notes" style="font-size: 12px;">Notes:</label>
-                            <textarea wire:model="notes"></textarea>
-                            @error('notes') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div style="text-align: center; justify-content: center; align-items: center; display: flex; margin-top: 10px;">
-                            <button style="margin-left: 5%; font-size: 12px;" class="btn btn-success" type="submit">Submit</button>
-                            <button class="btn btn-danger" wire:click="close" type="button" style="font-size: 12px;">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-backdrop fade show blurred-backdrop"></div>
-    @endif
+   
     @if($viewMode === 'table')
     <!-- Render Table View -->
     <table class="table table-striped table-bordered">
