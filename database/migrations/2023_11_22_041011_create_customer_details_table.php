@@ -17,12 +17,13 @@ return new class extends Migration
             $table->string('customer_id')->nullable()->default(null)->unique();
             $table->string('customer_name');
             $table->string('customer_company_name');
-            $table->string('customer_profile');
+            $table->string('customer_company_logo');
             $table->string('email')->unique();
             $table->string('phone')->unique()->nullable();
             $table->text('address');
             $table->text('notes')->nullable();
             $table->string('company_id');
+            $table->string('status')->default(1);
             $table->foreign('company_id')
                 ->references('company_id')
                 ->on('company_details')

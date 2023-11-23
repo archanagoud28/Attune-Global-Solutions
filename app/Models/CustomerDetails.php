@@ -12,7 +12,7 @@ class CustomerDetails extends Model
     public $incrementing = false;
     protected $fillable = [
         'customer_id',
-        'customer_profile',
+        'customer_company_logo',
         'company_id',     
         'customer_name', 
         'customer_company_name', 
@@ -20,6 +20,7 @@ class CustomerDetails extends Model
         'phone',          
         'address',         
         'notes',           
+        'status',           
     ];
     public function company()
     {
