@@ -237,6 +237,7 @@ h4{
                               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseOrderModal" >
                                 Purchase Order
                               </button>
+                             
                             </div>
                             <div class="pink-background" style="height: 25px;">{{ $employee->skill_set }}</div>
                         </div>
