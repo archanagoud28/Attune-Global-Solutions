@@ -98,44 +98,78 @@
  
 <body>
     @guest
-    @livewire('hr-login')
+        @livewire('hr-login')
     @else
-    <div class="container-fluid">
-        <div class="col-md-2">
-            <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-            <a class="menu-link" href="/"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
-            <a class="menu-link" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
-            <a class="menu-link" href="vendors"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
-            <a class="menu-link" href="employee-list-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
-            <a class="menu-link" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
-            <a class="menu-link" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Sales / Purchase Orders</span></a><br>
-            <a class="menu-link" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
-            <a class="menu-link" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a> <br>
-            <a class="menu-link" href="/time-sheet-display"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
-        </div>
+        @if(Auth::guard('hr')->check())
+        <div class="container-fluid">
+            <div class="col-md-2">
+                <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+                <a class="menu-link" href="/"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                <a class="menu-link" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
+                <a class="menu-link" href="/vendor-page"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
+                <a class="menu-link" href="employee-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
+                <a class="menu-link" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
+                <a class="menu-link" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Sales / Purchase Orders</span></a><br>
+                <a class="menu-link" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
+                <a class="menu-link" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a> <br>
+                <a class="menu-link" href="/time-sheet-display"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
+            </div></div>
+        @elseif(Auth::guard('vendor')->check())
+            <div class="container-fluid">
+                <div class="col-md-2">
+                    <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+                    <a class="menu-link" href="/vendor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                 <a class="menu-link" href="vendor-pages"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
+                </div>
+            </div>
+        @elseif(Auth::guard('customer')->check())
+            <div class="container-fluid">
+                <div class="col-md-2">
+                    <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+                    <a class="menu-link" href="/customer-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link" href="/customer-pages"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
+                </div>
+            </div>
+        @elseif(Auth::guard('contractor')->check())
+            <div class="container-fluid">
+                <div class="col-md-2">
+                    <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+                    <a class="menu-link" href="/contractor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link" href="contractor-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
+                </div>
+            </div>
+ 
+            @elseif(Auth::guard('employee')->check())
+            <div class="container-fluid">
+                <div class="col-md-2">
+                    <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+                    <a class="menu-link" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link" href="employee-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Employees</span></a><br>
+                    <a class="menu-link" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text">Time Sheets</span></a><br>
+                </div>
+            </div>
+ 
+        @endif
  
         <div class="col-md-10">
-            <div class="row-header d-flex justify-content-between align-items-center" style=" z-index: 1000;">
-                <h4 style="color: white; margin-left:43%" class="text-center mb-0">Vendor Bloom</h4>
+            <div class="row-header d-flex justify-content-between align-items-center" style="z-index: 1000;">
+                <h4 style="color: white; margin-left:40%" class="text-center mb-0">Vendor Bloom</h4>
                 @livewire('log-out')
             </div>
-
+ 
             <div class="row-content">
                 <div class="overflow-auto">
                     {{$slot}}
                 </div>
             </div>
         </div>
-    </div>
+    @endif
  
     @livewireScripts
-    @endguest
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
  
 </html>
+ 

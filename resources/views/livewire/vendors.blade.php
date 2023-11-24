@@ -26,8 +26,8 @@
         .profile-image,
         .people-image,
         .customer-profile {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             object-fit: cover;
             border-radius: 5%;
             border: 1px solid darkgrey;
@@ -81,7 +81,6 @@
             box-sizing: border-box;
             border: 1px solid #ced4da;
             border-radius: 4px;
-            margin-bottom: 15px;
             font-size: 12px;
         }
 
@@ -545,7 +544,7 @@
     </div>
     @else
     <div class="row" style="margin-top: 15px;">
-        <div class="col-md-3" style="background-color:#f2f2f2; border-radius: 5px; height: auto; padding: 5px;margin-right:20px">
+        <div class="col-md-3" style="background-color:#f2f2f2; border-radius: 5px; height: auto; padding: 5px;margin-right:20px;max-height:500px;overflow-y:auto">
             <div class="container" style="margin-top: 15px">
                 <div class="row">
                     <div class="col" style="margin: 0px; padding: 0px">
@@ -566,7 +565,7 @@
                 <div class="container" style="text-align: center; color: gray;">No Vendors Found</div>
                 @else
                 @foreach($allVendors as $vendor)
-                <div wire:click="selectVendor('{{ $vendor->vendor_id }}')" class="container" style="height:auto;cursor: pointer; background-color: {{ $selectedVendor && $selectedVendor->vendor_id == $vendor->vendor_id ? '#ccc' : 'white' }}; width: 500px; border-radius: 5px;padding:5px">
+                <div wire:click="selectVendor('{{ $vendor->vendor_id }}')" class="container" style="height:45px;cursor: pointer; background-color: {{ $selectedVendor && $selectedVendor->vendor_id == $vendor->vendor_id ? '#ccc' : 'white' }}; width: 500px; border-radius: 5px;padding:2px">
                     <div class="row align-items-center">
                         <div class="col-md-4">
                             <img style="border-radius: 50%" class="profile-image" src="{{ asset('/storage/' . $vendor->vendor_image) }}" alt="Profile Image">
@@ -591,8 +590,8 @@
                         $selectedPerson = $selectedVendor ?? $vendors->first();
                         $isActive = $selectedPerson->status == 'active';
                         @endphp
-                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD Employee</button>
-                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button>
+                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD Employee</button> -->
+                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button> -->
                         <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Invoices</button>
                         <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Time Sheets</button>
                         <button wire:click="showSoList('{{ $selectedPerson->vendor_id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79);border-radius:5px;border:none;color:white">View SO</button>
@@ -716,8 +715,8 @@
             <div class="row" style="font-size: 13px;">
                 <div class="row">
                     <div style="text-align: center; margin-top:15px">
-                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD Employee</button>
-                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button>
+                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD Employee</button> -->
+                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button> -->
                         <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Invoices</button>
                         <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Time Sheets</button>
                         <button wire:click="showSoList('{{ $firstPerson->vendor_id }}')" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">View SO</button>

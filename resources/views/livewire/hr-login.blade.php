@@ -90,9 +90,9 @@
                         </div>
                         @endif
                         <div class="form-group">
-                            <input style="font-size: 12px;" type="text" class="form-control" placeholder="HR ID" wire:model="form.hr_id" />
-                            @error('form.hr_id')
-                            <p class="pt-2 px-1 text-danger">{{ str_replace('form.hr_id', 'HR ID', $message) }}</p>
+                            <input style="font-size: 12px;" type="text" class="form-control" placeholder="ID/Email" wire:model="form.id" />
+                            @error('form.id')
+                            <p class="pt-2 px-1 text-danger">{{ str_replace('form.id', 'ID or Email', $message) }}</p>
                             @enderror
                         </div>
                         <div class="form-group" style="margin-top: 20px;">
