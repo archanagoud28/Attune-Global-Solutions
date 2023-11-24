@@ -169,7 +169,7 @@
         }
     </style>
 
-    <p style="margin-top: 50px;text-align:end;margin-right:25px">
+    <p style="margin-top: 50px;text-align:end;">
         <button wire:click="open" class="button">ADD Customers</button>
     </p>
 
@@ -478,8 +478,8 @@
     @endif
 
     <!-- Everyone tab content -->
-    <div class="row" style="margin-top: 15px; width: 100%;">
-        <div class="col" style="width: 150px; background-color:white;border:1px solid grey; border-radius: 5px; height: auto; margin-right: 20px; padding: 5px;">
+    <div class="row" style="margin-top: 15px;margin-left:50px">
+        <div class="col-md-4" style="background-color:white;border:1px solid grey; border-radius: 5px; height: auto; margin-right: 20px; padding: 5px;">
             <div class="container" style="margin-top: 15px">
                 <div class="row">
                     <div class="col" style="margin: 0px; padding: 0px">
@@ -522,7 +522,7 @@
         </div>
 
         <!-- Details of the selected person -->
-        <div class="col-6" style="height:auto;width: 500px; background-color: #fff; border-radius: 5px;border:1px solid grey; padding: 5px">
+        <div class="col-md-7" style="height:auto; background-color: #fff; border-radius: 5px;border:1px solid grey; padding: 5px">
             @if ($selectedCustomer)
             @if($poList=="true")
             <div style="text-align: end;">
