@@ -107,7 +107,7 @@
                 <a class="menu-link" href="/"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
                 <a class="menu-link" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
                 <a class="menu-link" href="/vendor-page"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
-                <a class="menu-link" href="employee-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
+                <a class="menu-link" href="/employee-list-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
                 <a class="menu-link" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
                 <a class="menu-link" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Sales / Purchase Orders</span></a><br>
                 <a class="menu-link" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
@@ -153,7 +153,7 @@
  
         <div class="col-md-10">
             <div class="row-header d-flex justify-content-between align-items-center" style="z-index: 1000;">
-                <h4 style="color: white; margin-left:40%" class="text-center mb-0">Vendor Bloom</h4>
+                <h4 style="color: white; margin-left:43%" class="text-center mb-0">Vendor Bloom</h4>
                 @livewire('log-out')
             </div>
  
