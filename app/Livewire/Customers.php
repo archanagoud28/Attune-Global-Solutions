@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\CompanyDetails;
 use App\Models\CustomerDetails;
+use App\Models\PurchaseOrder;
+use App\Models\VendorDetails;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +13,14 @@ use Illuminate\Support\Facades\Auth;
 class Customers extends Component
 {
     use WithFileUploads;
+    public $vendorId;
+    public $rate;
+    public $rateType;
+    public $endClientTimesheetRequired;
+    public $timeSheetType;
+    public $timeSheetBegins;
+    public $invoiceType;
+    public $paymentType;
     public $customers, $selected_customer;
     public $company_name;
     public $show = false;
@@ -18,6 +28,42 @@ class Customers extends Component
     public  $customer_profile, $company_id, $customer_name, $email, $phone, $address, $notes, $customer_company_name;
 
     public $selectedCustomer;
+    public $customer_id;
+    public $poList=false;
+    public $showPOLists;
+    public function showPoList($customerId){
+        $this->showPOLists=PurchaseOrder::where('customer_id',$customerId)->get();
+        $this->poList=true;
+    }
+    public function closePOList(){
+        $this->poList=false;
+    }
+    public function savePurchaseOrder()
+    {
+        $this->validate([
+            'vendorId' => 'required',
+            'rate' => 'required',
+            'rateType' => 'required',
+            'endClientTimesheetRequired' => 'required_if:endClientTimesheetRequired,true',
+            'timeSheetType' => 'required',
+            'timeSheetBegins' => 'required',
+            'invoiceType' => 'required',
+            'paymentType' => 'required',
+        ]);
+
+        PurchaseOrder::create([
+            'customer_id' => $this->customer_id,
+            'vendor_id' => $this->vendorId,
+            'rate' => $this->rate . ' ' . $this->rateType,
+            'end_client_timesheet_required' => $this->endClientTimesheetRequired,
+            'time_sheet_type' => $this->timeSheetType,
+            'time_sheet_begins' => $this->timeSheetBegins,
+            'invoice_type' => $this->invoiceType,
+            'payment_type' => $this->paymentType,
+        ]);
+        session()->flash('purchase-order', 'Purchase order submitted successfully.');
+        $this->po = false;
+    }
     public function selectCustomer($customerId)
     {
         $this->selectedCustomer = CustomerDetails::where('customer_id', $customerId)->first();
@@ -145,13 +191,27 @@ class Customers extends Component
 
         $customer->status = $customer->status == 'active' ? 'inactive' : 'active';
         $customer->save();
+        return redirect('/customers');
     }
 
     public $allCustomers;
     public $companies;
+    public $po = false;
+    public function addPO($customerId)
+    {
+        $this->po = true;
+        $this->selectedCustomer = CustomerDetails::where('customer_id', $customerId)->first();
+        $this->customer_id = $this->selectedCustomer->customer_id;
+    }
+    public function cancelPO()
+    {
+        $this->po = false;
+    }
+    public $vendors;
     public function render()
     {
         $this->companies = CompanyDetails::all();
+        $this->vendors = VendorDetails::all();
         $this->customers = CustomerDetails::with('company')->orderBy('created_at', 'desc')->get();
         $this->allCustomers = $this->filteredPeoples ?: $this->customers;
         return view('livewire.customers');
