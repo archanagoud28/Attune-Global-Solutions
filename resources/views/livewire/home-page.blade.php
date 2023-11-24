@@ -42,6 +42,15 @@
         font-weight:500;
         color:#fff;
         width:100px;
+        padding:2px;
+      }
+      .btn:hover{
+        background:#fff;
+        border:1px solid #003767;
+        font-size:0.875rem;
+        font-weight:500;
+        color:#003767;
+        width:100px;
       }
       .view-container{
         display:flex;
@@ -49,10 +58,11 @@
         margin-top:30px;
       }
       .view{
-        border:1px solid #003767;
+        border:0.09rem solid #003767;
         border-radius:7px;
-        background:#f1f8ff;
-        padding:5px 10px;
+        background:#fcfcfc;
+        position: relative;
+        padding:7px 10px;
       }
       .view h6{
         font-size:0.9rem;
@@ -67,43 +77,52 @@
       .vendor-icon{
         font-weight:600;
       }
+      .vendor-icon p{
+        font-size:0.875rem;
+        color:#002555;
+      }
       .vendors{
         background:#fff;
-        color:#003767;
-        border:1px solid #003767;
+        color:#004c8e;
+        border:1px solid #002555;
         border-radius:4px;
         font-size:0.725rem;
         font-weight:600;
         width:50px;
       }
+      
+      .pink-background {
+     position: absolute;
+    top: 0;
+    color: #fff;
+    align-items: center;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    left: 0;
+    height: 100%;
+    background-color: #003767;
+    padding: 3px;
+}
+
+
     </style>
  
     <div class="container">
-    <div class="calender">
-    <i class="fas fa-calendar-alt"></i>
-        <time id="current-time" datetime="<?= date('Y-m-d\TH:i:sP'); ?>">
-            <?= date('l, F j, Y H:i:s'); ?>
-        </time>
+    <div class="main-cont">
+        <div class="text">
+            <h6>Welcome Bandari Divya, your dashboard is ready!</h6>
+            <p>Great Job, your affiliate dashboard is ready to go!You can view profiles,vendors,customers and purchase orders.</p>
+            <button class="btn">View Profile</button>
+        </div>
+        <div class="image">
+            <img src="https://img.freepik.com/free-vector/modern-business-team-working-open-office-space_74855-5541.jpg" alt="" style="width:300px;height:200px;">
+        </div>
     </div>
- 
-    <script>
-        const currentTimeElement = document.getElementById('current-time');
-        const eventSource = new EventSource('time.php');
- 
-        eventSource.onmessage = function(event) {
-            currentTimeElement.innerHTML = event.data;
-        };
- 
-        eventSource.onerror = function(error) {
-            console.error('EventSource failed:', error);
-            eventSource.close();
-        };
-    </script>
- 
     <!-- row containers -->
     <div class="view-container">
          <div style="padding: 5px;" class="col-md-3">
             <div class="view">
+              <div class="pink-background" ></div>
                 <h6>Customers</h6>
                 <div class="vendor-icon">
                     <p>10</p>
@@ -113,6 +132,7 @@
          </div>
          <div style="padding: 5px;" class="col-md-3">
             <div class="view">
+            <div class="pink-background" ></div>
                 <h6>Vendors</h6>
                 <div class="vendor-icon">
                     <p>10</p>
@@ -123,6 +143,7 @@
          <div style="padding: 5px;" class="col-md-3">
             <div class="view">
                <h6>Employees</h6>
+               <div class="pink-background" ></div>
                <div class="vendor-icon">
                     <p>120</p>
                    <button class="vendors">View</button>
@@ -132,22 +153,13 @@
          <div style="padding: 5px;" class="col-md-3">
             <div class="view">
                 <h6>Contractors</h6>
+                <div class="pink-background" ></div>
                 <div class="vendor-icon">
                     <p>20</p>
                    <button class="vendors">View</button>
               </div>
             </div>
          </div>
-    </div>
-    <div class="main-cont">
-        <div class="text">
-            <h6>Welcome Bandari Divya, your dashboard is ready!</h6>
-            <p>Great Job, your affiliate dashboard is ready to go!You can view profiles,vendors,customers and purchase orders.</p>
-            <button class="btn ">View Profile</button>
-        </div>
-        <div class="image">
-            <img src="https://img.freepik.com/free-vector/modern-business-team-working-open-office-space_74855-5541.jpg" alt="" style="width:300px;height:200px;">
-        </div>
     </div>
 </div>
 </div>

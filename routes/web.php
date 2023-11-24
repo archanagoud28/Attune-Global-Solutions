@@ -14,7 +14,7 @@ use App\Livewire\EmployeePage;
 use App\Livewire\HomePage;
 
 use App\Livewire\VendorPage;
-
+use App\Livewire\EmployeeListPage;
 use App\Livewire\PurchaseOrder;
 use App\Livewire\SalesOrPurchaseOrders;
 use App\Livewire\TimeSheetDisplay;
@@ -88,6 +88,7 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/sales-or-purchase-orders', SalesOrPurchaseOrders::class);
     Route::get('/time-sheet-display', TimeSheetDisplay::class)->name('time-sheet-display');
     Route::get('/purchase-order', PurchaseOrder::class)->name('purchase-order');
+    Route::get('/employee-list-page', EmployeeListPage::class)->name('employee-list-page');
 });
 
 // Route::middleware(['auth:vendor'])->group(function () {

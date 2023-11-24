@@ -57,11 +57,11 @@ class EmpRegister extends Component
     public $company_id;
     public $is_starred;
     public $skill_set;
+    public $savedImage;
 
     
     public function register(){
         $this->validate([
-            'emp_id' => 'required|unique:emp_details',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'date_of_birth' => 'required|date',
@@ -86,13 +86,8 @@ class EmpRegister extends Component
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
-        if ($this->image) {
-            // Check if an image is set
-            $imagePath = $this->image->store('images', 'public');
-        } else {
-            $imagePath = null;
-        }
-         
+       $imagePath = $this->image->store('employee_image', 'public');
+       $this->savedImage = $imagePath;
          EmpDetails::create([
            
             'emp_id' => $this->emp_id,

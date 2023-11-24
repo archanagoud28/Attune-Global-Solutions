@@ -1,11 +1,41 @@
 <div>
 <style>
-.card{
-    margin-bottom:15px;
+.card {
+    margin-bottom: 15px;
     position: relative;
-    height:400px;
-    z-index: 1; 
+    height: 400px;
+    z-index: 1;
+      transition: transform 0.3s, box-shadow 0.3s ease;/* Add transition for smooth effect */
 }
+
+.card:hover {
+    transform: scale(1.02); /* Increase the size on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow on hover */
+}
+
+.card-body {
+    line-height: 1;
+    margin: 0;
+    text-align: start;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease; /* Add transition for background color */
+}
+
+.card:hover .card-body {
+    background-color: #f8f9fa; /* Change background color on hover */
+}
+
+.card-content {
+    font-size: 0.785rem;
+    font-weight: 500;
+    color: #778899;
+    transition: color 0.3s ease; /* Add transition for text color */
+}
+
+.card:hover .card-content {
+    color: #495057; /* Change text color on hover */
+}
+
 #purchaseOrderModal {
     z-index: 1100; /* Adjust the value as needed */
 }
@@ -47,21 +77,12 @@
             background-color: rgba(0, 123, 255, 0.1);
         }
 
-.card-body{
-    line-height:1;
-    margin:0;
-    text-align:start;
-    padding:10px 15px;
-}
+
 h4{
     margin-bottom:10px;
     color:#002555;
 }
-.card-content{
-    font-size:0.785rem;
-    font-weight:500;
-    color:#778899;
-}
+
 .card-mid{
     height:130px;
     margin-bottom:7px;
@@ -76,13 +97,19 @@ h4{
     .pink-background {
       position: absolute;
       bottom: 0;
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
       left: 0;
       font-weight: 600;
       width: 100%;
-      font-size: 0.785rem;
-      background-color: #e8e8e8;
+      font-size: 0.875rem;
+      background-color: #002555;
       text-align: center;
-      padding: 5px 10px;
+      padding: 15px ;
     }
 .btn{
     padding:2px;
@@ -175,13 +202,13 @@ h4{
                 <tbody>
                     @foreach ($employees as $customer)
                     <tr>
-                        <td><img style="height: 50px;width:50px" src="{{ asset('storage/' . $customer->customer_profile) }}" height="50" width="50"></td>
+                        <td><img style="height: 35px;width: 35px" src="{{ asset('storage/' . $customer->employee_image) }}" height="50" width="50"></td>
                         <td>{{ $customer->emp_id }}</td>
                         <td>{{ $customer->company_id }}</td>
                         <td>{{ $customer->company_name }}</td>
                         <td>{{ $customer->first_name }} {{ $customer->last_name }}</td>
                         <td>{{ $customer->email }}</td>
-                        <td>{{ $customer->phone }}</td>
+                        <td>{{ $customer->skill_set }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -196,20 +223,22 @@ h4{
     @foreach ($employees as $employee)
                 <div class="col-md-3">
                     <div class="card">
-                        <img src="{{ $employee->image }}" class="card-img-top" 
+                        <img src="{{ asset('/storage/' . $employee->employee_image) }}" class="card-img-top" 
                             style="width:150px;height:150px; ">
                         <div class="card-body">
                             <p class="card-text"><strong>Mr. {{ $employee->first_name }} {{ $employee->last_name}}</strong></p>
                             <div class="card-mid">
-                                <p class="card-content">{{ $employee->company_name }}</p>
-                                <p class="card-content">{{ $employee->email }}</p>
-                                <p class="card-content">Join Date: <span>{{ $employee->join_date }}</span></p>
-                                <p class="card-content">End Date: <span>{{ $employee->end_date }}</span></p>
+                                <p class="card-content"> <strong>Company :</strong> {{ $employee->company_name }}</p>
+                                <p class="card-content"> <strong>Email :</strong> {{ $employee->email }}</p>
+                                <p class="card-content"><strong>Join Date :</strong> <span> {{ $employee->join_date }}</span></p>
+                                <p class="card-content"><strong>End Date :</strong> <span> {{ $employee->end_date }}</span></p>
                             </div>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseOrderModal">
+                            <div style="display:flex;justify-content:center">
+                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseOrderModal" >
                                 Purchase Order
-                            </button>
-                            <div class="pink-background" style="height: 25px;">{{ $employee->role }}</div>
+                              </button>
+                            </div>
+                            <div class="pink-background" style="height: 25px;">{{ $employee->skill_set }}</div>
                         </div>
                     </div>
                 </div>
