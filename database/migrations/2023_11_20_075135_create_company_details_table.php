@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('contact_email')->unique();
             $table->string('contact_phone')->unique();
             $table->string('ceo_name');
+            $table->string('status')->default(1);
             $table->timestamps();
         });
 

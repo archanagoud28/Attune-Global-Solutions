@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('report_to');
             $table->enum('employee_status', ['active', 'on-leave', 'terminated']);
             $table->string('emergency_contact')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('image');
             $table->string('blood_group');
             $table->string('nationality');
@@ -60,6 +60,7 @@ return new class extends Migration
             $table->string('is_starred')->nullable();
             $table->string('skill_set')->nullable();
             $table->string('company_id');
+            $table->string('status')->default(1);
             $table->foreign('company_id')
                 ->references('company_id') // Assuming the primary key of the companies table is 'id'
                 ->on('company_details')

@@ -19,7 +19,8 @@ class CompanyDetails extends Model
         'company_logo',
         'contact_email',
         'contact_phone',
-        'ceo_name'
+        'ceo_name',
+        'status'
     ];
 
 

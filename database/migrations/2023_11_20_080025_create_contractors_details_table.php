@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('contractors_details', function (Blueprint $table) {
             $table->id();
             $table->string('contractor_id')->nullable()->default(null)->unique();
-            $table->string('client_name');
-            $table->text('client_address')->nullable();
+            $table->string('contractor_image');
+            $table->string('contractor_name');
+            $table->string('contractor_email')->unique();
+            $table->string('contractor_phone')->unique();
+            $table->text('contractor_address')->nullable();
             $table->string('it_company_name');
             $table->text('it_company_address');
             $table->date('effective_date');
@@ -33,6 +36,8 @@ return new class extends Migration
             $table->text('dispute_resolution')->nullable();
             $table->text('insurance_requirements')->nullable();
             $table->string('governing_law')->nullable();
+            $table->string('password')->nullable();
+            $table->string('status')->default(1);
             $table->string('company_id');
             $table->foreign('company_id')
                 ->references('company_id') // Assuming the primary key of the companies table is 'id'

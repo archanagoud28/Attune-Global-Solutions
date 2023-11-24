@@ -1,7 +1,7 @@
 <?php
- 
+
 return [
- 
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
@@ -12,12 +12,12 @@ return [
     | as required, but they're a perfect start for most applications.
     |
     */
- 
+
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
     ],
- 
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -34,13 +34,13 @@ return [
     | Supported: "session"
     |
     */
- 
+
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
- 
+
         'com' => [
             'driver' => 'session',
             'provider' => 'com',
@@ -49,8 +49,24 @@ return [
             'driver' => 'session',
             'provider' => 'hr',
         ],
+        'vendor' => [
+            'driver' => 'session',
+            'provider' => 'vendor',
+        ],
+        'customer' => [
+            'driver' => 'session',
+            'provider' => 'customer',
+        ],
+        'contractor' => [
+            'driver' => 'session',
+            'provider' => 'contractor',
+        ],
+        'employee' => [
+            'driver' => 'session',
+            'provider' => 'employee',
+        ],
     ],
- 
+
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -67,29 +83,50 @@ return [
     | Supported: "database", "eloquent"
     |
     */
- 
+
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
- 
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
- 
-       
+
+
             'com' => [
                 'driver' => 'eloquent',
                 'model' => App\Models\CompanyDetails::class, // Update this to your Employee model
             ],
+
             'hr' => [
                 'driver' => 'eloquent',
                 'model' => App\Models\HrDetail::class, // Update this to your Employee model
             ],
+
+            'customer' => [
+                'driver' => 'eloquent',
+                'model' => App\Models\CustomerDetails::class, // Update this to your Employee model
+            ],
+
+            'vendor' => [
+                'driver' => 'eloquent',
+                'model' => App\Models\VendorDetails::class, // Update this to your Employee model
+            ],
+
+            'contractor' => [
+                'driver' => 'eloquent',
+                'model' => App\Models\ContractorsDetails::class, // Update this to your Employee model
+            ],
+
+            'employee' => [
+                'driver' => 'eloquent',
+                'model' => App\Models\EmpDetails::class, // Update this to your Employee model
+            ],
     ],
- 
+
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords
@@ -108,7 +145,7 @@ return [
     | quickly generating a very large amount of password reset tokens.
     |
     */
- 
+
     'passwords' => [
         'users' => [
             'provider' => 'users',
@@ -116,7 +153,7 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
- 
+
         'com' => [
             'driver' => 'eloquent',
             'model' => App\Models\CompanyDetails::class,
@@ -126,7 +163,7 @@ return [
             'model' => App\Models\HrDetail::class,
         ],
     ],
- 
+
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout
@@ -137,8 +174,7 @@ return [
     | confirmation screen. By default, the timeout lasts for three hours.
     |
     */
- 
+
     'password_timeout' => 10800,
- 
+
 ];
- 
