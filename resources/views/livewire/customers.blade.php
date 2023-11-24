@@ -5,8 +5,8 @@
             border-radius: 2;
             height: 100px;
             width: 300px;
-            border: 1px solid darkgray;
             margin-top: 25px;
+            background-color: white;
         }
 
         body {
@@ -169,10 +169,12 @@
         }
     </style>
 
-    <p style="margin-top: 50px;text-align:end;">
+    <h4 style="margin-top: 50px;text-align:center;">
+        Customers
+    </h4>
+    <p style="text-align: end;">
         <button wire:click="open" class="button">ADD Customers</button>
     </p>
-
 
     @if(session()->has('success'))
     <div id="successAlert" style="text-align: center;" class="alert alert-success">
@@ -453,8 +455,8 @@
                                 <label style="font-size: 12px;" for="paymentType">Payment Type:</label>
                                 <select style="font-size: 12px;" class="form-control" id="paymentType" wire:model="paymentType">
                                     <option style="font-size: 12px;">Select Payment Type</option>
-                                    <option style="font-size: 12px;" value="credit_card">Credit Card</option>
-                                    <option style="font-size: 12px;" value="bank_transfer">Bank Transfer</option>
+                                    <option style="font-size: 12px;" value="credit card">Credit Card</option>
+                                    <option style="font-size: 12px;" value="bank transfer">Bank Transfer</option>
                                     <option style="font-size: 12px;" value="paypal">PayPal</option>
                                     <option style="font-size: 12px;" value="check">Check</option>
                                     <option style="font-size: 12px;" value="cash">Cash</option>
@@ -478,13 +480,84 @@
     @endif
 
     <!-- Everyone tab content -->
-    <div class="row" style="margin-top: 15px;margin-left:50px">
-        <div class="col-md-4" style="background-color:white;border:1px solid grey; border-radius: 5px; height: auto; margin-right: 20px; padding: 5px;overflow-y:auto;max-height:">
+    @if($poList=="true")
+    <div style="text-align: end;">
+        <button wire:click="closePOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
+    </div>
+    <!-- resources/views/livewire/purchase-order-table.blade.php -->
+
+    <div>
+        <style>
+            /* Add your custom CSS styles here */
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            th,
+            td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+                font-size: 12px;
+                /* Set font size to 12px */
+            }
+
+            th {
+                background-color: #f2f2f2;
+            }
+
+            tr:hover {
+                background-color: #f5f5f5;
+            }
+        </style>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>PO Number</th>
+                    <th>Customer ID</th>
+                    <th>Vendor ID</th>
+                    <th>Vendor Name</th>
+                    <th>Rate</th>
+                    <th>End Client Timesheet Required</th>
+                    <th>Time Sheet Type</th>
+                    <th>Time Sheet Begins</th>
+                    <th>Invoice Type</th>
+                    <th>Payment Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($showPOLists as $purchaseOrder)
+                <tr>
+                    <td>{{ $purchaseOrder->po_number }}</td>
+                    <td>{{ $purchaseOrder->customer_id }}</td>
+                    <td>{{ $purchaseOrder->vendor_id }}</td>
+                    <td>{{ $purchaseOrder->vendor->vendor_name }}</td>
+                    <td>{{ $purchaseOrder->rate }}</td>
+                    <td>{{ $purchaseOrder->end_client_timesheet_required }}</td>
+                    <td>{{ $purchaseOrder->time_sheet_type }}</td>
+                    <td>{{ $purchaseOrder->time_sheet_begins }}</td>
+                    <td>{{ $purchaseOrder->invoice_type }}</td>
+                    <td>{{ $purchaseOrder->payment_type }}</td>
+                </tr>
+                @empty
+                <div style="text-align: center; margin-top: 10px;">Purchase Orders Not Found</div>
+                @endforelse
+
+            </tbody>
+        </table>
+    </div>
+
+    @else
+    <div class="row" style="margin-top: 15px">
+        <div class="col-md-3" style="background-color:#f2f2f2;border-radius: 5px; height: auto; padding: 5px;margin-right:20px">
             <div class="container" style="margin-top: 15px">
                 <div class="row">
                     <div class="col" style="margin: 0px; padding: 0px">
                         <div class="input-group">
-                            <input wire:model="searchTerm" style="font-size: 10px; cursor: pointer; border-radius: 5px 0 0 5px;" type="text" class="form-control" placeholder="Search for Company Name or ID" aria-label="Search" aria-describedby="basic-addon1">
+                            <input wire:model="searchTerm" style="font-size: 10px; cursor: pointer; border-radius: 5px 0 0 5px;" type="text" class="form-control" placeholder="Search for customers" aria-label="Search" aria-describedby="basic-addon1">
                             <div class="input-group-append">
                                 <button wire:click="filter" style="height: 30px; border-radius: 0 5px 5px 0; background-color: #007BFF; color: #fff; border: none;" class="btn" type="button">
                                     <i style="text-align: center;" class="fa fa-search"></i>
@@ -500,19 +573,13 @@
                 <div class="container" style="text-align: center; color: gray;">No Customers Found</div>
                 @else
                 @foreach($allCustomers as $customer)
-                <div wire:click="selectCustomer('{{ $customer->customer_id }}')" class="container" style="border:1px solid darkgrey;height:auto;cursor: pointer; background-color: {{ $selectedCustomer && $selectedCustomer->customer_id == $customer->customer_id ? '#ccc' : 'white' }}; width: 500px; border-radius: 5px;padding:3px">
+                <div wire:click="selectCustomer('{{ $customer->customer_id }}')" class="container" style="height:auto;cursor: pointer; background-color: {{ $selectedCustomer && $selectedCustomer->customer_id == $customer->customer_id ? '#ccc' : 'white' }}; width: 500px; border-radius: 5px;padding:5px">
                     <div class="row align-items-center">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <img style="border-radius: 50%" class="profile-image" src="{{ asset('/storage/' . $customer->customer_company_logo) }}" alt="Profile Image">
                         </div>
-                        <div class="col-md-3">
-                            <h6 class="username" style="font-size: 8px; color: black;">{{ $customer->customer_company_name }}</h6>
-                        </div>
-                        <div class="col-md-3">
-                            <h6 class="username" style="font-size: 8px; color: black;">{{ $customer->customer_name }}</h6>
-                        </div>
-                        <div class="col-md-3">
-                            <p class="mb-0" style=" color: black;font-size:8px">(#{{ $customer->customer_id }})</p>
+                        <div class="col-md-8">
+                            <h6 class="username" style="font-size: 12px; color: black;">{{ $customer->customer_company_name }}</h6>
                         </div>
                     </div>
                 </div>
@@ -522,95 +589,31 @@
         </div>
 
         <!-- Details of the selected person -->
-        <div class="col-md-7" style="height:auto; background-color: #fff; border-radius: 5px;border:1px solid grey; padding: 5px">
+        <div class="col-md-8" style="height:auto; background-color: #f2f2f2; border-radius: 5px; padding: 5px">
             @if ($selectedCustomer)
-            @if($poList=="true")
-            <div style="text-align: end;">
-                <button wire:click="closePOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
-            </div>
-            <!-- resources/views/livewire/purchase-order-table.blade.php -->
 
-            <div>
-                <style>
-                    /* Add your custom CSS styles here */
-                    .table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 20px;
-                    }
-
-                    th,
-                    td {
-                        border: 1px solid #ddd;
-                        padding: 8px;
-                        text-align: left;
-                        font-size: 5px;
-                        /* Set font size to 12px */
-                    }
-
-                    th {
-                        background-color: #f2f2f2;
-                    }
-
-                    tr:hover {
-                        background-color: #f5f5f5;
-                    }
-                </style>
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>PO Number</th>
-                            <th>Customer ID</th>
-                            <th>Vendor ID</th>
-                            <th>Rate</th>
-                            <th>End Client Timesheet Required</th>
-                            <th>Time Sheet Type</th>
-                            <th>Time Sheet Begins</th>
-                            <th>Invoice Type</th>
-                            <th>Payment Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($showPOLists as $purchaseOrder)
-                        <tr>
-                            <td>{{ $purchaseOrder->po_number }}</td>
-                            <td>{{ $purchaseOrder->customer_id }}</td>
-                            <td>{{ $purchaseOrder->vendor_id }}</td>
-                            <td>{{ $purchaseOrder->rate }}</td>
-                            <td>{{ $purchaseOrder->end_client_timesheet_required }}</td>
-                            <td>{{ $purchaseOrder->time_sheet_type }}</td>
-                            <td>{{ $purchaseOrder->time_sheet_begins }}</td>
-                            <td>{{ $purchaseOrder->invoice_type }}</td>
-                            <td>{{ $purchaseOrder->payment_type }}</td>
-                        </tr>
-                        @empty
-                        <div style="text-align: center; margin-top: 10px;">Purchase Orders Not Found</div>
-                        @endforelse
-
-                    </tbody>
-                </table>
-            </div>
-
-            @else
             <div class="row" style="font-size: 13px;">
                 <div class="row">
-                    <div style="text-align: end; margin-top:15px">
+                    <div style="text-align: center; margin-top:15px">
                         @php
                         $selectedPerson = $selectedCustomer ?? $customers->first();
                         $isActive = $selectedPerson->status == 'active';
                         @endphp
-                        <button wire:click="showPoList('{{ $selectedPerson->customer_id }}')" class="action-button" style="background-color:orange;border-radius:5px;border:none;color:white">View PO</button>
-                        <button wire:click="addPO('{{ $selectedPerson->customer_id }}')" class="action-button" style="background-color:green;border-radius:5px;border:none;color:white">ADD PO</button>
-                      
-                        <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="background-color: blue;border-radius:5px;border:none; color: white;">Edit</button>
+                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD Employee</button>
+                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button>
+                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Invoices</button>
+                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Time Sheets</button>
+                        <button wire:click="showPoList('{{ $selectedPerson->customer_id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79);border-radius:5px;border:none;color:white">View PO</button>
+                        <button wire:click="addPO('{{ $selectedPerson->customer_id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79);border-radius:5px;border:none;color:white">ADD PO</button>
+
+                        <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="margin-right: 10px;background-color: rgb(2, 17, 79);border-radius:5px;border:none; color: white;">Edit</button>
                     </div>
                     <div class="row">
                         <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->customer_company_logo) }}" alt="Profile Image">
                     </div>
                     <div class="col" style="margin-top: 50px; margin-right: 80px">
                         <div style="display: flex; flex-wrap: wrap;">
-                            <div style="flex: 1; margin-left: 15%;">
+                            <div style="flex: 1; margin-left:22%;">
 
                                 <h2 style="font-size: 12px;"><strong>Customer Name</strong></h2>
                                 <p style="font-size: 12px;">{{ optional($selectedPerson)->customer_company_name }}</p>
@@ -639,7 +642,6 @@
                     </div>
                 </div>
             </div>
-            @endif
 
             @elseif (!$customers->isEmpty())
             @if($poList=="true")
@@ -662,16 +664,20 @@
                         border: 1px solid #ddd;
                         padding: 8px;
                         text-align: left;
-                        font-size: 5px;
+                        font-size: 12px;
                         /* Set font size to 12px */
                     }
 
                     th {
                         background-color: #f2f2f2;
+                        font-size: 12px;
+
                     }
 
                     tr:hover {
                         background-color: #f5f5f5;
+                        font-size: 12px;
+
                     }
                 </style>
 
@@ -681,6 +687,7 @@
                             <th>PO Number</th>
                             <th>Customer ID</th>
                             <th>Vendor ID</th>
+                            <th>Vendor Name</th>
                             <th>Rate</th>
                             <th>End Client Timesheet Required</th>
                             <th>Time Sheet Type</th>
@@ -695,6 +702,7 @@
                             <td>{{ $purchaseOrder->po_number }}</td>
                             <td>{{ $purchaseOrder->customer_id }}</td>
                             <td>{{ $purchaseOrder->vendor_id }}</td>
+                            <td>{{ $purchaseOrder->vendor->vendor_name }}</td>
                             <td>{{ $purchaseOrder->rate }}</td>
                             <td>{{ $purchaseOrder->end_client_timesheet_required }}</td>
                             <td>{{ $purchaseOrder->time_sheet_type }}</td>
@@ -721,17 +729,22 @@
 
             <div class="row" style="font-size: 13px;">
                 <div class="row">
-                    <div style="text-align: end; margin-top:15px">
-                        <button wire:click="showPoList('{{ $firstPerson->customer_id }}')" style="background-color:orange ;border-radius:5px;border:none; color: white;">View PO</button>
-                        <button wire:click="addPO('{{ $firstPerson->customer_id }}')" style="background-color:green ;border-radius:5px;border:none; color: white;">ADD PO</button>
-                        <button wire:click="editCustomers('{{ $firstPerson->id }}')" class="action-button" style="background-color:blue ;border-radius:5px;border:none; color: white;">Edit</button>
+                    <div style="text-align: center; margin-top:15px">
+                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD Employee</button>
+                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button>
+                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Invoices</button>
+                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Time Sheets</button>
+
+                        <button wire:click="showPoList('{{ $firstPerson->customer_id }}')" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">View PO</button>
+                        <button wire:click="addPO('{{ $firstPerson->customer_id }}')" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD PO</button>
+                        <button wire:click="editCustomers('{{ $firstPerson->id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Edit</button>
                     </div>
                     <div class="row">
                         <img class="customer-image" src="{{ asset('storage/' . optional($firstPerson)->customer_company_logo) }}" alt="Profile Image">
                     </div>
                     <div class="col" style="margin-top: 50px; margin-right: 80px">
                         <div style="display: flex; flex-wrap: wrap;">
-                            <div style="flex: 1; margin-left: 15%;">
+                            <div style="flex: 1; margin-left: 22%;">
                                 <h2 style="font-size: 12px;"><strong>Customer Name</strong></h2>
                                 <p style="font-size: 12px;">{{ optional($firstPerson)->customer_company_name }}</p>
 
@@ -765,5 +778,6 @@
 
         </div>
     </div>
+    @endif
     <!-- End of Everyone tab content -->
 </div>

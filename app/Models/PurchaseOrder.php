@@ -19,9 +19,8 @@ class PurchaseOrder extends Model
         'invoice_type',
         'payment_type',
     ];
-
     public function vendor()
     {
-        return $this->belongsTo(VendorDetails::class);
+        return $this->belongsTo(VendorDetails::class, 'vendor_id', 'vendor_id');
     }
 }

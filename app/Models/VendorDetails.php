@@ -11,7 +11,8 @@ class VendorDetails extends Model implements Authenticatable
 {
     use HasFactory;
     use AuthenticatableTrait;
-    protected $primaryKey = 'vendor_id';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
     protected $fillable = [
         'vendor_id',
         'company_id',

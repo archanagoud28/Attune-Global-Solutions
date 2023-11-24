@@ -187,9 +187,7 @@
                             $selectedPerson = $selectedCustomer ?? $customers->first();
                             $isActive = $selectedPerson->status == 'active';
                             @endphp
-                            <button class="action-button" style="background-color: {{ $isActive ? 'green' : 'green' }};border-radius:5px;border:none;color:white;width:80px;font-size:0.725rem; padding:2px 7px;">ADD PO</button>
-                            <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'blue' : 'lightblue' }};border-radius:5px;border:none; color: white;width:80px;font-size:0.795rem; padding:2px 7px;">Edit</button>
-                            <button wire:click="updateStatus('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'green' : 'red' }};border-radius:5px;border:none; color: white;width:80px;font-size:0.795rem; padding:2px 7px;">{{ $isActive ? 'Active' : 'Inactive' }}</button>
+                         
                         </div>
                         <div >
                             <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->image) }}" alt="Profile Image">
@@ -244,9 +242,7 @@
                             $selectedPerson = $selectedCustomer ?? $customers->first();
                             $isActive = $selectedPerson->status == 'active';
                             @endphp
-                            <button class="action-button" style="background-color: {{ $isActive ? 'green' : 'green' }};border-radius:5px;border:none;color:white;width:80px;font-size:0.725rem; padding:2px 7px;">ADD PO</button>
-                            <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'blue' : 'lightblue' }};border-radius:5px;border:none; color: white;width:80px;font-size:0.795rem; padding:2px 7px;">Edit</button>
-                            <button wire:click="updateStatus('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'green' : 'red' }};border-radius:5px;border:none; color: white;width:80px;font-size:0.795rem; padding:2px 7px;">{{ $isActive ? 'Active' : 'Inactive' }}</button>
+                        
                         </div>
                         <div >
                             <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->image) }}" alt="Profile Image">

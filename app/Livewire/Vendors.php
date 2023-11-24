@@ -28,14 +28,16 @@ class Vendors extends Component
 
     public $selectedVendor;
     public $vendor_id;
-    public $soList=false;
+    public $soList = false;
     public $showSOLists;
-    public function showSOList($vendorId){
-        $this->showSOLists=SalesOrder::where('vendor_id',$vendorId)->get();
-        $this->soList=true;
+    public function showSoList($vendorId)
+    {
+        $this->showSOLists = SalesOrder::with('customer')->where('vendor_id', $vendorId)->get();
+        $this->soList = true;
     }
-    public function closeSOList(){
-        $this->soList=false;
+    public function closeSOList()
+    {
+        $this->soList = false;
     }
     public function saveSalesOrder()
     {
@@ -51,8 +53,8 @@ class Vendors extends Component
         ]);
 
         SalesOrder::create([
-            'customer_id' => $this->customer_id,
-            'vendor_id' => $this->vendorId,
+            'customer_id' => $this->customerId,
+            'vendor_id' => $this->vendor_id,
             'rate' => $this->rate . ' ' . $this->rateType,
             'end_client_timesheet_required' => $this->endClientTimesheetRequired,
             'time_sheet_type' => $this->timeSheetType,
@@ -133,8 +135,6 @@ class Vendors extends Component
 
         $this->edit = true;
         $this->selected_vendor = VendorDetails::find($vendorId);
-
-        // Assign values to Livewire properties
         $this->vendor_profile = $this->selected_vendor->vendor_image;
         $this->company_id = $this->selected_vendor->company_id;
         $this->vendor_name = $this->selected_vendor->contact_person;

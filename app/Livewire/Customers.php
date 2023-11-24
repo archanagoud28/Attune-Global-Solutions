@@ -32,7 +32,7 @@ class Customers extends Component
     public $poList=false;
     public $showPOLists;
     public function showPoList($customerId){
-        $this->showPOLists=PurchaseOrder::where('customer_id',$customerId)->get();
+        $this->showPOLists=PurchaseOrder::with('vendor')->where('customer_id',$customerId)->get();
         $this->poList=true;
     }
     public function closePOList(){
