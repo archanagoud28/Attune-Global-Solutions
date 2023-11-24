@@ -48,7 +48,7 @@ class HrLogin extends Component
             Session::put('email', $mailId);
             Session::put('lastActivityTime', now());
             session()->flash('Success', 'You are logged in successfully!');
-            return redirect('/employee-page');
+            return redirect('/employee-pages');
         }
         else if (Auth::guard('customer')->attempt(['email' => $this->form['id'], 'password' => $this->form['password']]) ||
         Auth::guard('customer')->attempt(['customer_id' => $this->form['id'], 'password' => $this->form['password']]))  {
@@ -59,7 +59,7 @@ class HrLogin extends Component
             Session::put('email', $mailId);
             Session::put('lastActivityTime', now());
             session()->flash('Success', 'You are logged in successfully!');
-            return redirect('/customers');
+            return redirect('/customer-pages');
         }
         else if (Auth::guard('vendor')->attempt(['email' => $this->form['id'], 'password' => $this->form['password']]) ||
         Auth::guard('vendor')->attempt(['vendor_id' => $this->form['id'], 'password' => $this->form['password']]))  {
@@ -70,7 +70,7 @@ class HrLogin extends Component
             Session::put('email', $mailId);
             Session::put('lastActivityTime', now());
             session()->flash('Success', 'You are logged in successfully!');
-            return redirect('/vendor-page');
+            return redirect('/vendor-pages');
         }
         else if (Auth::guard('contractor')->attempt(['contractor_email' => $this->form['id'], 'password' => $this->form['password']]) ||
         Auth::guard('contractor')->attempt(['contractor_id' => $this->form['id'], 'password' => $this->form['password']]))  {
@@ -81,7 +81,7 @@ class HrLogin extends Component
             Session::put('contractor_email', $mailId);
             Session::put('lastActivityTime', now());
             session()->flash('Success', 'You are logged in successfully!');
-            return redirect('/contractor-page');
+            return redirect('/contractor-pages');
         }
         else {
             $this->error = "ID/Email or Password Wrong!!";

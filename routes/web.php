@@ -37,43 +37,43 @@ Route::middleware(['checkAuth'])->group(function () {
 });
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        // Get the currently authenticated user
-        $user = Auth::user();
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/', function () {
+//         // Get the currently authenticated user
+//         $user = Auth::user();
 
-        // Check if a user is authenticated
-        if ($user) {
-            // Get the role of the user
-            $role = $user->role;
+//         // Check if a user is authenticated
+//         if ($user) {
+//             // Get the role of the user
+//             $role = $user->role;
 
-            // Redirect based on the user's role
-            switch ($role) {
-                case 'hr':
-                    return redirect()->route('home-page');
-                    break;
-                case 'vendor':
-                    return redirect()->route('vendor-page');
-                    break;
-                case 'customer':
-                    return redirect()->route('customer-page');
-                    break;
-                case 'employee':
-                    return redirect()->route('employee-page');
-                    break;
-                case 'contractor':
-                    return redirect()->route('contractor-page');
-                    break;
-                default:
-                    // Handle other roles or unauthorized access
-                    abort(403, 'Unauthorized');
-            }
-        } else {
-            // User is not authenticated, handle accordingly
-            return redirect()->route('hr-login');
-        }
-    });
-});
+//             // Redirect based on the user's role
+//             switch ($role) {
+//                 case 'hr':
+//                     return redirect()->route('home-page');
+//                     break;
+//                 case 'vendor':
+//                     return redirect()->route('vendor-page');
+//                     break;
+//                 case 'customer':
+//                     return redirect()->route('customer-page');
+//                     break;
+//                 case 'employee':
+//                     return redirect()->route('employee-page');
+//                     break;
+//                 case 'contractor':
+//                     return redirect()->route('contractor-page');
+//                     break;
+//                 default:
+//                     // Handle other roles or unauthorized access
+//                     abort(403, 'Unauthorized');
+//             }
+//         } else {
+//             // User is not authenticated, handle accordingly
+//             return redirect()->route('hr-login');
+//         }
+//     });
+// });
 
 Route::middleware(['auth:hr'])->group(function () {
     Route::get('/', HomePage::class)->name('home-page');
@@ -92,23 +92,25 @@ Route::middleware(['auth:hr'])->group(function () {
 });
 
 Route::middleware(['auth:vendor'])->group(function () {
+    Route::get('/vendor-home', HomePage::class)->name('vendor-home');
     Route::get('/vendor-pages', VendorPage::class)->name('vendor-pages');
     Route::get('/vendor-registers', VendorRegister::class)->name('vendor-registers');
 });
 
 Route::middleware(['auth:customer'])->group(function () {
-
+    Route::get('/customer-home', HomePage::class)->name('customer-home');
     Route::get('/customer-pages', Customers::class)->name('customer-pages');
 });
 
 Route::middleware(['auth:employee'])->group(function () {
-
+    Route::get('/employee-home', HomePage::class)->name('employee-home');
     Route::get('/employee-pages', EmployeePage::class)->name('employee-pages');
+    Route::get('/time-sheets-display', TimeSheetDisplay::class)->name('time-sheets-display');
 
 });
 
 Route::middleware(['auth:contractor'])->group(function () {
-
+    Route::get('/contractor-home', HomePage::class)->name('contractor-home');
     Route::get('/contractor-pages', ContractorPage::class)->name('contractor-pages');
 
 });
