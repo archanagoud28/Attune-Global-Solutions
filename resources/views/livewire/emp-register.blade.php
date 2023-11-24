@@ -18,6 +18,9 @@
     color:#47515B;
     margin-bottom:10px;
 }
+a:hover{
+    color:green;
+}
 .emp{
     display:flex;
     flex-direction:column;
@@ -49,7 +52,8 @@
         <div class="container " style=" padding:10px;background:#f2f2f2;border:1px solid #ccc;">
             <div class="col-md-12">
                 <div class="emp-container" style="padding:0; margin:0 auto;">
-                    <div class="card-header" style="background-color: #00234f;padding:10px;width:50%;margin-left:20%;">
+                     <div style="display:flex;justify-content:end;"><a style="text-decoration:none;font-weight:600;color:#00459c;"href="{{route('employee-list-page')}}">View Employee List</a></div>
+                    <div class="card-header" style="background-color: #00234f;padding:10px;width:50%;margin-left:20%; border-radius:20px;;">
                         <h5 class="mb-0" style="text-align: center;color:white;">Employee Registration Form</h5>
                     </div>
                     <div class="card-body">
@@ -60,14 +64,6 @@
                                 <div class="emp" >
                                <div class=" employee-details" > 
                                 <div style="margin:5px 0 20px 0"><h5>Employee Details</h5></div>  
-                                 <div class="form-group" >
-                                    <label for="id">Employee ID :</label>
-                                    <input type="text" class="form-control" wire:model="emp_id" style="margin-bottom:10px;">
-                                   @error('emp_id') 
-                                    <span class="text-danger">{{ $message }}</span>
-                                   @enderror
-                                </div>
-                         
                             <div class="form-group" >
                                 <label for="first_name">First Name :</label>
                                 <input type="text" class="form-control" wire:model="first_name" style="margin-bottom:10px;">
@@ -76,13 +72,13 @@
                                 @enderror
                             </div>
  
-                            <div class="form-group" >
-                                <label for="last_name">Last Name :</label>
-                                <input type="text" class="form-control" wire:model="last_name" style="margin-bottom:10px;;">
-                                @error('last_name') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
+                                    <div class="form-group" >
+                                        <label for="last_name">Last Name :</label>
+                                        <input type="text" class="form-control" wire:model="last_name" style="margin-bottom:10px;;">
+                                        @error('last_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
                             
-                            <div class="form-group" >
+                                    <div class="form-group" >
                                         <label for="mobile_number">Phone Number :</label>
                                         <input type="text" class="form-control" wire:model="mobile_number" style="margin-bottom:10px;;">
                                         @error('mobile_number') <span class="text-danger">{{ $message }}</span> @enderror
@@ -142,41 +138,59 @@
                                 </div>
  
                                 {{-- Upload Employee Image --}}
-                                <div class="form-group" >
-                                    <label for="image">Employee Image :</label>
-                                    <input type="file" class="form-control-file" wire:model="image" style="margin-bottom:10px;;">
+                                <div class="form-group">
+                                    <label for="image">Employee Image:</label>
+                                    <input type="file" class="form-control-file" wire:model="image" style="margin-bottom:10px;">
                                     @error('image') <span class="text-danger">{{ $message }}</span> @enderror
- 
                                 </div>
- 
- 
-                                <div>
-                                   
+
+                                <div >
                                     <!-- Display the saved image -->
-                                    <img height="50" width="50" src="" alt="Saved Image" class="img-preview">
-                                    <span></span>
-                               
+                                    @if($savedImage)
+                                        <img height="50" width="50" src="{{ asset('storage/' . $savedImage) }}" alt="Saved Image" class="img-preview">
+                                        <span>{{ $savedImage }}</span>
+                                    @endif
+
                                     <!-- Display the temporary image -->
-                                    <img height="50" width="50" src="" alt="Temporary Image" class="img-preview">
-                                    <span></span>
-                                
+                                    @if($image)
+                                        <img height="50" width="50" src="{{ $image->temporaryUrl() }}" alt="Temporary Image" class="img-preview">
+                                        <span>{{ $image->getClientOriginalName() }}</span>
+                                    @endif
                                 </div>
- 
-                              
                                </div>
                                  <div class="employee-details">
-                                <div style="margin:5px 0 20px 0"><h5>Job Details</h5></div>  
+                                   <div style="margin:5px 0 20px 0"><h5>Job Details</h5></div>  
 
-                                 <div class="form-group">
-                                    <label for="hire_date">Hire Date :</label>
-                                    <input type="text" class="form-control" wire:model="hire_date" style="margin-bottom:10px;;">
-                                    @error('hire_date') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="form-group" >
-                                    <label for="employee_type">Employee Type :</label>
-                                    <input type="text" class="form-control" wire:model="employee_type" style="margin-bottom:10px;;">
+                                   <div class="form-group" >
+                                        <label for="hire_date">Hire Date :</label>
+                                        <input type="date" class="form-control" wire:model="hire_date" max="{{ date('Y-m-d') }}" style="margin-bottom:10px;">
+                                        @error('hire_date') <span class="text-danger">{{ $message }}</span> @enderror
+                                    </div>
+
+                                <div class="form-group">
+                                    <label for="employee_type">Employee Type:</label>
+                                    <select class="form-control custom-select" wire:model="employee_type" style="margin-bottom: 10px; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'grey\' class=\'bi bi-chevron-down\' width=\'22\' height=\'22\' viewBox=\'0 0 20 16\'><path d=\'M1 5l7 7 7-7H1z\'/></svg>'); background-repeat: no-repeat; background-position: right;">
+                                        <option value="defualt">Select Employee Type</option>
+                                        <option value="full-time">Full-Time</option>
+                                        <option value="part-time">Part-Time</option>
+                                        <option value="contract">Contract</option>
+                                    </select>
                                     @error('employee_type') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="employee_status">Employee Status:</label>
+                                    <div class="input-group">
+                                    <select class="form-control custom-select" wire:model="employee_status" style="margin-bottom: 10px; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'grey\' class=\'bi bi-chevron-down\' width=\'22\' height=\'22\' viewBox=\'0 0 20 16\'><path d=\'M1 5l7 7 7-7H1z\'/></svg>'); background-repeat: no-repeat; background-position: right;">
+                                            <option value="defualt">Select Employee Status</option>
+                                            <option value="active">Active</option>
+                                            <option value="on-leave">On Leave</option>
+                                            <option value="terminated">Terminated</option>
+                                        </select>
+                                    </div>
+                                    @error('employee_status') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+
                                 <div class="form-group">
                                     <label for="department">Department :</label>
                                     <input type="text" class="form-control" wire:model="department" style="margin-bottom:10px;;">
@@ -187,11 +201,7 @@
                                     <input type="text" class="form-control" wire:model="job_title" style="margin-bottom:10px;;">
                                     @error('job_title') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-                                <div class="form-group" >
-                                    <label for="employee_status">Employee Status :</label>
-                                    <input type="text" class="form-control" wire:model="employee_status" style="margin-bottom:10px;;">
-                                    @error('employee_status') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
+                              
                                
                               
                                 <div class="form-group" >
