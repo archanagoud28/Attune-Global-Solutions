@@ -48,8 +48,10 @@ return new class extends Migration
             $table->text('renewal_terms')->nullable(); // Change to text
             $table->text('integration_processes')->nullable(); // Change to text
             $table->text('vendor_onboarding_process')->nullable(); // Change to text
-            $table->text('training_requirements')->nullable(); // Change to text
+            $table->text('training_requirements')->nullable();
+            $table->string('password')->nullable(); // Change to text
             $table->string('company_id');
+            $table->string('status')->default(1);
             $table->foreign('company_id')
                 ->references('company_id') // Assuming the primary key of the companies table is 'id'
                 ->on('company_details')

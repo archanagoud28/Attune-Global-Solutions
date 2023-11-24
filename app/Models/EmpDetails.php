@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 use Illuminate\Notifications\Notifiable;
-class EmpDetails extends Model
+class EmpDetails extends Model implements Authenticatable
 {
+    use AuthenticatableTrait;
     use HasFactory, Notifiable;
     protected $primaryKey = 'emp_id';
     public $incrementing = false;
@@ -58,7 +60,8 @@ class EmpDetails extends Model
         'linked_in',
         'company_id',
         'is_starred',
-        'skill_set'
+        'skill_set',
+        'status'
     ];
 
     public function company()
@@ -90,7 +93,7 @@ class EmpDetails extends Model
     //     // Combine company_name and padded numeric part to create the new emp_id
     //     return strtoupper(substr($this->company_name, 0, 3)) . '-' . $paddedNumericPart;
     // }
-    
+
 
 
 

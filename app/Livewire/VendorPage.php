@@ -8,7 +8,24 @@ class VendorPage extends Component
 {
     public $search = '';
     public $view = 'grid';
+    public $show = false;
 
+    public $viewMode;
+    public function toggleView()
+    {
+        $this->viewMode = ($this->viewMode === 'table') ? 'grid' : 'table';
+    }
+
+
+    public function addVendor()
+    {
+        $this->show = true;
+    }
+
+    public function close()
+    {
+        $this->show = false;
+    }
     public function render()
     {
         $query = VendorDetails::query();

@@ -63,21 +63,16 @@
 
     <div class="container" style="padding: 10px 15px; margin: 30px auto; background:#fff;">
         <h3>Our Vendors</h3>
-
+        <p style="margin-top: 50px;text-align:end;margin-right:25px">
+            <button wire:click="addVendors" class="button">ADD Vendors</button>
+            <button wire:click="toggleView" style="padding:3px;background-color: blue;border-radius:5px;color:#fff;border:none">
+                {{ $viewMode === 'table' ? 'Switch to Grid' : 'Switch to Table' }}
+            </button>
+        </p>
         <!-- Search Box -->
         <div class="search-box">
             <input type="text" wire:model="search" placeholder="Search vendors...">
         </div>
-
-        <!-- View Options (Grid/Normal) -->
-        <div class="view-options">
-            <label for="view-select">View </label>
-            <select wire:model="view" id="view-select">
-                <option value="grid">Grid</option>
-                <option value="normal">Normal</option>
-            </select>
-        </div>
-
         @foreach ($vendors as $vendor)
             <div class="col-md-3">
                 <div class="card @if($view === 'grid') grid-view @endif">
