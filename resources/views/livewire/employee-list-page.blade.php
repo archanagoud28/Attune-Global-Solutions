@@ -1,4 +1,4 @@
-<div style="padding:10px 15px;">
+<div style="padding:10px 15px; background:#fff;">
     <!-- Add this to your HTML file -->
     <style>
         .customer-image {
@@ -295,8 +295,8 @@
 
 
     <!-- Everyone tab content -->
-    <div class="row" style="margin-top: 15px; width: 100%;">
-        <div class="col-md-4" style=" background-color: #f2f2f2;; border-radius: 5px; margin-right: 20px; padding: 5px;">
+    <div class="row" style="margin-top: 15px; width: 100%;height:100%;">
+        <div class="col-md-3" style=" background-color: #f2f2f2;; border-radius: 5px; margin-right: 20px; padding: 5px;">
             <div class="container" style="margin-top: 15px">
                 <div class="row">
                     <div class="col" style="margin: 0px; padding: 0px">
@@ -332,9 +332,10 @@
         </div>
 
         <!-- Details of the selected person -->
-        <div class="col-md-7" style="height:auto; background-color: rgb(2, 17, 79); border-radius: 5px;border:1px solid grey; padding: 15px 20px;color:white;">
+        @if ($selectedCustomer)
+        <div class="col-md-8" style="height:auto; background-color: rgb(2, 17, 79); border-radius: 5px;border:1px solid grey; padding: 15px 20px;color:white;">
                  <div >
-                 @if ($selectedCustomer)
+              
                    <div class="emp-content" style="display:flex;flex-direction:column; gap:20px;">
                         <div style="text-align: end; display:flex; justify-content:flex-end; gap:10px;">
                             @php
