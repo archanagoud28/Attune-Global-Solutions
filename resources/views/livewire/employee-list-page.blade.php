@@ -120,22 +120,51 @@
         }
         .align-data{
             display: grid; 
-            grid-template-columns:  repeat(2, 1fr);
+            grid-template-columns: 120px 1fr;
+            margin-bottom: 5px; 
         }
+        .align-data strong {
+        white-space: nowrap;
+        margin-right: 5px; /* Adjust the value to control the space between strong and colon */
+    }
+    .scroll-container {
+          overflow-y: auto;
+          max-height: 350px;
+          margin: auto 10px;
+          scrollbar-width: thin; /* For Firefox */
+          scrollbar-color: #ccc transparent; /* For Firefox */
+
+          /* For WebKit browsers (Chrome, Safari) */
+          &::-webkit-scrollbar {
+              width: 4px;
+          }
+
+          &::-webkit-scrollbar-thumb {
+              background-color: #ccc;
+              border-radius: 4px;
+          }
+
+          &::-webkit-scrollbar-track {
+              background-color: transparent;
+          }
+      }
+
+      /* Style for the employee-data items */
+      .container.employee-data {
+          transition: background-color 0.3s;
+      }
+
+      .container.employee-data:hover {
+          background-color: #456787;
+      }
+
+
     </style>
 
        <div style="margin-top:40px;display:flex;justify-content:flex-end;">
           <button class="button" style="padding:5px;font-size:0.875rem;"><a href="{{route('emp-register')}}" style="outline:none;text-decoration:none;color:#fff;">ADD Employees</a></button>
+          <button class="button" style="padding:5px;font-size:0.875rem;margin-left:10px;"><a href="{{route('contractor-page')}}" style="outline:none;text-decoration:none;color:#fff;">Contarctors List</a></button>
        </div>
-
-
-    @if(session()->has('success'))
-    <div style="text-align: center;" class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
-   
-
 
     <!-- Everyone tab content -->
     @if ($allCustomers->isEmpty())
@@ -144,14 +173,17 @@
             <p style="color:#778899; text-align:center; font-weight:500;">No data found</p>
      @else
     <div class="row" style="margin-top: 15px; width: 100%;height:100%;">
+    <div>
+        <h5 style="color:rgb(2, 17, 79);font-weight:400;">Employees List</h5>
+    </div>
         <div class="col-md-3" style=" background-color: #f2f2f2;; border-radius: 5px; margin-right: 20px; padding: 5px;">
             <div class="container" style="margin-top: 15px">
                 <div class="row">
                     <div class="col" style="margin: 0px; padding: 0px">
                         <div class="input-group">
-                            <input wire:model="searchTerm" style="font-size: 10px; cursor: pointer; border-radius: 5px 0 0 5px;" type="text" class="form-control" placeholder="Search for Company Name or ID" aria-label="Search" aria-describedby="basic-addon1">
+                            <input wire:model="searchTerm" style="font-size: 11px; width:70%;cursor: pointer; border-radius: 5px 0 0 5px;" type="text" class="form-control" placeholder="Search for Name or ID" aria-label="Search" aria-describedby="basic-addon1">
                             <div class="input-group-append">
-                                <button wire:click="filter" style="height: 28px; border-radius: 0 5px 5px 0; background-color: #003767; color: #fff; border: none;" class="btn" type="button">
+                                <button wire:click="filter" style="height: 30px; border-radius: 0 5px 5px 0; background-color: #003767; color: #fff; border: none;" class="btn" type="button">
                                     <i style="text-align: center;" class="fa fa-search"></i>
                                 </button>
                             </div>
@@ -160,7 +192,7 @@
                 </div>
             </div>
 
-            <div class="row" style="overflow-y: auto; max-height: 400px; margin:auto 10px;">
+            <div class="scroll-container" >
                
                 @foreach($allCustomers as $customer)
                     <div wire:click="selectCustomer('{{ $customer->emp_id }}')" class="container employee-data" style="background-color: {{ $selectedCustomer && $selectedCustomer->emp_id == $customer->emp_id ? '#ccc' : 'white' }};">
@@ -187,9 +219,6 @@
                             $selectedPerson = $selectedCustomer ?? $customers->first();
                             $isActive = $selectedPerson->status == 'active';
                             @endphp
-                            <button class="action-button" style="background-color: {{ $isActive ? 'green' : 'green' }};border-radius:5px;border:none;color:white;width:80px;font-size:0.725rem; padding:2px 7px;">ADD PO</button>
-                            <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'blue' : 'lightblue' }};border-radius:5px;border:none; color: white;width:80px;font-size:0.795rem; padding:2px 7px;">Edit</button>
-                            <button wire:click="updateStatus('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'green' : 'red' }};border-radius:5px;border:none; color: white;width:80px;font-size:0.795rem; padding:2px 7px;">{{ $isActive ? 'Active' : 'Inactive' }}</button>
                         </div>
                         <div >
                             <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->image) }}" alt="Profile Image">
@@ -197,11 +226,11 @@
                           <div class="details" style=" display:flex; flex-direction:row; line-height:2; font-size:0.895rem;margin-top:20px'" >
                                 <div class="col-md-6" >
                                     <div class="align-data">
-                                        <strong>Customer Name </strong> 
+                                        <strong>Employee Name </strong> 
                                         <span><strong>:</strong> {{ optional($selectedPerson)->first_name }} {{ optional($selectedPerson)->last_name }}</span>
                                     </div>
                                      <div class="align-data">
-                                        <strong>Customer ID </strong> 
+                                        <strong>Employee ID </strong> 
                                         <span> <strong>:</strong> (#{{ optional($selectedPerson)->emp_id }})</span>
                                      </div>
                                      <div class="align-data">
@@ -216,8 +245,8 @@
                                         <span style="line-height:1.6;"><strong>:</strong> {{ optional($selectedPerson)->address }}</span>
                                     </div>
                                     <div class="align-data">
-                                      <strong>Email</strong>
-                                        <span><strong>:</strong> {{ optional($selectedPerson)->email }}</span>
+                                      <strong>Company Email</strong>
+                                        <span><strong>:</strong> {{ optional($selectedPerson)->company_email }}</span>
                                     </div>
                                     <div class="align-data">
                                        <strong>Company Name</strong>
@@ -244,9 +273,7 @@
                             $selectedPerson = $selectedCustomer ?? $customers->first();
                             $isActive = $selectedPerson->status == 'active';
                             @endphp
-                            <button class="action-button" style="background-color: {{ $isActive ? 'green' : 'green' }};border-radius:5px;border:none;color:white;width:80px;font-size:0.725rem; padding:2px 7px;">ADD PO</button>
-                            <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'blue' : 'lightblue' }};border-radius:5px;border:none; color: white;width:80px;font-size:0.795rem; padding:2px 7px;">Edit</button>
-                            <button wire:click="updateStatus('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'green' : 'red' }};border-radius:5px;border:none; color: white;width:80px;font-size:0.795rem; padding:2px 7px;">{{ $isActive ? 'Active' : 'Inactive' }}</button>
+                            
                         </div>
                         <div >
                             <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->image) }}" alt="Profile Image">
@@ -254,11 +281,11 @@
                           <div class="details" style=" display:flex; flex-direction:row; line-height:2; font-size:0.895rem;margin-top:20px'" >
                                 <div class="col-md-6" >
                                     <div class="align-data">
-                                        <strong>Customer Name </strong> 
+                                        <strong>Employee Name </strong> 
                                         <span><strong>:</strong> {{ optional($selectedPerson)->first_name }} {{ optional($selectedPerson)->last_name }}</span>
                                     </div>
                                      <div class="align-data">
-                                        <strong>Customer ID </strong> 
+                                        <strong>Employee ID </strong> 
                                         <span> <strong>:</strong> (#{{ optional($selectedPerson)->emp_id }})</span>
                                      </div>
                                      <div class="align-data">
@@ -273,8 +300,8 @@
                                         <span style="line-height:1.6;"><strong>:</strong> {{ optional($selectedPerson)->address }}</span>
                                     </div>
                                     <div class="align-data">
-                                        <strong>Email</strong>
-                                        <span style="white-space: nowrap;  max-width: calc(100% - 20px);"><strong>:</strong> {{ optional($selectedPerson)->email }}</span>
+                                        <strong>Company Email</strong>
+                                        <span ><strong>:</strong> {{ optional($selectedPerson)->company_email }}</span>
                                     </div>
 
                                     <div class="align-data">
