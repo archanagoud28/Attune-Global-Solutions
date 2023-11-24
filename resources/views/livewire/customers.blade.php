@@ -380,16 +380,16 @@
                                 <label style="font-size: 12px;" for="rate">Rate:</label>
                                 <div class="input-group">
                                     <input style="font-size: 12px;" type="number" class="form-control" id="rate" wire:model="rate">
-                                @error('rate') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                                    @error('rate') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
 
                                     <select style="font-size: 12px;" class="form-control" id="rateType" wire:model="rateType">
-                                    <option style="font-size: 12px;">Select Rate Type</option>
+                                        <option style="font-size: 12px;">Select Rate Type</option>
                                         <option style="font-size: 12px;" value="hourly">Per Hour</option>
                                         <option style="font-size: 12px;" value="daily">Per Day</option>
                                         <option style="font-size: 12px;" value="weekly">Per Week</option>
                                         <option style="font-size: 12px;" value="monthly">Per Month</option>
                                     </select>
-                                @error('rateType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                                    @error('rateType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
 
                                 </div>
                             </div>
@@ -411,7 +411,7 @@
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="timeSheetType">Time Sheet Type:</label>
                                 <select style="font-size: 12px;" class="form-control" id="timeSheetType" wire:model="timeSheetType">
-                                <option style="font-size: 12px;" >Select Time Sheet Type</option>
+                                    <option style="font-size: 12px;">Select Time Sheet Type</option>
                                     <option style="font-size: 12px;" value="weekly">Weekly</option>
                                     <option style="font-size: 12px;" value="semi-monthly">Semi Monthly</option>
                                     <option style="font-size: 12px;" value="monthly">Monthly</option>
@@ -423,7 +423,7 @@
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="timeSheetBegins">Time Sheet Begins:</label>
                                 <select style="font-size: 12px;" class="form-control" id="timeSheetBegins" wire:model="timeSheetBegins">
-                                <option style="font-size: 12px;">Select Time Sheet Begins</option>
+                                    <option style="font-size: 12px;">Select Time Sheet Begins</option>
                                     <option style="font-size: 12px;" value="mon-fri">Monday to Friday</option>
                                     <option style="font-size: 12px;" value="mon-sat">Monday to Saturday</option>
                                     <option style="font-size: 12px;" value="sun">Sunday</option>
@@ -437,7 +437,7 @@
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="invoiceType">Invoice Type:</label>
                                 <select style="font-size: 12px;" class="form-control" id="invoiceType" wire:model="invoiceType">
-                                <option style="font-size: 12px;">Select Invoice Type</option>
+                                    <option style="font-size: 12px;">Select Invoice Type</option>
                                     <option style="font-size: 12px;" value="hourly">Hourly</option>
                                     <option style="font-size: 12px;" value="daily">Daily</option>
                                     <option style="font-size: 12px;" value="weekly">Weekly</option>
@@ -452,7 +452,7 @@
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="paymentType">Payment Type:</label>
                                 <select style="font-size: 12px;" class="form-control" id="paymentType" wire:model="paymentType">
-                                <option style="font-size: 12px;">Select Payment Type</option>
+                                    <option style="font-size: 12px;">Select Payment Type</option>
                                     <option style="font-size: 12px;" value="credit_card">Credit Card</option>
                                     <option style="font-size: 12px;" value="bank_transfer">Bank Transfer</option>
                                     <option style="font-size: 12px;" value="paypal">PayPal</option>
@@ -600,15 +600,15 @@
                         $selectedPerson = $selectedCustomer ?? $customers->first();
                         $isActive = $selectedPerson->status == 'active';
                         @endphp
-                        @if($selectedPerson->status=="active")
+                        <!-- @if($selectedPerson->status=="1") -->
                         <button wire:click="showPoList('{{ $selectedPerson->customer_id }}')" class="action-button" style="background-color:blue;border-radius:5px;border:none;color:white">Purchased Orders</button>
                         <button wire:click="addPO('{{ $selectedPerson->customer_id }}')" class="action-button" style="background-color:green;border-radius:5px;border:none;color:white">ADD Purchase Order</button>
-                        @else
+                        <!-- @else
                         <button class="action-button" style="background-color:lightblue;border-radius:5px;border:none;color:white" disabled>Purchased Orders</button>
-                        <button class="action-button" style="background-color:lightgreen;border-radius:5px;border:none;color:white" disabled>ADD Purchase Order</button>
-                        @endif
+                        <button class="action-button" style="background-color:lightgreen;border-radius:5px;border:none;color:white" disabled>ADD Purchase Order</button> -->
+                        <!-- @endif -->
                         <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'blue' : 'lightblue' }};border-radius:5px;border:none; color: white;">Edit</button>
-                        <button wire:click="updateStatus('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'green' : 'red' }};border-radius:5px;border:none; color: white;">{{ $isActive ? 'Active' : 'Inactive' }}</button>
+                        <!-- <button wire:click="updateStatus('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'green' : 'red' }};border-radius:5px;border:none; color: white;">{{ $isActive ? 'Active' : 'Inactive' }}</button> -->
                     </div>
                     <div class="row">
                         <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->customer_company_logo) }}" alt="Profile Image">
@@ -727,17 +727,17 @@
             <div class="row" style="font-size: 13px;">
                 <div class="row">
                     <div style="text-align: end; margin-top:15px">
-                        @if($firstPerson->status=='active')
+                        <!-- @if($firstPerson->status=='1') -->
                         <button wire:click="showPoList('{{ $firstPerson->customer_id }}')" style="background-color:blue ;border-radius:5px;border:none; color: white;">Purchased Orders</button>
                         <button wire:click="addPO('{{ $firstPerson->customer_id }}')" style="background-color:green ;border-radius:5px;border:none; color: white;">ADD Purchase Order</button>
                         <button wire:click="editCustomers('{{ $firstPerson->id }}')" class="action-button" style="background-color:blue ;border-radius:5px;border:none; color: white;">Edit</button>
-                        <button wire:click="updateStatus('{{ $firstPerson->id }}')" class="action-button" style="background-color: green;border-radius:5px;border:none; color: white;">Active</button>
-                        @else
-                        <button style="background-color:lightblue ;border-radius:5px;border:none; color: white;">Purchased Orders</button>
+                        <!-- <button wire:click="updateStatus('{{ $firstPerson->id }}')" class="action-button" style="background-color: green;border-radius:5px;border:none; color: white;">Active</button> -->
+                        <!-- @else -->
+                        <!-- <button style="background-color:lightblue ;border-radius:5px;border:none; color: white;">Purchased Orders</button>
                         <button style="background-color:lightgreen ;border-radius:5px;border:none; color: white;" disabled>ADD PO</button>
                         <button class="action-button" style="background-color:lightblue ;border-radius:5px;border:none; color: white;" disabled>Edit</button>
-                        <button wire:click="updateStatus('{{ $firstPerson->id }}')" class="action-button" style="background-color: red;border-radius:5px;border:none; color: white;">Inactive</button>
-                        @endif
+                        <button wire:click="updateStatus('{{ $firstPerson->id }}')" class="action-button" style="background-color: red;border-radius:5px;border:none; color: white;">Inactive</button> -->
+                        <!-- @endif -->
                     </div>
                     <div class="row">
                         <img class="customer-image" src="{{ asset('storage/' . optional($firstPerson)->customer_company_logo) }}" alt="Profile Image">
