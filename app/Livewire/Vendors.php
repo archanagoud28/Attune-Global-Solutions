@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\CompanyDetails;
+use App\Models\CustomerDetails;
 use App\Models\SalesOrder;
 use App\Models\VendorDetails;
 use Livewire\Component;
@@ -18,11 +20,11 @@ class Vendors extends Component
     public $timeSheetBegins;
     public $invoiceType;
     public $paymentType;
-    public $vendors, $selected_vendor;
+    public $selected_vendor;
     public $company_name;
     public $show = false;
 
-    public  $_profilevendor, $company_id, $vendor_name, $email, $phone, $address, $notes, $vendor_company_name;
+    public  $vendor_profile, $company_id, $vendor_name, $email, $phone, $address, $notes, $vendor_company_name;
 
     public $selectedVendor;
     public $vendor_id;
@@ -76,10 +78,10 @@ class Vendors extends Component
         $trimmedSearchTerm = trim($this->searchTerm);
 
         // Use Eloquent to filter records based on the search term
-        $this->filteredPeoples = CustomerDetails::where(function ($query) use ($trimmedSearchTerm) {
-            $query->where('customer_company_name', 'LIKE', '%' . $trimmedSearchTerm . '%')
-                ->orWhere('customer_id', 'LIKE', '%' . $trimmedSearchTerm . '%')
-                ->orWhere('customer_name', 'LIKE', '%' . $trimmedSearchTerm . '%')
+        $this->filteredPeoples = VendorDetails::where(function ($query) use ($trimmedSearchTerm) {
+            $query->where('vendor_name', 'LIKE', '%' . $trimmedSearchTerm . '%')
+                ->orWhere('vendor_id', 'LIKE', '%' . $trimmedSearchTerm . '%')
+                ->orWhere('contact_person', 'LIKE', '%' . $trimmedSearchTerm . '%')
                 ->orWhere('status', 'LIKE', '%' . $trimmedSearchTerm . '%');
         })
             ->get();
@@ -98,119 +100,108 @@ class Vendors extends Component
     {
         $this->show = false;
     }
-    public function addCustomers()
+    public function addVendors()
     {
         $this->validate([
-            'customer_profile' => 'required',
+            'vendor_profile' => 'required',
             'company_id' => 'required',
-            'customer_name' => 'required',
+            'vendor_name' => 'required',
             'email' => 'required',
             'phone' => 'required',
             'address' => 'required',
-            'notes' => 'required',
-            'customer_company_name' => 'required'
+            'vendor_company_name' => 'required'
         ]);
-        $customerProfilePath = $this->customer_profile->store('customer_profiles', 'public');
-        CustomerDetails::create([
-            'customer_company_logo' => $customerProfilePath,
+        $vendorProfilePath = $this->vendor_profile->store('vendor_profiles', 'public');
+        VendorDetails::create([
+            'vendor_image' => $vendorProfilePath,
             'company_id' => $this->company_id,
-            'customer_name' => $this->customer_name,
-            'customer_company_name' => $this->customer_company_name,
+            'contact_person' => $this->vendor_name,
+            'vendor_name' => $this->vendor_company_name,
             'email' => $this->email,
-            'phone' => $this->phone,
+            'phone_number' => $this->phone,
             'address' => $this->address,
-            'notes' => $this->notes,
         ]);
-        session()->flash('success', 'Customer added successfully.');
+        session()->flash('vendor', 'Vendor added successfully.');
         $this->show = false;
     }
     public $edit = false;
 
-    public $selectedCustomerId;
-    public function editCustomers($customerId)
+    public $selectedVendorId;
+    public function editVendors($vendorId)
     {
-        $this->selectedCustomerId = $customerId;
+        $this->selectedVendorId = $vendorId;
 
         $this->edit = true;
-        $this->selected_customer = CustomerDetails::find($customerId);
+        $this->selected_vendor = VendorDetails::find($vendorId);
 
         // Assign values to Livewire properties
-        $this->customer_profile = $this->selected_customer->customer_company_logo;
-        $this->company_id = $this->selected_customer->company_id;
-        $this->customer_name = $this->selected_customer->customer_name;
-        $this->customer_company_name = $this->selected_customer->customer_company_name;
-        $this->email = $this->selected_customer->email;
-        $this->phone = $this->selected_customer->phone;
-        $this->address = $this->selected_customer->address;
-        $this->notes = $this->selected_customer->notes;
+        $this->vendor_profile = $this->selected_vendor->vendor_image;
+        $this->company_id = $this->selected_vendor->company_id;
+        $this->vendor_name = $this->selected_vendor->contact_person;
+        $this->vendor_company_name = $this->selected_vendor->vendor_name;
+        $this->email = $this->selected_vendor->email;
+        $this->phone = $this->selected_vendor->phone_number;
+        $this->address = $this->selected_vendor->address;
     }
     public function closeEdit()
     {
         $this->edit = false;
     }
 
-    public function updateCustomers()
+    public function updateVendors()
     {
         $this->validate([
             'company_id' => 'required',
-            'customer_name' => 'required',
+            'vendor_name' => 'required',
             'email' => 'required',
             'phone' => 'required',
             'address' => 'required',
-            'notes' => 'required',
-            'customer_company_name' => 'required'
+            'vendor_company_name' => 'required'
         ]);
-        $customer = CustomerDetails::find($this->selectedCustomerId);
+        $vendor = VendorDetails::find($this->selectedVendorId);
 
-        if ($this->customer_profile instanceof \Illuminate\Http\UploadedFile) {
-            $customerProfilePath = $this->customer_profile->store('customer_profiles', 'public');
-            $customer->update(['customer_company_logo' => $customerProfilePath]);
+        if ($this->vendor_profile instanceof \Illuminate\Http\UploadedFile) {
+            $vendorProfilePath = $this->vendor_profile->store('vendor_profiles', 'public');
+            $vendor->update(['vendor_image' => $vendorProfilePath]);
         }
 
 
-        $customer->update([
+        $vendor->update([
             'company_id' => $this->company_id,
-            'customer_name' => $this->customer_name,
-            'customer_company_name' => $this->customer_company_name,
+            'contact_person' => $this->vendor_name,
+            'vendor_name' => $this->vendor_company_name,
             'email' => $this->email,
-            'phone' => $this->phone,
+            'phone_number' => $this->phone,
             'address' => $this->address,
-            'notes' => $this->notes,
         ]);
 
         // Reset the Livewire properties and set edit mode to false
         $this->reset();
         $this->edit = false;
     }
-    public function updateStatus($customerId)
-    {
-        $customer = CustomerDetails::find($customerId);
 
-        $customer->status = $customer->status == 'active' ? 'inactive' : 'active';
-        $customer->save();
-        return redirect('/customers');
-    }
 
-    public $allCustomers;
+    public $allVendors;
     public $companies;
-    public $po = false;
-    public function addPO($customerId)
+    public $so = false;
+    public function addSO($vendorId)
     {
-        $this->po = true;
-        $this->selectedCustomer = CustomerDetails::where('customer_id', $customerId)->first();
-        $this->customer_id = $this->selectedCustomer->customer_id;
+        $this->so = true;
+        $this->selectedVendor = VendorDetails::where('vendor_id', $vendorId)->first();
+        $this->vendor_id = $this->selectedVendor->vendor_id;
     }
-    public function cancelPO()
+    public function cancelSO()
     {
-        $this->po = false;
+        $this->so = false;
     }
     public $vendors;
+    public $customers;
     public function render()
     {
         $this->companies = CompanyDetails::all();
-        $this->vendors = VendorDetails::all();
-        $this->customers = CustomerDetails::with('company')->orderBy('created_at', 'desc')->get();
-        $this->allCustomers = $this->filteredPeoples ?: $this->customers;
+        $this->customers = CustomerDetails::all();
+        $this->vendors = VendorDetails::with('company')->orderBy('created_at', 'desc')->get();
+        $this->allVendors = $this->filteredPeoples ?: $this->vendors;
         return view('livewire.vendors');
     }
 }

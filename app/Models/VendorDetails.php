@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
+
 class VendorDetails extends Model implements Authenticatable
 {
     use HasFactory;
@@ -53,4 +54,8 @@ class VendorDetails extends Model implements Authenticatable
         'status'
         // Add other fields as needed
     ];
+    public function company()
+    {
+        return $this->belongsTo(CompanyDetails::class, 'company_id', 'company_id');
+    }
 }

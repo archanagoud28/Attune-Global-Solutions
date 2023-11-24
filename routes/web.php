@@ -5,7 +5,6 @@ use App\Livewire\ContractorPage;
 
 use App\Livewire\Customers;
 use Illuminate\Support\Facades\Auth;
-use App\Livewire\Home;
 use App\Livewire\HrLogin;
 use App\Livewire\EmpRegister;
 use App\Livewire\EmpAccountDetails;
@@ -13,12 +12,11 @@ use App\Livewire\EmpFamilyDetails;
 use App\Livewire\EmployeePage;
 use App\Livewire\HomePage;
 
-use App\Livewire\VendorPage;
 use App\Livewire\EmployeeListPage;
 use App\Livewire\PurchaseOrder;
 use App\Livewire\SalesOrPurchaseOrders;
 use App\Livewire\TimeSheetDisplay;
-use App\Livewire\VendorRegister;
+use App\Livewire\Vendors;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,9 +80,8 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
     Route::get('/employee-page', EmployeePage::class)->name('employee-page');
     Route::get('/contractor-page', ContractorPage::class)->name('contractor-page');
-    Route::get('/vendor-page', VendorPage::class)->name('vendor-page');
-    Route::get('/vendor-register', VendorRegister::class)->name('vendor-register');
     Route::get('/customers', Customers::class)->name('customer-page');
+    Route::get('/vendors', Vendors::class)->name('vendor-page');
     Route::get('/sales-or-purchase-orders', SalesOrPurchaseOrders::class);
     Route::get('/time-sheet-display', TimeSheetDisplay::class)->name('time-sheet-display');
     Route::get('/purchase-order', PurchaseOrder::class)->name('purchase-order');

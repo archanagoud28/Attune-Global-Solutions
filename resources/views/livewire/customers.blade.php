@@ -479,7 +479,7 @@
 
     <!-- Everyone tab content -->
     <div class="row" style="margin-top: 15px;margin-left:50px">
-        <div class="col-md-4" style="background-color:white;border:1px solid grey; border-radius: 5px; height: auto; margin-right: 20px; padding: 5px;">
+        <div class="col-md-4" style="background-color:white;border:1px solid grey; border-radius: 5px; height: auto; margin-right: 20px; padding: 5px;overflow-y:auto;max-height:">
             <div class="container" style="margin-top: 15px">
                 <div class="row">
                     <div class="col" style="margin: 0px; padding: 0px">
@@ -497,7 +497,7 @@
 
             <div class="row" style="font-size: 13px;">
                 @if ($allCustomers->isEmpty())
-                <div class="container" style="text-align: center; color: gray;">No People Found</div>
+                <div class="container" style="text-align: center; color: gray;">No Customers Found</div>
                 @else
                 @foreach($allCustomers as $customer)
                 <div wire:click="selectCustomer('{{ $customer->customer_id }}')" class="container" style="border:1px solid darkgrey;height:auto;cursor: pointer; background-color: {{ $selectedCustomer && $selectedCustomer->customer_id == $customer->customer_id ? '#ccc' : 'white' }}; width: 500px; border-radius: 5px;padding:3px">
@@ -600,15 +600,10 @@
                         $selectedPerson = $selectedCustomer ?? $customers->first();
                         $isActive = $selectedPerson->status == 'active';
                         @endphp
-                        <!-- @if($selectedPerson->status=="1") -->
-                        <button wire:click="showPoList('{{ $selectedPerson->customer_id }}')" class="action-button" style="background-color:blue;border-radius:5px;border:none;color:white">Purchased Orders</button>
-                        <button wire:click="addPO('{{ $selectedPerson->customer_id }}')" class="action-button" style="background-color:green;border-radius:5px;border:none;color:white">ADD Purchase Order</button>
-                        <!-- @else
-                        <button class="action-button" style="background-color:lightblue;border-radius:5px;border:none;color:white" disabled>Purchased Orders</button>
-                        <button class="action-button" style="background-color:lightgreen;border-radius:5px;border:none;color:white" disabled>ADD Purchase Order</button> -->
-                        <!-- @endif -->
-                        <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'blue' : 'lightblue' }};border-radius:5px;border:none; color: white;">Edit</button>
-                        <!-- <button wire:click="updateStatus('{{ $selectedPerson->id }}')" class="action-button" style="background-color: {{ $isActive ? 'green' : 'red' }};border-radius:5px;border:none; color: white;">{{ $isActive ? 'Active' : 'Inactive' }}</button> -->
+                        <button wire:click="showPoList('{{ $selectedPerson->customer_id }}')" class="action-button" style="background-color:orange;border-radius:5px;border:none;color:white">View PO</button>
+                        <button wire:click="addPO('{{ $selectedPerson->customer_id }}')" class="action-button" style="background-color:green;border-radius:5px;border:none;color:white">ADD PO</button>
+                      
+                        <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="background-color: blue;border-radius:5px;border:none; color: white;">Edit</button>
                     </div>
                     <div class="row">
                         <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->customer_company_logo) }}" alt="Profile Image">
@@ -727,17 +722,9 @@
             <div class="row" style="font-size: 13px;">
                 <div class="row">
                     <div style="text-align: end; margin-top:15px">
-                        <!-- @if($firstPerson->status=='1') -->
-                        <button wire:click="showPoList('{{ $firstPerson->customer_id }}')" style="background-color:blue ;border-radius:5px;border:none; color: white;">Purchased Orders</button>
-                        <button wire:click="addPO('{{ $firstPerson->customer_id }}')" style="background-color:green ;border-radius:5px;border:none; color: white;">ADD Purchase Order</button>
+                        <button wire:click="showPoList('{{ $firstPerson->customer_id }}')" style="background-color:orange ;border-radius:5px;border:none; color: white;">View PO</button>
+                        <button wire:click="addPO('{{ $firstPerson->customer_id }}')" style="background-color:green ;border-radius:5px;border:none; color: white;">ADD PO</button>
                         <button wire:click="editCustomers('{{ $firstPerson->id }}')" class="action-button" style="background-color:blue ;border-radius:5px;border:none; color: white;">Edit</button>
-                        <!-- <button wire:click="updateStatus('{{ $firstPerson->id }}')" class="action-button" style="background-color: green;border-radius:5px;border:none; color: white;">Active</button> -->
-                        <!-- @else -->
-                        <!-- <button style="background-color:lightblue ;border-radius:5px;border:none; color: white;">Purchased Orders</button>
-                        <button style="background-color:lightgreen ;border-radius:5px;border:none; color: white;" disabled>ADD PO</button>
-                        <button class="action-button" style="background-color:lightblue ;border-radius:5px;border:none; color: white;" disabled>Edit</button>
-                        <button wire:click="updateStatus('{{ $firstPerson->id }}')" class="action-button" style="background-color: red;border-radius:5px;border:none; color: white;">Inactive</button> -->
-                        <!-- @endif -->
                     </div>
                     <div class="row">
                         <img class="customer-image" src="{{ asset('storage/' . optional($firstPerson)->customer_company_logo) }}" alt="Profile Image">
