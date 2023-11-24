@@ -42,6 +42,15 @@
         font-weight:500;
         color:#fff;
         width:100px;
+        padding:2px;
+      }
+      .btn:hover{
+        background:#fff;
+        border:1px solid #003767;
+        font-size:0.875rem;
+        font-weight:500;
+        color:#003767;
+        width:100px;
       }
       .view-container{
         display:flex;
@@ -81,6 +90,7 @@
         font-weight:600;
         width:50px;
       }
+      
       .pink-background {
      position: absolute;
     top: 0;
@@ -90,7 +100,7 @@
     border-bottom-left-radius: 5px;
     left: 0;
     height: 100%;
-    background-color: #002555;
+    background-color: #003767;
     padding: 3px;
 }
 
@@ -102,7 +112,7 @@
         <div class="text">
             <h6>Welcome Bandari Divya, your dashboard is ready!</h6>
             <p>Great Job, your affiliate dashboard is ready to go!You can view profiles,vendors,customers and purchase orders.</p>
-            <button class="btn ">View Profile</button>
+            <button class="btn">View Profile</button>
         </div>
         <div class="image">
             <img src="https://img.freepik.com/free-vector/modern-business-team-working-open-office-space_74855-5541.jpg" alt="" style="width:300px;height:200px;">
