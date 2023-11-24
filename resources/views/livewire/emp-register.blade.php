@@ -35,24 +35,80 @@ a:hover{
     border-radius:10px;
     background:#fff;
 }
+.alert-container {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    display: none; /* Initially hide the container */
+}
+
+.close-btn {
+    cursor: pointer;
+    float: right;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.close-btn:hover {
+    color: #fff; /* Change color on hover */
+}
+.view-button {
+            background-color: rgb(2, 17, 79);
+            color: white;
+            border-radius: 7px;
+            border: none;
+            cursor: pointer;
+            margin-left:10px;
+            padding:4px 10px;
+            font-size:0.825rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .view-button:hover {
+            background-color: #0056b3;
+            color:#fff;
+        }
 </style>
 <div>
     <div class="container" style="padding:0px;margin:30px 0;">
-        @if (session()->has('emp_success'))
-        <div class="emp-success" style="width:608px;text-align: center; color: green; padding: 10px; border-radius: 10px; margin: 0 auto; background-color: lightgreen; display: flex; justify-content: center; align-items: center;">
-            <b>{{ session('emp_success') }}</b>
+    <div id="alert-container" class="alert-container">
+            <span id="close-btn" class="close-btn">&times;</span>
+            @if(session()->has('emp_success'))
+                {{ session('emp_success') }}
+            @endif
         </div>
- 
         <script>
+        // Wait for the document to be ready (if using jQuery)
+        $(document).ready(function() {
+            // Show the alert container
+            $('#alert-container').fadeIn();
+
+            // Set a timeout to hide the alert after a certain duration (e.g., 5000 milliseconds)
             setTimeout(function() {
-                document.querySelector('.emp-success').style.display = 'none';
-            }, 5000);
-        </script>
-        @endif
+                $('#alert-container').fadeOut();
+            }, 5000); // Adjust the duration as needed
+
+            // Close the alert on close button click
+            $('#close-btn').on('click', function() {
+                $('#alert-container').fadeOut();
+            });
+        });
+    </script>
+
         <div class="container " style=" padding:10px;background:#f2f2f2;border:1px solid #ccc;">
             <div class="col-md-12">
                 <div class="emp-container" style="padding:0; margin:0 auto;">
-                     <div style="display:flex;justify-content:end;"><a style="text-decoration:none;font-weight:600;color:#00459c;"href="{{route('employee-list-page')}}">View Employee List</a></div>
+                     <div style="display:flex;justify-content:end;">
+                     <a style="text-decoration:none;font-weight:600;color:#00459c;"href="{{route('employee-list-page')}}"><button class="view-button">View Employees</button></a>
+                     <a style="text-decoration:none;font-weight:600;color:#00459c;"href="{{route('contractor-page')}}"><button class="view-button">View Contractors</button></a>
+                    </div>
                     <div class="card-header" style="background-color: #00234f;padding:10px;width:50%;margin-left:20%; border-radius:20px;;">
                         <h5 class="mb-0" style="text-align: center;color:white;">Employee Registration Form</h5>
                     </div>
