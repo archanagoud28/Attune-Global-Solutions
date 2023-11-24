@@ -1,3 +1,4 @@
+
 <?php
 
 
@@ -19,6 +20,7 @@ use App\Livewire\PurchaseOrder;
 use App\Livewire\SalesOrPurchaseOrders;
 use App\Livewire\TimeSheetDisplay;
 use App\Livewire\VendorRegister;
+use App\Livewire\Vendors;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,43 +39,43 @@ Route::middleware(['checkAuth'])->group(function () {
 });
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        // Get the currently authenticated user
-        $user = Auth::user();
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/', function () {
+//         // Get the currently authenticated user
+//         $user = Auth::user();
 
-        // Check if a user is authenticated
-        if ($user) {
-            // Get the role of the user
-            $role = $user->role;
+//         // Check if a user is authenticated
+//         if ($user) {
+//             // Get the role of the user
+//             $role = $user->role;
 
-            // Redirect based on the user's role
-            switch ($role) {
-                case 'hr':
-                    return redirect()->route('home-page');
-                    break;
-                case 'vendor':
-                    return redirect()->route('vendor-page');
-                    break;
-                case 'customer':
-                    return redirect()->route('customer-page');
-                    break;
-                case 'employee':
-                    return redirect()->route('employee-page');
-                    break;
-                case 'contractor':
-                    return redirect()->route('contractor-page');
-                    break;
-                default:
-                    // Handle other roles or unauthorized access
-                    abort(403, 'Unauthorized');
-            }
-        } else {
-            // User is not authenticated, handle accordingly
-            return redirect()->route('hr-login');
-        }
-    });
-});
+//             // Redirect based on the user's role
+//             switch ($role) {
+//                 case 'hr':
+//                     return redirect()->route('home-page');
+//                     break;
+//                 case 'vendor':
+//                     return redirect()->route('vendor-page');
+//                     break;
+//                 case 'customer':
+//                     return redirect()->route('customer-page');
+//                     break;
+//                 case 'employee':
+//                     return redirect()->route('employee-page');
+//                     break;
+//                 case 'contractor':
+//                     return redirect()->route('contractor-page');
+//                     break;
+//                 default:
+//                     // Handle other roles or unauthorized access
+//                     abort(403, 'Unauthorized');
+//             }
+//         } else {
+//             // User is not authenticated, handle accordingly
+//             return redirect()->route('hr-login');
+//         }
+//     });
+// });
 
 Route::middleware(['auth:hr'])->group(function () {
     Route::get('/', HomePage::class)->name('home-page');
@@ -82,8 +84,7 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/emp-family-details', EmpFamilyDetails::class)->name('emp-family-details');
     Route::get('/employee-page', EmployeePage::class)->name('employee-page');
     Route::get('/contractor-page', ContractorPage::class)->name('contractor-page');
-    Route::get('/vendor-page', VendorPage::class)->name('vendor-page');
-    Route::get('/vendor-register', VendorRegister::class)->name('vendor-register');
+    Route::get('/vendor-page', Vendors::class)->name('vendor-page');
     Route::get('/customers', Customers::class)->name('customer-page');
     Route::get('/sales-or-purchase-orders', SalesOrPurchaseOrders::class);
     Route::get('/time-sheet-display', TimeSheetDisplay::class)->name('time-sheet-display');
@@ -91,24 +92,23 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/employee-list-page', EmployeeListPage::class)->name('employee-list-page');
 });
 
-// Route::middleware(['auth:vendor'])->group(function () {
-//     Route::get('/vendor-page', VendorPage::class)->name('vendor-page');
-//     Route::get('/vendor-register', VendorRegister::class)->name('vendor-register');
-// });
+Route::middleware(['auth:vendor'])->group(function () {
+    Route::get('/vendor-home', HomePage::class)->name('vendor-home');
+    Route::get('/vendor-pages', Vendors::class)->name('vendor-pages');
+});
 
-// Route::middleware(['auth:customer'])->group(function () {
+Route::middleware(['auth:customer'])->group(function () {
+    Route::get('/customer-home', HomePage::class)->name('customer-home');
+    Route::get('/customer-pages', Customers::class)->name('customer-pages');
+});
 
-//     Route::get('/customers', Customers::class)->name('customer-page');
-// });
+Route::middleware(['auth:employee'])->group(function () {
+    Route::get('/employee-home', HomePage::class)->name('employee-home');
+    Route::get('/employee-pages', EmployeePage::class)->name('employee-pages');
+    Route::get('/time-sheets-display', TimeSheetDisplay::class)->name('time-sheets-display');
+});
 
-// Route::middleware(['auth:employee'])->group(function () {
-
-//     Route::get('/employee-page', EmployeePage::class)->name('employee-page');
-
-// });
-
-// Route::middleware(['auth:contractor'])->group(function () {
-
-//     Route::get('/contractor-page', ContractorPage::class)->name('contractor-page');
-
-// });
+Route::middleware(['auth:contractor'])->group(function () {
+    Route::get('/contractor-home', HomePage::class)->name('contractor-home');
+    Route::get('/contractor-pages', ContractorPage::class)->name('contractor-pages');
+});

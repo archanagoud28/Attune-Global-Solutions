@@ -219,6 +219,7 @@
                             $selectedPerson = $selectedCustomer ?? $customers->first();
                             $isActive = $selectedPerson->status == 'active';
                             @endphp
+                         
                         </div>
                         <div >
                             <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->image) }}" alt="Profile Image">

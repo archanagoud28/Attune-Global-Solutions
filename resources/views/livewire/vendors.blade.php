@@ -1,4 +1,5 @@
 <div style="padding:20px">
+
     <!-- Add this to your HTML file -->
     <style>
         .customer-image {
@@ -169,19 +170,20 @@
     </style>
 
     <h4 style="margin-top: 50px;text-align:center;">
-        Customers
+        Vendors
     </h4>
-    <p style="text-align: end;">
-        <button wire:click="open" class="button">ADD Customers</button>
+    <p style="text-align:end;">
+        <button wire:click="open" class="button">ADD Vendors</button>
     </p>
 
-    @if(session()->has('success'))
+
+    @if(session()->has('vendor'))
     <div id="successAlert" style="text-align: center;" class="alert alert-success">
-        {{ session('success') }}
+        {{ session('vendor') }}
     </div>
-    @elseif(session()->has('purchase-order'))
+    @elseif(session()->has('sales-order'))
     <div id="purchaseOrderAlert" style="text-align: center;" class="alert alert-success">
-        {{ session('purchase-order') }}
+        {{ session('sales-order') }}
     </div>
     @endif
     <script>
@@ -195,17 +197,17 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: rgb(2, 17, 79); height: 50px;">
-                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>ADD Customers Details</b></h5>
+                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>ADD Vendors Details</b></h5>
                     <button wire:click="close" type="button" class="close" style="border:none" data-dismiss="modal" aria-label="Close">
                         <span style="color:rgb(2, 17, 79)" aria-hidden="true" style="color: white;">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form wire:submit.prevent="addCustomers">
+                    <form wire:submit.prevent="addVendors">
                         <div>
-                            <label for="customer_profile" style="font-size: 12px;">Customer Company Logo:</label>
-                            <input type="file" wire:model="customer_profile">
-                            @error('customer_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                            <label for="customer_profile" style="font-size: 12px;">Vendor Company Logo:</label>
+                            <input type="file" wire:model="vendor_profile">
+                            @error('vendor_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
 
                         <div style="margin-bottom:10px">
@@ -221,15 +223,15 @@
 
 
                         <div>
-                            <label for="customer_name" style="font-size: 12px;">Customer Name:</label>
-                            <input type="text" wire:model="customer_name">
-                            @error('customer_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                            <label for="customer_name" style="font-size: 12px;">Vendor Name:</label>
+                            <input type="text" wire:model="vendor_name">
+                            @error('vendor_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
 
                         <div>
-                            <label for="customer_company_name" style="font-size: 12px;">Customer Company Name:</label>
-                            <input type="text" wire:model="customer_company_name">
-                            @error('customer_company_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                            <label for="customer_company_name" style="font-size: 12px;">Vendor Company Name:</label>
+                            <input type="text" wire:model="vendor_company_name">
+                            @error('vendor_company_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
                         <div>
                             <label for="email" style="font-size: 12px;">Email:</label>
@@ -247,12 +249,6 @@
                             <label for="address" style="font-size: 12px;">Address:</label>
                             <textarea wire:model="address"></textarea>
                             @error('address') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="notes" style="font-size: 12px;">Notes:</label>
-                            <textarea wire:model="notes"></textarea>
-                            @error('notes') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
 
                         <div style="text-align: center; justify-content: center; align-items: center; display: flex; margin-top: 10px;">
@@ -273,16 +269,17 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: rgb(2, 17, 79); height: 50px;">
-                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>Edit Customers Details</b></h5>
+                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>Edit Vendors Details</b></h5>
                     <button wire:click="closeEdit" type="button" class="close" style="border:none" data-dismiss="modal" aria-label="Close">
                         <span style="color:rgb(2, 17, 79)" aria-hidden="true" style="color: white;">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form wire:submit.prevent="updateCustomers">
+                    <form wire:submit.prevent="updateVendors">
                         <div>
-                            <label for="customer_profile" style="font-size: 12px;">Customer Company Logo:</label>
-                            <input type="file" wire:model="customer_profile">
+                            <label for="customer_profile" style="font-size: 12px;">Vendor Company Logo:</label>
+                            <input type="file" wire:model="vendor_profile">
+                            @error('vendor_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
 
                         <div style="margin-bottom:10px">
@@ -298,15 +295,15 @@
 
 
                         <div>
-                            <label for="customer_name" style="font-size: 12px;">Customer Name:</label>
-                            <input type="text" wire:model="customer_name">
-                            @error('customer_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                            <label for="customer_name" style="font-size: 12px;">Vendor Name:</label>
+                            <input type="text" wire:model="vendor_name">
+                            @error('vendor_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
 
                         <div>
-                            <label for="customer_company_name" style="font-size: 12px;">Customer Company Name:</label>
-                            <input type="text" wire:model="customer_company_name">
-                            @error('customer_company_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                            <label for="customer_company_name" style="font-size: 12px;">Vendor Company Name:</label>
+                            <input type="text" wire:model="vendor_company_name">
+                            @error('vendor_company_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
                         <div>
                             <label for="email" style="font-size: 12px;">Email:</label>
@@ -326,15 +323,9 @@
                             @error('address') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
 
-                        <div>
-                            <label for="notes" style="font-size: 12px;">Notes:</label>
-                            <textarea wire:model="notes"></textarea>
-                            @error('notes') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
                         <div style="text-align: center; justify-content: center; align-items: center; display: flex; margin-top: 10px;">
                             <button style="margin-left: 5%; font-size: 12px;" class="btn btn-success" type="submit">Update</button>
-                            <button class="btn btn-danger" wire:click="closeEdit" type="button" style="font-size: 12px;">Cancel</button>
+                            <button class="btn btn-danger" wire:click="close" type="button" style="font-size: 12px;">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -347,13 +338,13 @@
 
 
 
-    @if($po=="true")
+    @if($so=="true")
     <div class="modal" tabindex="-1" role="dialog" style="display: block; overflow-y: auto;">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: rgb(2, 17, 79); height: 50px;">
-                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>ADD Purchase Order</b></h5>
-                    <button wire:click="cancelPO" type="button" class="close" style="border:none" data-dismiss="modal" aria-label="Close">
+                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>ADD Sales Order</b></h5>
+                    <button wire:click="cancelSO" type="button" class="close" style="border:none" data-dismiss="modal" aria-label="Close">
                         <span style="color:rgb(2, 17, 79)" aria-hidden="true" style="color: white;">×</span>
                     </button>
                 </div>
@@ -364,17 +355,17 @@
                                 margin-bottom: 10px;
                             }
                         </style>
-                        <form wire:submit.prevent="savePurchaseOrder">
+                        <form wire:submit.prevent="saveSalesOrder">
                             @csrf
                             <div class="form-group">
-                                <label style="font-size: 12px;" for="vendorName" style="font-size: 12px;">Vendor Name:</label>
-                                <select style="font-size: 12px;" class="form-control" id="vendorName" wire:model="vendorId">
-                                    <option style="font-size: 12px;" value="">Select Vendor</option>
-                                    @foreach($vendors as $vendor)
-                                    <option style="font-size: 12px;" value="{{ $vendor->vendor_id }}">{{ $vendor->vendor_name }}</option>
+                                <label style="font-size: 12px;" for="vendorName" style="font-size: 12px;">Customer Name:</label>
+                                <select style="font-size: 12px;" class="form-control" id="vendorName" wire:model="customerId">
+                                    <option style="font-size: 12px;" value="">Select Customer</option>
+                                    @foreach($customers as $customer)
+                                    <option style="font-size: 12px;" value="{{ $customer->customer_id }}">{{ $customer->customer_company_name }}</option>
                                     @endforeach
                                 </select>
-                                @error('vendorId') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                                @error('customerId') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                             </div>
 
                             <div class="form-group">
@@ -391,7 +382,6 @@
                                         <option style="font-size: 12px;" value="monthly">Per Month</option>
                                     </select>
                                     @error('rateType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-
                                 </div>
                             </div>
 
@@ -479,9 +469,9 @@
     @endif
 
     <!-- Everyone tab content -->
-    @if($poList=="true")
+    @if($soList=="true")
     <div style="text-align: end;">
-        <button wire:click="closePOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
+        <button wire:click="closeSOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
     </div>
     <!-- resources/views/livewire/purchase-order-table.blade.php -->
 
@@ -505,20 +495,24 @@
 
             th {
                 background-color: #f2f2f2;
+                font-size: 12px;
+
             }
 
             tr:hover {
                 background-color: #f5f5f5;
+                font-size: 12px;
+
             }
         </style>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th>PO Number</th>
-                    <th>Customer ID</th>
+                    <th>SO Number</th>
                     <th>Vendor ID</th>
-                    <th>Vendor Name</th>
+                    <th>Customer ID</th>
+                    <th>Customer Name</th>
                     <th>Rate</th>
                     <th>End Client Timesheet Required</th>
                     <th>Time Sheet Type</th>
@@ -528,35 +522,34 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($showPOLists as $purchaseOrder)
+                @forelse($showSOLists as $salesOrder)
                 <tr>
-                    <td>{{ $purchaseOrder->po_number }}</td>
-                    <td>{{ $purchaseOrder->customer_id }}</td>
-                    <td>{{ $purchaseOrder->vendor_id }}</td>
-                    <td>{{ $purchaseOrder->vendor->vendor_name }}</td>
-                    <td>{{ $purchaseOrder->rate }}</td>
-                    <td>{{ $purchaseOrder->end_client_timesheet_required }}</td>
-                    <td>{{ $purchaseOrder->time_sheet_type }}</td>
-                    <td>{{ $purchaseOrder->time_sheet_begins }}</td>
-                    <td>{{ $purchaseOrder->invoice_type }}</td>
-                    <td>{{ $purchaseOrder->payment_type }}</td>
+                    <td>{{ $salesOrder->so_number }}</td>
+                    <td>{{ $salesOrder->vendor_id }}</td>
+                    <td>{{ $salesOrder->customer_id }}</td>
+                    <td>{{ $salesOrder->customer->customer_company_name }}</td>
+                    <td>{{ $salesOrder->rate }}</td>
+                    <td>{{ $salesOrder->end_client_timesheet_required }}</td>
+                    <td>{{ $salesOrder->time_sheet_type }}</td>
+                    <td>{{ $salesOrder->time_sheet_begins }}</td>
+                    <td>{{ $salesOrder->invoice_type }}</td>
+                    <td>{{ $salesOrder->payment_type }}</td>
                 </tr>
                 @empty
-                <div style="text-align: center; margin-top: 10px;">Purchase Orders Not Found</div>
+                <div style="text-align: center; margin-top: 10px;">Sales Orders Not Found</div>
                 @endforelse
 
             </tbody>
         </table>
     </div>
-
     @else
-    <div class="row" style="margin-top: 15px">
-        <div class="col-md-3" style="background-color:#f2f2f2;border-radius: 5px; height: auto; padding: 5px;margin-right:20px;max-height:500px;overflow-y:auto">
+    <div class="row" style="margin-top: 15px;">
+        <div class="col-md-3" style="background-color:#f2f2f2; border-radius: 5px; height: auto; padding: 5px;margin-right:20px;max-height:500px;overflow-y:auto">
             <div class="container" style="margin-top: 15px">
                 <div class="row">
                     <div class="col" style="margin: 0px; padding: 0px">
                         <div class="input-group">
-                            <input wire:model="searchTerm" style="font-size: 10px; cursor: pointer; border-radius: 5px 0 0 5px;" type="text" class="form-control" placeholder="Search for customers" aria-label="Search" aria-describedby="basic-addon1">
+                            <input wire:model="searchTerm" style="font-size: 10px; cursor: pointer; border-radius: 5px 0 0 5px;" type="text" class="form-control" placeholder="Search for vendors" aria-label="Search" aria-describedby="basic-addon1">
                             <div class="input-group-append">
                                 <button wire:click="filter" style="height: 30px; border-radius: 0 5px 5px 0; background-color: #007BFF; color: #fff; border: none;" class="btn" type="button">
                                     <i style="text-align: center;" class="fa fa-search"></i>
@@ -568,17 +561,17 @@
             </div>
 
             <div class="row" style="font-size: 13px;">
-                @if ($allCustomers->isEmpty())
-                <div class="container" style="text-align: center; color: gray;">No Customers Found</div>
+                @if ($allVendors->isEmpty())
+                <div class="container" style="text-align: center; color: gray;">No Vendors Found</div>
                 @else
-                @foreach($allCustomers as $customer)
-                <div wire:click="selectCustomer('{{ $customer->customer_id }}')" class="container" style="height:45px;cursor: pointer; background-color: {{ $selectedCustomer && $selectedCustomer->customer_id == $customer->customer_id ? '#ccc' : 'white' }}; width: 500px; border-radius: 5px;padding:2px;">
+                @foreach($allVendors as $vendor)
+                <div wire:click="selectVendor('{{ $vendor->vendor_id }}')" class="container" style="height:45px;cursor: pointer; background-color: {{ $selectedVendor && $selectedVendor->vendor_id == $vendor->vendor_id ? '#ccc' : 'white' }}; width: 500px; border-radius: 5px;padding:2px">
                     <div class="row align-items-center">
                         <div class="col-md-4">
-                            <img style="border-radius: 50%" class="profile-image" src="{{ asset('/storage/' . $customer->customer_company_logo) }}" alt="Profile Image">
+                            <img style="border-radius: 50%" class="profile-image" src="{{ asset('/storage/' . $vendor->vendor_image) }}" alt="Profile Image">
                         </div>
                         <div class="col-md-8">
-                            <h6 class="username" style="font-size: 12px; color: black;">{{ $customer->customer_company_name }}</h6>
+                            <h6 class="username" style="font-size: 12px; color: black;">{{ $vendor->vendor_name }}</h6>
                         </div>
                     </div>
                 </div>
@@ -589,41 +582,38 @@
 
         <!-- Details of the selected person -->
         <div class="col-md-8" style="height:auto; background-color: #f2f2f2; border-radius: 5px; padding: 5px">
-            @if ($selectedCustomer)
-
+            @if ($selectedVendor)
             <div class="row" style="font-size: 13px;">
                 <div class="row">
                     <div style="text-align: center; margin-top:15px">
                         @php
-                        $selectedPerson = $selectedCustomer ?? $customers->first();
+                        $selectedPerson = $selectedVendor ?? $vendors->first();
                         $isActive = $selectedPerson->status == 'active';
                         @endphp
                         <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD Employee</button> -->
-                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button>
-                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Invoices</button> -->
+                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button> -->
+                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Invoices</button>
                         <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Time Sheets</button>
-                        <button wire:click="showPoList('{{ $selectedPerson->customer_id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79);border-radius:5px;border:none;color:white">View PO</button>
-                        <button wire:click="addPO('{{ $selectedPerson->customer_id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79);border-radius:5px;border:none;color:white">ADD PO</button>
+                        <button wire:click="showSoList('{{ $selectedPerson->vendor_id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79);border-radius:5px;border:none;color:white">View SO</button>
+                        <button wire:click="addSO('{{ $selectedPerson->vendor_id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79);border-radius:5px;border:none;color:white">ADD SO</button>
 
-                        <button wire:click="editCustomers('{{ $selectedPerson->id }}')" class="action-button" style="margin-right: 10px;background-color: rgb(2, 17, 79);border-radius:5px;border:none; color: white;">Edit</button>
+                        <button wire:click="editVendors('{{ $selectedPerson->id }}')" class="action-button" style="margin-right: 10px;background-color: rgb(2, 17, 79);border-radius:5px;border:none; color: white;">Edit</button>
                     </div>
                     <div class="row">
-                        <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->customer_company_logo) }}" alt="Profile Image">
+                        <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->vendor_image) }}" alt="Profile Image">
                     </div>
                     <div class="col" style="margin-top: 50px; margin-right: 80px">
                         <div style="display: flex; flex-wrap: wrap;">
-                            <div style="flex: 1; margin-left:22%;">
+                            <div style="flex: 1; margin-left: 22%;">
 
-                                <h2 style="font-size: 12px;"><strong>Customer Name</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($selectedPerson)->customer_company_name }}</p>
+                                <h2 style="font-size: 12px;"><strong>Vendor Name</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($selectedPerson)->vendor_name }}</p>
 
-                                <h2 style="font-size: 12px;"><strong>Customer ID</strong></h2>
-                                <p style="font-size: 12px;">(#{{ optional($selectedPerson)->customer_id }})</p>
+                                <h2 style="font-size: 12px;"><strong>Vendor ID</strong></h2>
+                                <p style="font-size: 12px;">(#{{ optional($selectedPerson)->vendor_id }})</p>
 
                                 <h2 style="font-size: 12px;"><strong>Contact Phone</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($selectedPerson)->phone }}</p>
-                                <h2 style="font-size: 12px;"><strong>Notes</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($selectedPerson)->notes }}</p>
+                                <p style="font-size: 12px;">{{ optional($selectedPerson)->phone_number }}</p>
                             </div>
 
                             <div style="flex: 1;margin-left: 8%;">
@@ -634,7 +624,7 @@
                                 <p style="font-size: 12px;">{{ optional($selectedPerson)->email }}</p>
 
                                 <h2 style="font-size: 12px;"><strong>Contact Name</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($selectedPerson)->customer_name }}</p>
+                                <p style="font-size: 12px;">{{ optional($selectedPerson)->contact_person }}</p>
                             </div>
                         </div>
 
@@ -642,10 +632,10 @@
                 </div>
             </div>
 
-            @elseif (!$customers->isEmpty())
-            @if($poList=="true")
+            @elseif (!$vendors->isEmpty())
+            @if($soList=="true")
             <div style="text-align: end;">
-                <button wire:click="closePOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
+                <button wire:click="closeSOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
             </div>
             <!-- resources/views/livewire/purchase-order-table.blade.php -->
 
@@ -669,24 +659,20 @@
 
                     th {
                         background-color: #f2f2f2;
-                        font-size: 12px;
-
                     }
 
                     tr:hover {
                         background-color: #f5f5f5;
-                        font-size: 12px;
-
                     }
                 </style>
 
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>PO Number</th>
-                            <th>Customer ID</th>
+                            <th>SO Number</th>
                             <th>Vendor ID</th>
-                            <th>Vendor Name</th>
+                            <th>Customer ID</th>
+                            <th>Customer Name</th>
                             <th>Rate</th>
                             <th>End Client Timesheet Required</th>
                             <th>Time Sheet Type</th>
@@ -696,21 +682,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($showPOLists as $purchaseOrder)
+                        @forelse($showSOLists as $salesOrder)
                         <tr>
-                            <td>{{ $purchaseOrder->po_number }}</td>
-                            <td>{{ $purchaseOrder->customer_id }}</td>
-                            <td>{{ $purchaseOrder->vendor_id }}</td>
-                            <td>{{ $purchaseOrder->vendor->vendor_name }}</td>
-                            <td>{{ $purchaseOrder->rate }}</td>
-                            <td>{{ $purchaseOrder->end_client_timesheet_required }}</td>
-                            <td>{{ $purchaseOrder->time_sheet_type }}</td>
-                            <td>{{ $purchaseOrder->time_sheet_begins }}</td>
-                            <td>{{ $purchaseOrder->invoice_type }}</td>
-                            <td>{{ $purchaseOrder->payment_type }}</td>
+                            <td>{{ $salesOrder->so_number }}</td>
+                            <td>{{ $salesOrder->vendor_id }}</td>
+                            <td>{{ $salesOrder->customer_id }}</td>
+                            <td>{{ $salesOrder->customer->customer_company_name }}</td>
+                            <td>{{ $salesOrder->rate }}</td>
+                            <td>{{ $salesOrder->end_client_timesheet_required }}</td>
+                            <td>{{ $salesOrder->time_sheet_type }}</td>
+                            <td>{{ $salesOrder->time_sheet_begins }}</td>
+                            <td>{{ $salesOrder->invoice_type }}</td>
+                            <td>{{ $salesOrder->payment_type }}</td>
                         </tr>
                         @empty
-                        <div style="text-align: center; margin-top: 10px;">Purchase Orders Not Found</div>
+                        <div style="text-align: center; margin-top: 10px;">Sales Orders Not Found</div>
                         @endforelse
 
                     </tbody>
@@ -720,9 +706,9 @@
             @else
             <!-- Display details of the first person in the list -->
             @php
-            $firstPerson = $customers->first();
-            $starredPerson = DB::table('customer_details')
-            ->where('customer_id', $firstPerson->customer_id)
+            $firstPerson = $vendors->first();
+            $starredPerson = DB::table('vendor_details')
+            ->where('vendor_id', $firstPerson->vendor_id)
             ->first();
             @endphp
 
@@ -730,42 +716,37 @@
                 <div class="row">
                     <div style="text-align: center; margin-top:15px">
                         <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD Employee</button> -->
-                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button>
-                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Invoices</button> -->
+                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button> -->
+                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Invoices</button>
                         <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Time Sheets</button>
-
-                        <button wire:click="showPoList('{{ $firstPerson->customer_id }}')" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">View PO</button>
-                        <button wire:click="addPO('{{ $firstPerson->customer_id }}')" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD PO</button>
-                        <button wire:click="editCustomers('{{ $firstPerson->id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Edit</button>
+                        <button wire:click="showSoList('{{ $firstPerson->vendor_id }}')" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">View SO</button>
+                        <button wire:click="addSO('{{ $firstPerson->vendor_id }}')" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD SO</button>
+                        <button wire:click="editVendors('{{ $firstPerson->id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Edit</button>
                     </div>
                     <div class="row">
-                        <img class="customer-image" src="{{ asset('storage/' . optional($firstPerson)->customer_company_logo) }}" alt="Profile Image">
+                        <img class="customer-image" src="{{ asset('storage/' . optional($firstPerson)->vendor_image) }}" alt="Profile Image">
                     </div>
                     <div class="col" style="margin-top: 50px; margin-right: 80px">
                         <div style="display: flex; flex-wrap: wrap;">
                             <div style="flex: 1; margin-left: 22%;">
-                                <h2 style="font-size: 12px;"><strong>Customer Name</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($firstPerson)->customer_company_name }}</p>
+                                <h2 style="font-size: 12px;"><strong>Vendor Name</strong></h2>
+                                <p style="font-size: 12px;">{{ optional($firstPerson)->vendor_name }}</p>
 
-                                <h2 style="font-size: 12px;"><strong>Customer ID</strong></h2>
-                                <p style="font-size: 12px;">(#{{ optional($firstPerson)->customer_id }})</p>
+                                <h2 style="font-size: 12px;"><strong>Vendor ID</strong></h2>
+                                <p style="font-size: 12px;">(#{{ optional($firstPerson)->vendor_id }})</p>
 
-                                <h2 style="font-size: 12px;"><strong>Contact Phone</strong></h2>
+                                <h2 style="font-size: 12px;"><strong>Vendor Phone</strong></h2>
                                 <p style="font-size: 12px;">{{ optional($firstPerson)->phone }}</p>
-                                <h2 style="font-size: 12px;"><strong>Notes</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($firstPerson)->notes }}</p>
+
                             </div>
 
                             <div style="flex: 1;margin-left: 8%;">
                                 <h2 style="font-size: 12px;"><strong>Address</strong></h2>
                                 <p style="font-size: 12px;">{{ optional($firstPerson)->address }}</p>
-
                                 <h2 style="font-size: 12px;"><strong>Email</strong></h2>
                                 <p style="font-size: 12px;">{{ optional($firstPerson)->email }}</p>
                                 <h2 style="font-size: 12px;"><strong>Contact Name</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($firstPerson)->customer_name }}</p>
-
-
+                                <p style="font-size: 12px;">{{ optional($firstPerson)->contact_person }}</p>
                             </div>
                         </div>
 

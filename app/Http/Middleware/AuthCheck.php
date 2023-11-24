@@ -21,7 +21,7 @@ class AuthCheck
             session(['user_type' => 'hr']);
             return redirect('/');
         } else if (auth()->guard('employee')->check()) {
-            session(['user_type' => 'employee-page']);
+            session(['user_type' => 'employee']);
             return redirect('/');
         }else if (auth()->guard('vendor')->check()) {
             session(['user_type' => 'vendor']);
