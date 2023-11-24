@@ -103,6 +103,7 @@
     <div class="container-fluid">
         <div class="col-md-2">
             <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+            <a class="menu-link" href="/"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
             <a class="menu-link" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
             <a class="menu-link" href="vendor-page"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
             <a class="menu-link" href="employee-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>

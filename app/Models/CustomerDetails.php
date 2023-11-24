@@ -14,7 +14,7 @@ class CustomerDetails extends Model implements Authenticatable
     public $incrementing = false;
     protected $fillable = [
         'customer_id',
-        'customer_profile',
+        'customer_company_logo',
         'company_id',
         'customer_name',
         'customer_company_name',
@@ -22,7 +22,6 @@ class CustomerDetails extends Model implements Authenticatable
         'phone',
         'address',
         'notes',
-        'password',
         'status',
     ];
     public function company()
