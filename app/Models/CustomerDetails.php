@@ -4,23 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class CustomerDetails extends Model
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
+class CustomerDetails extends Model implements Authenticatable
 {
     use HasFactory;
+    use AuthenticatableTrait;
     protected $primaryKey = 'id';
     public $incrementing = false;
     protected $fillable = [
         'customer_id',
         'customer_company_logo',
-        'company_id',     
-        'customer_name', 
-        'customer_company_name', 
-        'email',         
-        'phone',          
-        'address',         
-        'notes',           
-        'status',           
+        'company_id',
+        'customer_name',
+        'customer_company_name',
+        'email',
+        'phone',
+        'address',
+        'notes',
+        'status',
     ];
     public function company()
     {

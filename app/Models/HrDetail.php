@@ -15,5 +15,6 @@ class HrDetail extends Model implements Authenticatable
         'company_id',
         'hr_id',
         'name', 'email', 'phone', 'address', 'password',
+        'status'
     ];
 }

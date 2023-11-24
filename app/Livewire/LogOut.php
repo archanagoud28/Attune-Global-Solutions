@@ -9,8 +9,26 @@ class LogOut extends Component
 {
     public function logouted()
     {
-        auth('hr')->loginUsingId(auth('hr')->user()->id);
-        auth('hr')->logout();
+
+        if(auth('hr')->loginUsingId(auth('hr')->user()->id)){
+            auth('hr')->logout();
+        }
+        else if(auth('vendor')->loginUsingId(auth('vendor')->user()->id)){
+            auth('vendor')->logout();
+        }
+        else if(auth('customer')->loginUsingId(auth('customer')->user()->id)){
+            auth('customer')->logout();
+        }
+        else if(auth('employee')->loginUsingId(auth('employee')->user()->id)){
+            auth('employee')->logout();
+        }
+        else if(auth('contractor')->loginUsingId(auth('contractor')->user()->id)){
+            auth('contractor')->logout();
+        }
+
+        auth()->guard('hr')->logout();
+        return redirect('/HrLogin');
+
     }
 
     public function render()

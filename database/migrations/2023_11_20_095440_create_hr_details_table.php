@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->text('address');
-            $table->string('password');
+            $table->string('password')->nullable();
+            $table->string('status')->default(1);
             $table->foreign('company_id')
                 ->references('company_id')
                 ->on('company_details')

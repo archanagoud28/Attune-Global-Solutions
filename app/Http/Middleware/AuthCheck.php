@@ -17,34 +17,26 @@ class AuthCheck
     public function handle(Request $request, Closure $next): Response
     {
 
-        //    This is also working fine.........
-        // if($request->user()){
-        //         session(['user_type' => 'admin']);
-        //         return redirect(route('home'));
-
-        //    }
-        // if (auth()->user() && auth()->check()) {
-        //     // Set the navigation bar for admin users
-        //     view()->share('navbar', 'navbar-admin');
-        // } elseif (auth()->guard('staff')->check()) {
-        //     // Set the navigation bar for staff users
-        //     view()->share('navbar', 'navbar-staff');
-        // } elseif (auth()->guard('student')->check()) {
-        //     // Set the navigation bar for student users
-        //     view()->share('navbar', 'navbar-student');
-        // } else {
-        //     // Set a default navigation bar for guests
-        //     view()->share('navbar', 'navbar-guest');
-        // }
-
-        // return $next($request);
         if (auth()->guard('hr')->check()) {
+            session(['user_type' => 'hr']);
             return redirect('/');
-        } else {
+        } else if (auth()->guard('employee')->check()) {
+            session(['user_type' => 'employee-page']);
+            return redirect('/');
+        }else if (auth()->guard('vendor')->check()) {
+            session(['user_type' => 'vendor']);
+            return redirect('/');
+        }
+        else if (auth()->guard('customer')->check()) {
+            session(['user_type' => 'customer']);
+            return redirect('/');
+        }
+        else if (auth()->guard('contractor')->check()) {
+            session(['user_type' => 'contractor']);
+            return redirect('/');
+        }
+        else {
             session(['user_type' => 'guest']);
-
-            // return redirect('/emplogin');
-            //  return redirect(route('emplogin'));
             return $next($request);
         }
 

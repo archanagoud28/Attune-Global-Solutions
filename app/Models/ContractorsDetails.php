@@ -1,18 +1,22 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class ContractorsDetails extends Model
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
+class ContractorsDetails extends Model implements Authenticatable
 {
+    use AuthenticatableTrait;
     use HasFactory;
     protected $primaryKey = 'contractor_id';
     protected $fillable = [
         'contractor_id',
-        'client_name',
-        'client_address',
+        'contractor_image',
+        'contractor_name',
+        'contractor_email',
+        'contractor_phone',
+        'contractor_address',
         'it_company_name',
         'it_company_address',
         'effective_date',
@@ -30,7 +34,9 @@ class ContractorsDetails extends Model
         'dispute_resolution',
         'insurance_requirements',
         'governing_law',
+        'password',
         'company_id',
+        'status'
     ];
 
     protected $dates = ['effective_date', 'project_timeline'];

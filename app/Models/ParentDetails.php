@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ParentDetails extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'emp_id',
         'father_first_name',
@@ -39,6 +39,7 @@ class ParentDetails extends Model
         'mother_nationality',
         'father_religion',
         'mother_religion',
+        'status'
     ];
     public function employee()
     {
