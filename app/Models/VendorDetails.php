@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class VendorDetails extends Model
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
+class VendorDetails extends Model implements Authenticatable
 {
     use HasFactory;
+    use AuthenticatableTrait;
     protected $primaryKey = 'vendor_id';
     protected $fillable = [
         'vendor_id',
@@ -47,6 +49,8 @@ class VendorDetails extends Model
         'integration_processes',
         'vendor_onboarding_process',
         'training_requirements',
+        'password',
+        'status'
         // Add other fields as needed
     ];
 }

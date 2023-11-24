@@ -42,6 +42,7 @@ return new class extends Migration
             $table->string('mother_nationality');
             $table->string('father_religion');
             $table->string('mother_religion');
+            $table->string('status')->default(1);
             $table->foreign('emp_id')->references('emp_id')->on('emp_details')->onDelete('cascade');
             $table->timestamps();
         });
