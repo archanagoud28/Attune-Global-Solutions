@@ -17,7 +17,7 @@ class EmployeePage extends Component
     public function render()
     {
         $employees = EmpDetails::with('company')->orderBy('created_at', 'desc')->paginate(8);
-
+      
         return view('livewire.employee-page', ['employees' => $employees]);
     }
 }
