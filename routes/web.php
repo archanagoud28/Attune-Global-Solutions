@@ -90,24 +90,24 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/purchase-order', PurchaseOrder::class)->name('purchase-order');
 });
 
-// Route::middleware(['auth:vendor'])->group(function () {
-//     Route::get('/vendor-page', VendorPage::class)->name('vendor-page');
-//     Route::get('/vendor-register', VendorRegister::class)->name('vendor-register');
-// });
+Route::middleware(['auth:vendor'])->group(function () {
+    Route::get('/vendor-pages', VendorPage::class)->name('vendor-pages');
+    Route::get('/vendor-registers', VendorRegister::class)->name('vendor-registers');
+});
 
-// Route::middleware(['auth:customer'])->group(function () {
+Route::middleware(['auth:customer'])->group(function () {
 
-//     Route::get('/customers', Customers::class)->name('customer-page');
-// });
+    Route::get('/customer-pages', Customers::class)->name('customer-pages');
+});
 
-// Route::middleware(['auth:employee'])->group(function () {
+Route::middleware(['auth:employee'])->group(function () {
 
-//     Route::get('/employee-page', EmployeePage::class)->name('employee-page');
+    Route::get('/employee-pages', EmployeePage::class)->name('employee-pages');
 
-// });
+});
 
-// Route::middleware(['auth:contractor'])->group(function () {
+Route::middleware(['auth:contractor'])->group(function () {
 
-//     Route::get('/contractor-page', ContractorPage::class)->name('contractor-page');
+    Route::get('/contractor-pages', ContractorPage::class)->name('contractor-pages');
 
-// });
+});
