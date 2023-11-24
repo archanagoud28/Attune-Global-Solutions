@@ -32,7 +32,7 @@ class EmployeeListPage extends Component
         $trimmedSearchTerm = trim($this->searchTerm);
 
         // Use Eloquent to filter records based on the search term
-        $this->filteredPeoples = EmpDetails::where(function ($query) use ($trimmedSearchTerm) {
+        $this->filteredPeoples = EmpDetails::where('employee_type', '!=', 'contract')->orderByDesc('created_at')->where(function ($query) use ($trimmedSearchTerm) {
             $query->where('first_name', 'LIKE', '%' . $trimmedSearchTerm . '%')
                 ->orWhere('last_name', 'LIKE', '%' . $trimmedSearchTerm . '%')
                 ->orWhere('emp_id', 'LIKE', '%' . $trimmedSearchTerm . '%');
