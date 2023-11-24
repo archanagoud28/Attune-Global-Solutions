@@ -5,7 +5,7 @@
             border-radius: 50%;
             height: 120px;
             width: 120px;
-            border: 1px solid black;
+            border: 2px solid #fcfcfc ;
             margin-top: 10px;
         }
 
@@ -31,10 +31,6 @@
 
         }
 
-        .employee-data h6 {
-            font-size:0.875rem;
-            font-weight:500;
-        }
 
         .modal {
             display: block;
@@ -89,10 +85,10 @@
         .employee-data{
           display:flex;
           flex-direction:row;
-          justify-content:space-between;
-          font-size:0.875rem;
-         cursor: pointer; 
-         background-color: white;
+           gap:15px;
+           line-height:1;
+           cursor: pointer; 
+           background-color: white;
            border-radius: 5px;
            padding:5px 10px;
             align-items:center;
@@ -138,163 +134,15 @@
         {{ session('success') }}
     </div>
     @endif
-    @if($show=="true")
-    <div class="modal" tabindex="-1" role="dialog" style="display: block; overflow-y: auto;">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: rgb(2, 17, 79); height: 50px;">
-                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>ADD Customers Details</b></h5>
-                    <button wire:click="close" type="button" class="close" style="border:none" data-dismiss="modal" aria-label="Close">
-                        <span style="color:rgb(2, 17, 79)" aria-hidden="true" style="color: white;">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form wire:submit.prevent="addCustomers">
-                        <div>
-                            <label for="customer_profile" style="font-size: 12px;">Customer Company Logo:</label>
-                            <input type="file" wire:model="customer_profile">
-                            @error('customer_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div style="margin-bottom:10px">
-                            <label for="company_id" style="font-size: 12px;">Company ID:</label>
-                            <select wire:model="company_id">
-                                <option value="">Select Company</option>
-                                @foreach($companies as $company)
-                                <option value="{{ $company->company_id }}">{{ $company->company_id }}</option>
-                                @endforeach
-                            </select>
-                            @error('company_id') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-
-                        <div>
-                            <label for="customer_name" style="font-size: 12px;">Customer Name:</label>
-                            <input type="text" wire:model="customer_name">
-                            @error('customer_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="customer_company_name" style="font-size: 12px;">Customer Company Name:</label>
-                            <input type="text" wire:model="customer_company_name">
-                            @error('customer_company_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-                        <div>
-                            <label for="email" style="font-size: 12px;">Email:</label>
-                            <input type="email" wire:model="email">
-                            @error('email') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="phone" style="font-size: 12px;">Phone:</label>
-                            <input type="text" wire:model="phone">
-                            @error('phone') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="address" style="font-size: 12px;">Address:</label>
-                            <textarea wire:model="address"></textarea>
-                            @error('address') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="notes" style="font-size: 12px;">Notes:</label>
-                            <textarea wire:model="notes"></textarea>
-                            @error('notes') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div style="text-align: center; justify-content: center; align-items: center; display: flex; margin-top: 10px;">
-                            <button style="margin-left: 5%; font-size: 12px;" class="btn btn-success" type="submit">Submit</button>
-                            <button class="btn btn-danger" wire:click="close" type="button" style="font-size: 12px;">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-backdrop fade show blurred-backdrop"></div>
-    @endif
-
-    @if($edit=="true")
-    <div class="modal" tabindex="-1" role="dialog" style="display: block; overflow-y: auto;">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: rgb(2, 17, 79); height: 50px;">
-                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>Edit Customers Details</b></h5>
-                    <button wire:click="closeEdit" type="button" class="close" style="border:none" data-dismiss="modal" aria-label="Close">
-                        <span style="color:rgb(2, 17, 79)" aria-hidden="true" style="color: white;">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form wire:submit.prevent="updateCustomers">
-                        <div>
-                            <label for="customer_profile" style="font-size: 12px;">Customer Company Logo:</label>
-                            <input type="file" wire:model="customer_profile">
-                        </div>
-
-                        <div style="margin-bottom:10px">
-                            <label for="company_id" style="font-size: 12px;">Company ID:</label>
-                            <select wire:model="company_id">
-                                <option value="">Select Company</option>
-                                @foreach($companies as $company)
-                                <option value="{{ $company->company_id }}">{{ $company->company_id }}</option>
-                                @endforeach
-                            </select>
-                            @error('company_id') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-
-                        <div>
-                            <label for="customer_name" style="font-size: 12px;">Customer Name:</label>
-                            <input type="text" wire:model="customer_name">
-                            @error('customer_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="customer_company_name" style="font-size: 12px;">Customer Company Name:</label>
-                            <input type="text" wire:model="customer_company_name">
-                            @error('customer_company_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-                        <div>
-                            <label for="email" style="font-size: 12px;">Email:</label>
-                            <input type="email" wire:model="email">
-                            @error('email') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="phone" style="font-size: 12px;">Phone:</label>
-                            <input type="text" wire:model="phone">
-                            @error('phone') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="address" style="font-size: 12px;">Address:</label>
-                            <textarea wire:model="address"></textarea>
-                            @error('address') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <label for="notes" style="font-size: 12px;">Notes:</label>
-                            <textarea wire:model="notes"></textarea>
-                            @error('notes') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div style="text-align: center; justify-content: center; align-items: center; display: flex; margin-top: 10px;">
-                            <button style="margin-left: 5%; font-size: 12px;" class="btn btn-success" type="submit">Update</button>
-                            <button class="btn btn-danger" wire:click="closeEdit" type="button" style="font-size: 12px;">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-backdrop fade show blurred-backdrop"></div>
-    @endif
+   
 
 
     <!-- Everyone tab content -->
+    @if ($allCustomers->isEmpty())
+    <div class="container" style="border:1px solid #ccc; display:flex; flex-direction:column; width:80%;border-radius:10px;box-shadow:1px 1px 0px 0 rgba(0,0,0,0.1)">
+            <img src="https://img.freepik.com/premium-vector/no-data-concept-illustration_86047-488.jpg" alt="" style="width:400px; height:400px;">
+            <p style="color:#778899; text-align:center; font-weight:500;">No data found</p>
+     @else
     <div class="row" style="margin-top: 15px; width: 100%;height:100%;">
         <div class="col-md-3" style=" background-color: #f2f2f2;; border-radius: 5px; margin-right: 20px; padding: 5px;">
             <div class="container" style="margin-top: 15px">
@@ -313,18 +161,15 @@
             </div>
 
             <div class="row" style="overflow-y: auto; max-height: 400px; margin:auto 10px;">
-                @if ($allCustomers->isEmpty())
-                <div class="container" style="text-align: center;">No Employee Data Found</div>
-                @else
+               
                 @foreach($allCustomers as $customer)
                     <div wire:click="selectCustomer('{{ $customer->emp_id }}')" class="container employee-data" style="background-color: {{ $selectedCustomer && $selectedCustomer->emp_id == $customer->emp_id ? '#ccc' : 'white' }};">
                         <div >
                             <img style="border-radius: 50%;height:37px;width:37px;" class="profile-image" src="{{ asset('/storage/' . $customer->image) }}" alt="Profile Image">
                         </div>
                         <div >
-                           {{ $customer->first_name }} {{ $customer->last_name }}
+                           <span style="font-size:0.895rem;">{{ $customer->first_name }} {{ $customer->last_name }}</span> <span style="color:#778899;font-size:0.625rem;">(#{{ $customer->emp_id }})</span>
                         </div>
-                        <div style="font-size:0.655rem;color:#778899;"> (#{{ $customer->emp_id }})</div>
                     </div>
                 @endforeach
                 @endif
@@ -332,10 +177,10 @@
         </div>
 
         <!-- Details of the selected person -->
-        @if ($selectedCustomer)
+      
         <div class="col-md-8" style="height:auto; background-color: rgb(2, 17, 79); border-radius: 5px;border:1px solid grey; padding: 15px 20px;color:white;">
                  <div >
-              
+                 @if ($selectedCustomer)
                    <div class="emp-content" style="display:flex;flex-direction:column; gap:20px;">
                         <div style="text-align: end; display:flex; justify-content:flex-end; gap:10px;">
                             @php
@@ -439,6 +284,7 @@
                                   </div>
                           </div>
                      </div>
+                     
             @endif
 
         </div>

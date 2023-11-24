@@ -52,7 +52,7 @@ a:hover{
         <div class="container " style=" padding:10px;background:#f2f2f2;border:1px solid #ccc;">
             <div class="col-md-12">
                 <div class="emp-container" style="padding:0; margin:0 auto;">
-                     <div style="display:flex;justify-content:end;"><a style="text-decoration:none;font-weight:600;color:#00459c;"href="{{route('employee-page')}}">View Employee List</a></div>
+                     <div style="display:flex;justify-content:end;"><a style="text-decoration:none;font-weight:600;color:#00459c;"href="{{route('employee-list-page')}}">View Employee List</a></div>
                     <div class="card-header" style="background-color: #00234f;padding:10px;width:50%;margin-left:20%; border-radius:20px;;">
                         <h5 class="mb-0" style="text-align: center;color:white;">Employee Registration Form</h5>
                     </div>
@@ -169,7 +169,7 @@ a:hover{
 
                                 <div class="form-group">
                                     <label for="employee_type">Employee Type:</label>
-                                    <select class="form-control custom-select" wire:model="employee_status" style="margin-bottom: 10px; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'grey\' class=\'bi bi-chevron-down\' width=\'22\' height=\'22\' viewBox=\'0 0 20 16\'><path d=\'M1 5l7 7 7-7H1z\'/></svg>'); background-repeat: no-repeat; background-position: right;">
+                                    <select class="form-control custom-select" wire:model="employee_type" style="margin-bottom: 10px; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'grey\' class=\'bi bi-chevron-down\' width=\'22\' height=\'22\' viewBox=\'0 0 20 16\'><path d=\'M1 5l7 7 7-7H1z\'/></svg>'); background-repeat: no-repeat; background-position: right;">
                                         <option value="defualt">Select Employee Type</option>
                                         <option value="full-time">Full-Time</option>
                                         <option value="part-time">Part-Time</option>
