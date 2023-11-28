@@ -59,6 +59,7 @@ class EmpDetails extends Model implements Authenticatable
         'twitter',
         'linked_in',
         'company_id',
+        'contractor_company_id',
         'is_starred',
         'skill_set',
         'status'

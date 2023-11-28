@@ -134,24 +134,32 @@
             <div class="container-fluid">
                 <div class="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-                    <a class="menu-link" href="/vendor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
-                 <a class="menu-link" href="vendor-pages"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
+                    <a class="menu-link {{ Request::is('vendor-home') ? 'active' : '' }}" href="/vendor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+
+                <a class="menu-link {{ Request::is('vendor-pages') ? 'active' : '' }}" href="/vendor-pages"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
+                 {{-- <a class="menu-link" href="vendor-pages"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>  --}}
                 </div>
             </div>
         @elseif(Auth::guard('customer')->check())
             <div class="container-fluid">
                 <div class="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-                    <a class="menu-link" href="/customer-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
-                    <a class="menu-link" href="/customer-pages"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
+                    <a class="menu-link {{ Request::is('customer-home') ? 'active' : '' }}" href="/customer-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+
+                    <a class="menu-link {{ Request::is('customer-pages') ? 'active' : '' }}" href="/customer-pages"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
+                    {{-- <a class="menu-link" href="/customer-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link" href="/customer-pages"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br> --}}
                 </div>
             </div>
         @elseif(Auth::guard('contractor')->check())
             <div class="container-fluid">
                 <div class="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-                    <a class="menu-link" href="/contractor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
-                    <a class="menu-link" href="contractor-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
+                    <a class="menu-link {{ Request::is('contractor-home') ? 'active' : '' }}" href="/contractor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+
+                    <a class="menu-link {{ Request::is('contractor-pages') ? 'active' : '' }}" href="/contractor-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
+                    {{-- <a class="menu-link" href="/contractor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link" href="contractor-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br> --}}
                 </div>
             </div>
 
@@ -159,9 +167,13 @@
             <div class="container-fluid">
                 <div class="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-                    <a class="menu-link" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link {{ Request::is('employee-home') ? 'active' : '' }}" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link {{ Request::is('employee-pages') ? 'active' : '' }}" href="/employee-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Employees</span></a><br>
+                    <a class="menu-link {{ Request::is('time-sheets-display') ? 'active' : '' }}" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text"> Time Sheets</span></a><br>
+
+                    {{-- <a class="menu-link" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
                     <a class="menu-link" href="employee-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Employees</span></a><br>
-                    <a class="menu-link" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text">Time Sheets</span></a><br>
+                    <a class="menu-link" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text">Time Sheets</span></a><br> --}}
                 </div>
             </div>
 
