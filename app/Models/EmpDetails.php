@@ -16,6 +16,7 @@ class EmpDetails extends Model implements Authenticatable
     protected $fillable = [
         'emp_id',
         'first_name',
+        'contractor_company_id',
         'last_name',
         'date_of_birth',
         'gender',

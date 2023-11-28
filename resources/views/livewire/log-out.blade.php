@@ -14,5 +14,4 @@
             <i class="fas fa-sign-out-alt"></i> <!-- Font Awesome Logout Icon -->
         </button>
     </a>
-
 </div>

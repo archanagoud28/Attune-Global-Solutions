@@ -1,215 +1,330 @@
-<div><style>
-.card{
-    margin-bottom:15px;
-    height:400px;
-    z-index: 1; 
-    position: relative;
-}
-.card-body{
-    line-height:1;
-    margin:0;
-    text-align:start;
-    padding:10px 15px;
-}
-h2{
-    margin-bottom:10px;
-}
-.card-content{
-    font-size:0.785rem;
-    font-weight:500;
-    color:#778899;
-}
-.card-mid{
-    height:130px;
-    margin-bottom:7px;
-}
+<div style="padding:10px 15px; background:#fff;">
+    <!-- Add this to your HTML file -->
+    <style>
+        .customer-image {
+            border-radius: 50%;
+            height: 120px;
+            width: 120px;
+            border: 2px solid #fcfcfc ;
+            margin-top: 10px;
+        }
 
-.card-content span{
-    font-size:0.725rem;
-    color:black;
-    font-weight:500;
-}
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
 
-    .pink-background {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        font-weight:600;
-        width: 100%;
-        font-size:0.785rem;
-        background-color: #e8e8e8;
-        text-align:center;
-        padding:5px 10px;
+        .container {
+            margin: 0 auto;
+            max-width: 100%;
+            margin-top: 30px;
+        }
+
+        .profile-image,
+        .people-image,
+        .customer-profile {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5%;
+            border: 1px solid black;
+
+        }
+
+
+        .modal {
+            display: block;
+            overflow-y: auto;
+        }
+
+        .modal-dialog {
+            margin: 1.75rem auto;
+        }
+
+        .modal-header {
+            background-color: rgb(2, 17, 79);
+            height: 50px;
+        }
+
+        .modal-title {
+            padding: 5px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .modal-body {
+            padding: 1rem;
+        }
+
+        form {
+            font-size: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+
+        .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+        .employee-data{
+          display:flex;
+          flex-direction:row;
+           gap:15px;
+           line-height:1;
+           cursor: pointer; 
+           background-color: white;
+           border-radius: 5px;
+           padding:5px 10px;
+            align-items:center;
+            transition: background-color 0.3s; 
+        }
+       
+        .employee-data:hover {
+        background-color: #456787; /* Add your desired hover background color */
     }
-.btn{
-    padding:2px;
-    width:100px;
-    font-size:0.825rem;
-}
-</style>
-    <div class="container" style="padding: 10px 15px; margin: 30px auto;background:#fff;">
-  <h3 style="center">Our Contractors</h3>
-  <div class="row">
-  <div class="modal fade" id="purchaseOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Purchase Order</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p><strong>Company Name:</strong> Microsoft</p>
-                            </div>
-                            <div class="col-md-6">
+        .customer-details {
+            margin-top: 15px;
+        }
+        .button {
+            background-color: rgb(2, 17, 79);
+            color: white;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            padding: 3px;
+            transition: background-color 0.3s ease-in-out;
+        }
 
-                                <p><strong>Employee Name:</strong> John Doe</p>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <h4>Engagement Details:</h4>
-                                <p><strong>Engagement End Date:</strong>  1 month from the order</p>
-                                <p><strong>Nature of Job:</strong>  UI Developer</p>
-                                <p><strong>Number of Hours per Week:</strong>  12hrs</p>
-                                <p><strong>Basic Salary per Week:</strong>  7,000</p>
-                                <p><strong>Time Sheet Cycle:</strong>   15 days</p>
-                                <!-- You can add more details and customize the layout as needed -->
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+        }
+        .align-data{
+            display: grid; 
+            grid-template-columns: 120px 1fr;
+            margin-bottom: 5px; 
+        }
+        .align-data strong {
+        white-space: nowrap;
+        margin-right: 5px; /* Adjust the value to control the space between strong and colon */
+    }
+        /* Style for the container with scrolling */
+      .scroll-container {
+          overflow-y: auto;
+          max-height: 350px;
+          margin: auto 10px;
+          scrollbar-width: thin; /* For Firefox */
+          scrollbar-color: #ccc transparent; /* For Firefox */
+
+          /* For WebKit browsers (Chrome, Safari) */
+          &::-webkit-scrollbar {
+              width: 4px;
+          }
+
+          &::-webkit-scrollbar-thumb {
+              background-color: #ccc;
+              border-radius: 4px;
+          }
+
+          &::-webkit-scrollbar-track {
+              background-color: transparent;
+          }
+      }
+
+      /* Style for the employee-data items */
+      .container.employee-data {
+          transition: background-color 0.3s;
+      }
+
+      .container.employee-data:hover {
+          background-color: #456787;
+      }
+
+    </style>
+
+       <div style="margin-top:40px;display:flex;justify-content:flex-end; ">
+          <button class="button" style="padding:5px;font-size:0.875rem;"><a href="{{route('emp-register')}}" style="outline:none;text-decoration:none;color:#fff;">ADD Employees</a></button>
+          <button class="button" style="padding:5px;font-size:0.875rem;margin-left:10px;"><a href="{{route('employee-list-page')}}" style="outline:none;text-decoration:none;color:#fff;">Employees List</a></button>
+       </div>
+
+
+     <div>
+     @if(session()->has('success'))
+    <div style="text-align: center;" class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+   
+
+
+    <!-- Everyone tab content -->
+    @if ($allContractors->isEmpty())
+    <div class="container" style="border:1px solid #ccc; display:flex; flex-direction:column; width:80%;border-radius:10px;box-shadow:1px 1px 0px 0 rgba(0,0,0,0.1)">
+            <img src="https://img.freepik.com/premium-vector/no-data-concept-illustration_86047-488.jpg" alt="" style="width:400px; height:400px;">
+            <p style="color:#778899; text-align:center; font-weight:500;">No data found</p>
+     @else
+    <div class="row" style="margin-top: 15px; width: 100%;height:100%;">
+    <div>
+        <h5 style="color:rgb(2, 17, 79);font-weight:400;">Contractors List</h5>
+    </div>
+        <div class="col-md-3" style=" background-color: #f2f2f2;; border-radius: 5px; margin-right: 20px; padding: 5px;">
+            <div class="container" style="margin-top: 15px">
+                <div class="row">
+                    <div class="col" style="margin: 0px; padding: 0px">
+                        <div class="input-group">
+                            <input wire:model="searchTerm" style="font-size: 11px; width:70%;cursor: pointer; border-radius: 5px 0 0 5px;" type="text" class="form-control" placeholder="Search for Name or ID" aria-label="Search" aria-describedby="basic-addon1">
+                            <div class="input-group-append">
+                                <button wire:click="filter" style="height: 28px; border-radius: 0 5px 5px 0; background-color: #003767; color: #fff; border: none;" class="btn" type="button">
+                                    <i style="text-align: center;" class="fa fa-search"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+            </div>
+
+            <div class="scroll-container" >
+               
+                @foreach($allContractors as $customer)
+                    <div wire:click="selectContractor('{{ $customer->emp_id }}')" class="container employee-data" style="background-color: {{ $selectedContractor && $selectedContractor->emp_id == $customer->emp_id ? '#ccc' : 'white' }};">
+                        <div >
+                            <img style="border-radius: 50%;height:37px;width:37px;" class="profile-image" src="{{ asset('/storage/' . $customer->image) }}" alt="Profile Image">
+                        </div>
+                        <div >
+                           <span style="font-size:0.895rem;">{{ $customer->first_name }} {{ $customer->last_name }}</span> <span style="color:#778899;font-size:0.625rem;">(#{{ $customer->emp_id }})</span>
+                        </div>
+                    </div>
+                @endforeach
+                @endif
             </div>
         </div>
-    </div>
-    <div class="col-md-3" >
-      <div class="card" >
-        <img src="https://thumbs.dreamstime.com/b/businessman-icon-vector-male-avatar-profile-image-profile-businessman-icon-vector-male-avatar-profile-image-182095609.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px; ">
-        <div class="card-body">
-          <p class="card-text"><strong>Mr. Joe Ucuzoglu</strong></p>
-         <div class="card-mid">
-         <p class="card-content">Attune Global Solutions</p>
-         <p class="card-content">Microsoft</p>
-          <p class="card-content">joe.ucuzoglu@ags.com</p>
-          <p class="card-content">Join Date: <span>11 Nov, 2023</span></p>
-         <p class="card-content">End Date: <span>11 Dec, 2023</span></p>
-         </div>
-         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseOrderModal">
-         Purchase Order
-         </button>
-         <div class="pink-background" style="height: 25px;">UI Developer</div>
+
+        <!-- Details of the selected person -->
+      
+        <div class="col-md-8" style="height:auto; background-color: rgb(2, 17, 79); border-radius: 5px;border:1px solid grey; padding: 15px 20px;color:white;">
+                 <div >
+                 @if ($selectedContractor)
+                   <div class="emp-content" style="display:flex;flex-direction:column; gap:20px;">
+                        <div style="text-align: end; display:flex; justify-content:flex-end; gap:10px;">
+                            @php
+                            $selectedPerson = $selectedContractor ?? $customers->first();
+                            $isActive = $selectedPerson->status == 'active';
+                            @endphp
+                        </div>
+                        <div >
+                            <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->image) }}" alt="Profile Image">
+                        </div>
+                          <div class="details" style=" display:flex; flex-direction:row; line-height:2; font-size:0.895rem;margin-top:20px'" >
+                                <div class="col-md-6" >
+                                    <div class="align-data">
+                                        <strong>Employee Name </strong> 
+                                        <span><strong>:</strong> {{ optional($selectedPerson)->first_name }} {{ optional($selectedPerson)->last_name }}</span>
+                                    </div>
+                                     <div class="align-data">
+                                        <strong>Employee ID </strong> 
+                                        <span> <strong>:</strong> (#{{ optional($selectedPerson)->emp_id }})</span>
+                                     </div>
+                                     <div class="align-data">
+                                        <strong>Phone </strong> 
+                                        <span> <strong>:</strong> {{ optional($selectedPerson)->mobile_number }}</span>
+                                     </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="align-data">
+                                       <strong style="white-space: nowrap;">Address</strong>
+                                        <span style="line-height:1.6;"><strong>:</strong> {{ optional($selectedPerson)->address }}</span>
+                                    </div>
+                                    <div class="align-data">
+                                      <strong>Company Email</strong>
+                                        <span><strong>:</strong> {{ optional($selectedPerson)->company_email }}</span>
+                                    </div>
+                                    <div class="align-data">
+                                       <strong>Company Name</strong>
+                                        <span><strong>:</strong> {{ optional($selectedPerson)->company_name }}</span>
+                                    </div>
+                                  </div>
+                          </div>
+                     </div>
+                 </div>
+            </div>
+
+            @elseif (!$contractors->isEmpty())
+            <!-- Display details of the first person in the list -->
+            @php
+            $firstPerson = $contractors->first();
+            $starredPerson = DB::table('customer_details')
+            ->where('customer_id', $firstPerson->customer_id)
+            ->first();
+            @endphp
+
+            <div class="emp-content" style="display:flex;flex-direction:column; gap:20px;">
+                        <div style="text-align: end; display:flex; justify-content:flex-end; gap:10px;">
+                            @php
+                            $selectedPerson = $selectedContractor ?? $contractors->first();
+                            $isActive = $selectedPerson->status == 'active';
+                            @endphp
+                            
+                        </div>
+                        <div >
+                            <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->image) }}" alt="Profile Image">
+                        </div>
+                          <div class="details" style=" display:flex; flex-direction:row; line-height:2; font-size:0.895rem;margin-top:20px'" >
+                                <div class="col-md-6" >
+                                    <div class="align-data">
+                                        <strong>Employee Name </strong> 
+                                        <span><strong>:</strong> {{ optional($selectedPerson)->first_name }} {{ optional($selectedPerson)->last_name }}</span>
+                                    </div>
+                                     <div class="align-data">
+                                        <strong>Employee ID </strong> 
+                                        <span> <strong>:</strong> (#{{ optional($selectedPerson)->emp_id }})</span>
+                                     </div>
+                                     <div class="align-data">
+                                        <strong>Phone </strong> 
+                                        <span> <strong>:</strong> {{ optional($selectedPerson)->mobile_number }}</span>
+                                     </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="align-data">
+                                       <strong style="white-space: nowrap;">Address</strong>
+                                        <span style="line-height:1.6;"><strong>:</strong> {{ optional($selectedPerson)->address }}</span>
+                                    </div>
+                                    <div class="align-data">
+                                        <strong>Company Email</strong>
+                                        <span style="white-space: nowrap; overflow-wrap: break-word; max-width: calc(100% - 20px);"><strong>:</strong> {{ optional($selectedPerson)->company_email }}</span>
+                                    </div>
+
+                                    <div class="align-data">
+                                       <strong>Company Name</strong>
+                                        <span><strong>:</strong> {{ optional($selectedPerson)->company_name }}</span>
+                                    </div>
+                                  </div>
+                          </div>
+                     </div>
+                     
+            @endif
+
         </div>
-      </div>
     </div>
-
-    <div class="col-md-3">
-      <div class="card">
-      <img src="https://static.vecteezy.com/system/resources/thumbnails/002/002/427/small/man-avatar-character-isolated-icon-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-        <div class="card-body">
-          <p class="card-text"><strong>Mr. Thierry Delaporte</strong></p>
-           <div class="card-mid">
-           <p class="card-content">Attune Global Solutions</p>
-            <p class="card-content">thierry.delaporte@ags.com</p>
-            <p class="card-content">Join Date: <span>15 Nov, 2023</span></p>
-           <p class="card-content">End Date:  <span>25 Dec, 2023</span></p>
-           </div>
-           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#purchaseOrderModal">
-      Purchase Order
-    </button>
-         <div class="pink-background" style="height: 25px;"> Full Stock Developer</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="card">
-        <img src="https://thumbs.dreamstime.com/b/businessman-icon-vector-male-avatar-profile-image-profile-businessman-icon-vector-male-avatar-profile-image-182095609.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-          <div class="card-body">
-            <p class="card-text"><strong>Mr. Anil Kumar</strong></p>
-             <div class="card-mid">
-             <p class="card-content">PayG</p>
-            <p class="card-content">keki.mistry@payg.in</p>
-            <p class="card-content">Present:  <span class="bench" style="font-weight:600;">On Bench</span></p>
-             </div>
-
-            <div class="pink-background" style="height: 25px;">PHP Developer</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="card">
-        <img src="https://static.vecteezy.com/system/resources/previews/005/026/528/non_2x/illustration-female-avatar-in-flat-style-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-        <div class="card-body">
-            <p class="card-text"><strong>Ms. Bhargavi</strong></p>
-             <div class="card-mid">
-             <p class="card-content">PayG</p>
-            <p class="card-content">keki.mistry@payg.in</p>
-            <p class="card-content">Present:  <span class="bench" style="font-weight:600;">On Bench</span></p>
-             </div>
-
-            <div class="pink-background" style="height: 25px;">Angular Developer</div>
-          </div>
-        </div>
-      </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
-      <div class="card">
-      <img src="https://static.vecteezy.com/system/resources/thumbnails/001/993/889/small/beautiful-latin-woman-avatar-character-icon-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-      <div class="card-body">
-            <p class="card-text"><strong>Ms. Keki Mistry</strong></p>
-              <div class="card-mid">
-              <p class="card-content">Attune Global Solutions</p>
-              <p class="card-content">keki.mistry@ags.com</p>
-               <p class="card-content">Present:  <span class="bench" style="font-weight:600;">On Bench</span></p>
-              </div>
-
-            <div class="pink-background" style="height: 25px;">Backend Developer</div>
-          </div>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card">
-      <img src="https://static.vecteezy.com/system/resources/thumbnails/002/002/332/small/ablack-man-avatar-character-isolated-icon-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-      <div class="card-body">
-            <p class="card-text"><strong>Mr. Jagadish Kumar</strong></p>
-             <div class="card-mid">
-             <p class="card-content">Attune Global Solutions</p>
-            <p class="card-content">keki.mistry@payg.in</p>
-            <p class="card-content">Present:  <span class="bench" style="font-weight:600;">On Bench</span></p>
-             </div>
-
-            <div class="pink-background" style="height: 25px;">Frontend Developer</div>
-          </div>
-      </div>
-    </div>
-
-
-      <div class="col-md-3">
-        <div class="card">
-        <img src="https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg" class="card-img-top" alt="Image 1" style="width:150px;height:150px;">
-        <div class="card-body">
-            <p class="card-text"><strong>Mr. Nithin Mistry</strong></p>
-              <div class="card-mid">
-              <p class="card-content">Attune Global Solutions</p>
-            <p class="card-content">keki.mistry@ags.in</p>
-            <p class="card-content">Present:  <span class="bench" style="font-weight:600;">On Bench</span></p>
-              </div>
-
-            <div class="pink-background" style="height: 25px;">UI/UX Developer</div>
-          </div>
-        </div>
-      </div>
-  </div>
-</div>
-
+     </div>
 </div>
