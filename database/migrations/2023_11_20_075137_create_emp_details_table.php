@@ -60,7 +60,7 @@ return new class extends Migration
             $table->string('is_starred')->nullable();
             $table->string('skill_set')->nullable();
             $table->string('company_id');
-            $table->string('contractor_company_id')->nullable;
+            $table->string('contractor_company_id')->nullable();
             $table->string('status')->default(1);
             $table->foreign('company_id')
                 ->references('company_id') // Assuming the primary key of the companies table is 'id'
