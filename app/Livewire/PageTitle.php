@@ -30,11 +30,15 @@ class PageTitle extends Component
         $routeTitleMap = [
             'home-page' => 'Home',
             'customer-page' => 'Customers',
+            'customer-pages' => 'Customers',
             'contractor-page' => 'Contractors',
             'vendor-page' => 'Vendors',
+            'vendor-pages' => 'Vendors',
             'employee-list-page' => 'Employees',
             'sales-or-purchase-orders' =>'Sales/Purchase Orders',
-            'time-sheet-display' => 'Time Sheets'
+            'time-sheet-display' => 'Time Sheets',
+            'time-sheets-display' => 'Time Sheets',
+            'employee-pages' => 'Employees'
             // Add more mappings as needed
         ];
 

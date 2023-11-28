@@ -201,10 +201,8 @@
 
        <div style="margin-top:40px;display:flex;justify-content:flex-end; ">
           <button class="button" style="text-align:center; padding:3px 10px;font-size:0.795rem;"><a href="{{route('emp-register')}}" style="outline:none;text-decoration:none;color:#fff;">ADD Contractors</a></button>
-          <button class="button" style="text-align:center; padding:3px 10px;font-size:0.795rem;margin-left:10px;"><a href="{{route('employee-list-page')}}" style="outline:none;text-decoration:none;color:#fff;">Contractor List</a></button>
+          <button class="button" style="text-align:center; padding:3px 10px;font-size:0.795rem;margin-left:10px;"><a href="{{route('contractor-page')}}" style="outline:none;text-decoration:none;color:#fff;">Contractor List</a></button>
        </div>
-
-
      <div>
      @if(session()->has('success'))
     <div style="text-align: center;" class="alert alert-success">
