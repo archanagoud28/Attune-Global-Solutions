@@ -39,9 +39,26 @@ class Vendors extends Component
     {
         $this->soList = false;
     }
-    public function saveSalesOrder()
+
+    public $employeeSkillsPairs = [['employees' => '', 'skills' => '']];
+
+    public function addPair()
+    {
+        $this->employeeSkillsPairs[] = ['employees' => '', 'skills' => ''];
+    }
+
+    public $activeButton = 'Bills';
+
+    public function removePair($index)
+    {
+        unset($this->employeeSkillsPairs[$index]);
+        $this->employeeSkillsPairs = array_values($this->employeeSkillsPairs);
+    }
+    public function savePurchaseOrder()
     {
         $this->validate([
+            'employeeSkillsPairs.*.employees' => 'required',
+            'employeeSkillsPairs.*.skills' => 'required',
             'customerId' => 'required',
             'rate' => 'required',
             'rateType' => 'required',
@@ -57,13 +74,14 @@ class Vendors extends Component
             'vendor_id' => $this->vendor_id,
             'rate' => $this->rate . ' ' . $this->rateType,
             'end_client_timesheet_required' => $this->endClientTimesheetRequired,
+            'employees_and_skills' => $this->employeeSkillsPairs,
             'time_sheet_type' => $this->timeSheetType,
             'time_sheet_begins' => $this->timeSheetBegins,
             'invoice_type' => $this->invoiceType,
             'payment_type' => $this->paymentType,
         ]);
         session()->flash('sales-order', 'Sales order submitted successfully.');
-        $this->so = false;
+        $this->po = false;
     }
     public function selectVendor($vendorId)
     {
@@ -106,7 +124,6 @@ class Vendors extends Component
     {
         $this->validate([
             'vendor_profile' => 'required',
-            'company_id' => 'required',
             'vendor_name' => 'required',
             'email' => 'required',
             'phone' => 'required',
@@ -114,9 +131,11 @@ class Vendors extends Component
             'vendor_company_name' => 'required'
         ]);
         $vendorProfilePath = $this->vendor_profile->store('vendor_profiles', 'public');
+        $companyId = auth()->user()->company_id;
+
         VendorDetails::create([
             'vendor_image' => $vendorProfilePath,
-            'company_id' => $this->company_id,
+            'company_id' => $companyId,
             'contact_person' => $this->vendor_name,
             'vendor_name' => $this->vendor_company_name,
             'email' => $this->email,
@@ -151,7 +170,6 @@ class Vendors extends Component
     public function updateVendors()
     {
         $this->validate([
-            'company_id' => 'required',
             'vendor_name' => 'required',
             'email' => 'required',
             'phone' => 'required',
@@ -165,9 +183,10 @@ class Vendors extends Component
             $vendor->update(['vendor_image' => $vendorProfilePath]);
         }
 
+        $companyId = auth()->user()->company_id;
 
         $vendor->update([
-            'company_id' => $this->company_id,
+            'company_id' => $companyId,
             'contact_person' => $this->vendor_name,
             'vendor_name' => $this->vendor_company_name,
             'email' => $this->email,
@@ -183,24 +202,24 @@ class Vendors extends Component
 
     public $allVendors;
     public $companies;
-    public $so = false;
-    public function addSO($vendorId)
+    public $po = false;
+    public function addPO()
     {
-        $this->so = true;
-        $this->selectedVendor = VendorDetails::where('vendor_id', $vendorId)->first();
-        $this->vendor_id = $this->selectedVendor->vendor_id;
+        $this->po = true;
+    
     }
-    public function cancelSO()
+    public function cancelPO()
     {
-        $this->so = false;
+        $this->po = false;
     }
     public $vendors;
     public $customers;
     public function render()
     {
-        $this->companies = CompanyDetails::all();
-        $this->customers = CustomerDetails::all();
-        $this->vendors = VendorDetails::with('company')->orderBy('created_at', 'desc')->get();
+        $companyId = auth()->user()->company_id;
+
+        $this->customers = CustomerDetails::where('company_id',$companyId)->orderBy('created_at', 'desc')->get();
+        $this->vendors = VendorDetails::with('company') ->where('company_id',$companyId)->orderBy('created_at', 'desc')->get();
         $this->allVendors = $this->filteredPeoples ?: $this->vendors;
         return view('livewire.vendors');
     }

@@ -4,7 +4,9 @@ namespace App\Livewire;
 
 use App\Models\CompanyDetails;
 use App\Models\CustomerDetails;
+use App\Models\EmpDetails;
 use App\Models\PurchaseOrder;
+use App\Models\SalesOrder;
 use App\Models\VendorDetails;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -28,32 +30,46 @@ class Customers extends Component
     public  $customer_profile, $company_id, $customer_name, $email, $phone, $address, $notes, $customer_company_name;
 
     public $selectedCustomer;
-    public $customer_id;
-    public $poList=false;
+    public $customerId;
+    public $poList = false;
     public $showPOLists;
-    public function showPoList($customerId){
-        $this->showPOLists=PurchaseOrder::with('vendor')->where('customer_id',$customerId)->get();
-        $this->poList=true;
+
+    public function showPoList($customerId)
+    {
+        $this->showPOLists = PurchaseOrder::with('vendor')->where('customer_id', $customerId)->get();
+        $this->poList = true;
     }
-    public function closePOList(){
-        $this->poList=false;
+    public function closePOList()
+    {
+        $this->poList = false;
     }
-    public function savePurchaseOrder()
+    public $job_title, $startDate, $endDate, $consultant_name, $customerName;
+    public function saveSalesOrder()
     {
         $this->validate([
-            'vendorId' => 'required',
             'rate' => 'required',
             'rateType' => 'required',
-            'endClientTimesheetRequired' => 'required_if:endClientTimesheetRequired,true',
+            'job_title' => 'required',
+            'endClientTimesheetRequired' => 'required',
             'timeSheetType' => 'required',
             'timeSheetBegins' => 'required',
             'invoiceType' => 'required',
             'paymentType' => 'required',
+            'consultant_name' => 'required',
+            'customerName' => 'required',
+            'startDate' => 'required',
+            'endDate' => 'required',
         ]);
 
-        PurchaseOrder::create([
-            'customer_id' => $this->customer_id,
-            'vendor_id' => $this->vendorId,
+        $companyId = auth()->user()->company_id;
+
+        SalesOrder::create([
+            'company_id' => $companyId,
+            'emp_id' => $this->consultant_name,
+            'customer_id' => $this->customerName,
+            'job_title' => $this->job_title,
+            'start_date' => $this->startDate,
+            'end_date' => $this->endDate,
             'rate' => $this->rate . ' ' . $this->rateType,
             'end_client_timesheet_required' => $this->endClientTimesheetRequired,
             'time_sheet_type' => $this->timeSheetType,
@@ -61,8 +77,8 @@ class Customers extends Component
             'invoice_type' => $this->invoiceType,
             'payment_type' => $this->paymentType,
         ]);
-        session()->flash('purchase-order', 'Purchase order submitted successfully.');
-        $this->po = false;
+        session()->flash('sales-order', 'Sales order submitted successfully.');
+        $this->so = false;
     }
     public function selectCustomer($customerId)
     {
@@ -103,9 +119,9 @@ class Customers extends Component
     }
     public function addCustomers()
     {
+
         $this->validate([
             'customer_profile' => 'required',
-            'company_id' => 'required',
             'customer_name' => 'required',
             'email' => 'required',
             'phone' => 'required',
@@ -114,9 +130,11 @@ class Customers extends Component
             'customer_company_name' => 'required'
         ]);
         $customerProfilePath = $this->customer_profile->store('customer_profiles', 'public');
+        $companyId = auth()->user()->company_id;
+
         CustomerDetails::create([
             'customer_company_logo' => $customerProfilePath,
-            'company_id' => $this->company_id,
+            'company_id' => $companyId,
             'customer_name' => $this->customer_name,
             'customer_company_name' => $this->customer_company_name,
             'email' => $this->email,
@@ -128,6 +146,7 @@ class Customers extends Component
         $this->show = false;
     }
     public $edit = false;
+    public $activeButton = 'Invoices';
 
     public $selectedCustomerId;
     public function editCustomers($customerId)
@@ -155,7 +174,6 @@ class Customers extends Component
     public function updateCustomers()
     {
         $this->validate([
-            'company_id' => 'required',
             'customer_name' => 'required',
             'email' => 'required',
             'phone' => 'required',
@@ -169,10 +187,11 @@ class Customers extends Component
             $customerProfilePath = $this->customer_profile->store('customer_profiles', 'public');
             $customer->update(['customer_company_logo' => $customerProfilePath]);
         }
+        $companyId = auth()->user()->company_id;
 
 
         $customer->update([
-            'company_id' => $this->company_id,
+            'company_id' => $companyId,
             'customer_name' => $this->customer_name,
             'customer_company_name' => $this->customer_company_name,
             'email' => $this->email,
@@ -196,23 +215,30 @@ class Customers extends Component
 
     public $allCustomers;
     public $companies;
-    public $po = false;
-    public function addPO($customerId)
+    public $so = false;
+    public function addSO()
     {
-        $this->po = true;
-        $this->selectedCustomer = CustomerDetails::where('customer_id', $customerId)->first();
-        $this->customer_id = $this->selectedCustomer->customer_id;
+
+        $this->so = true;
     }
-    public function cancelPO()
+    public function cancelSO()
     {
-        $this->po = false;
+        $this->so = false;
     }
-    public $vendors;
+    public $vendors, $employees;
+    public function selectedConsultantId()
+    {
+        $selectedConsultantId = $this->employees->firstWhere('emp_id', $this->consultant_name);
+        $this->job_title = $selectedConsultantId ? $selectedConsultantId->job_title : null;
+    }
     public function render()
     {
-        $this->companies = CompanyDetails::all();
-        $this->vendors = VendorDetails::all();
-        $this->customers = CustomerDetails::with('company')->orderBy('created_at', 'desc')->get();
+        $companyId = auth()->user()->company_id;
+
+        $this->vendors = VendorDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
+        $this->employees = EmpDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
+        $this->customers = CustomerDetails::with('company')
+            ->where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
         $this->allCustomers = $this->filteredPeoples ?: $this->customers;
         return view('livewire.customers');
     }

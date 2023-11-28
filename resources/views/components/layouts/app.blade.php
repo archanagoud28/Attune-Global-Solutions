@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="{{asset('/images/fav.png')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('/images/Small.png')}}">
     <title>Attune Global Solutions</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -25,6 +26,7 @@
             margin: auto;
         }
 
+
         .menu-link {
             font-size: 12px;
             color: white;
@@ -35,26 +37,32 @@
             margin-left: 15px;
         }
 
+
         .menu-link:hover,
         .menu-link.active {
             color: orange;
         }
 
 
+
+
         .fas {
             width: 25px;
         }
+
 
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
         }
 
+
         .container-fluid {
             padding: 0;
             margin: 0;
             display: flex;
         }
+
 
         .col-md-2 {
             background-color: rgb(2, 17, 79);
@@ -66,9 +74,11 @@
             width: 17%;
         }
 
+
         .col-md-10 {
             margin-left: 17%;
         }
+
 
         .row-header {
             background-color: rgb(2, 17, 79);
@@ -83,11 +93,14 @@
             align-items: center;
         }
 
+
         .row-content {
             background-color: #fff;
             margin-top: 20px;
 
+
         }
+
 
         .overflow-auto {
             height: auto;
@@ -103,9 +116,10 @@
     </style>
 </head>
 
+
 <body>
     @guest
-        @livewire('hr-login')
+    @livewire('hr-login')
     @else
         @if(Auth::guard('hr')->check())
         <div class="container-fluid">
@@ -193,6 +207,7 @@
         </div>
     @endif
 
+
     @livewireScripts
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -205,6 +220,15 @@
     <!-- Add this script inside the head tag or at the end of the body tag -->
 
 
+
+
+
+
+
+    <!-- Add this script inside the head tag or at the end of the body tag -->
+
+
 </body>
+
 
 </html>

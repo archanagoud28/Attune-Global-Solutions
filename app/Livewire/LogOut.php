@@ -9,10 +9,8 @@ class LogOut extends Component
 {
     public function logouted()
     {
-
         Auth::logout();
         return redirect('/HrLogin');
-
     }
 
     public function render()
