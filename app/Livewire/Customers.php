@@ -31,19 +31,24 @@ class Customers extends Component
 
     public $selectedCustomer;
     public $customerId;
-    public $poList = false;
-    public $showPOLists;
+    public $soList = false;
+    public $showSOLists;
 
-    public function showPoList($customerId)
+    public function updateAndShowSoList($customerId)
     {
-        $this->showPOLists = PurchaseOrder::with('vendor')->where('customer_id', $customerId)->get();
-        $this->poList = true;
+        $this->activeButton = 'SO';
+        $this->showSoList($customerId);
     }
-    public function closePOList()
+    public function showSoList($customerId)
     {
-        $this->poList = false;
+        $this->showSOLists = SalesOrder::with('cus','com','emp')->where('customer_id', $customerId)->get();
+        $this->soList = true;
     }
-    public $job_title, $startDate, $endDate, $consultant_name, $customerName;
+    public function closeSOList()
+    {
+        $this->soList = false;
+    }
+    public $job_title, $startDate, $endDate, $consultant_name, $customerName, $paymentTerms;
     public function saveSalesOrder()
     {
         $this->validate([
@@ -54,7 +59,7 @@ class Customers extends Component
             'timeSheetType' => 'required',
             'timeSheetBegins' => 'required',
             'invoiceType' => 'required',
-            'paymentType' => 'required',
+            'paymentTerms' => 'required',
             'consultant_name' => 'required',
             'customerName' => 'required',
             'startDate' => 'required',
@@ -75,7 +80,7 @@ class Customers extends Component
             'time_sheet_type' => $this->timeSheetType,
             'time_sheet_begins' => $this->timeSheetBegins,
             'invoice_type' => $this->invoiceType,
-            'payment_type' => $this->paymentType,
+            'payment_terms' => $this->paymentTerms,
         ]);
         session()->flash('sales-order', 'Sales order submitted successfully.');
         $this->so = false;
@@ -237,8 +242,7 @@ class Customers extends Component
 
         $this->vendors = VendorDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
         $this->employees = EmpDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
-        $this->customers = CustomerDetails::with('company')
-            ->where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
+        $this->customers = CustomerDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
         $this->allCustomers = $this->filteredPeoples ?: $this->customers;
         return view('livewire.customers');
     }

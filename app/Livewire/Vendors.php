@@ -4,8 +4,11 @@ namespace App\Livewire;
 
 use App\Models\CompanyDetails;
 use App\Models\CustomerDetails;
+use App\Models\EmpDetails;
+use App\Models\PurchaseOrder;
 use App\Models\SalesOrder;
 use App\Models\VendorDetails;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Emphasis;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -28,16 +31,21 @@ class Vendors extends Component
 
     public $selectedVendor;
     public $vendor_id;
-    public $soList = false;
-    public $showSOLists;
-    public function showSoList($vendorId)
+    public $poList = false;
+    public $showPOLists;
+    public function updateAndShowPoList($vendorId)
     {
-        $this->showSOLists = SalesOrder::with('customer')->where('vendor_id', $vendorId)->get();
-        $this->soList = true;
+        $this->activeButton = 'PO';
+        $this->showPOList($vendorId);
     }
-    public function closeSOList()
+    public function showPOList($vendorId)
     {
-        $this->soList = false;
+        $this->showPOLists = PurchaseOrder::with('ven','com','emp')->where('vendor_id', $vendorId)->get();
+        $this->poList = true;
+    }
+    public function closePOList()
+    {
+        $this->poList = false;
     }
 
     public $employeeSkillsPairs = [['employees' => '', 'skills' => '']];
@@ -54,34 +62,47 @@ class Vendors extends Component
         unset($this->employeeSkillsPairs[$index]);
         $this->employeeSkillsPairs = array_values($this->employeeSkillsPairs);
     }
+    public $job_title, $startDate, $endDate, $consultantName, $vendorName, $paymentTerms;
     public function savePurchaseOrder()
     {
         $this->validate([
-            'employeeSkillsPairs.*.employees' => 'required',
-            'employeeSkillsPairs.*.skills' => 'required',
-            'customerId' => 'required',
             'rate' => 'required',
             'rateType' => 'required',
-            'endClientTimesheetRequired' => 'required_if:endClientTimesheetRequired,true',
+            'job_title' => 'required',
+            'endClientTimesheetRequired' => 'required',
             'timeSheetType' => 'required',
             'timeSheetBegins' => 'required',
             'invoiceType' => 'required',
-            'paymentType' => 'required',
+            'paymentTerms' => 'required',
+            'consultantName' => 'required',
+            'vendorName' => 'required',
+            'startDate' => 'required',
+            'endDate' => 'required',
         ]);
 
-        SalesOrder::create([
-            'customer_id' => $this->customerId,
-            'vendor_id' => $this->vendor_id,
+        $companyId = auth()->user()->company_id;
+
+        PurchaseOrder::create([
+            'company_id' => $companyId,
+            'emp_id' => $this->consultantName,
+            'vendor_id' => $this->vendorName,
+            'job_title' => $this->job_title,
+            'start_date' => $this->startDate,
+            'end_date' => $this->endDate,
             'rate' => $this->rate . ' ' . $this->rateType,
             'end_client_timesheet_required' => $this->endClientTimesheetRequired,
-            'employees_and_skills' => $this->employeeSkillsPairs,
             'time_sheet_type' => $this->timeSheetType,
             'time_sheet_begins' => $this->timeSheetBegins,
             'invoice_type' => $this->invoiceType,
-            'payment_type' => $this->paymentType,
+            'payment_terms' => $this->paymentTerms,
         ]);
-        session()->flash('sales-order', 'Sales order submitted successfully.');
+        session()->flash('purchase-order', 'Purchase order submitted successfully.');
         $this->po = false;
+    }
+    public function selectedConsultantId()
+    {
+        $selectedConsultantId = $this->employees->firstWhere('emp_id', $this->consultantName);
+        $this->job_title = $selectedConsultantId ? $selectedConsultantId->job_title : null;
     }
     public function selectVendor($vendorId)
     {
@@ -206,20 +227,20 @@ class Vendors extends Component
     public function addPO()
     {
         $this->po = true;
-    
     }
     public function cancelPO()
     {
         $this->po = false;
     }
     public $vendors;
-    public $customers;
+    public $customers,$employees;
     public function render()
     {
         $companyId = auth()->user()->company_id;
+        $this->employees = EmpDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
 
-        $this->customers = CustomerDetails::where('company_id',$companyId)->orderBy('created_at', 'desc')->get();
-        $this->vendors = VendorDetails::with('company') ->where('company_id',$companyId)->orderBy('created_at', 'desc')->get();
+        $this->customers = CustomerDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
+        $this->vendors = VendorDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
         $this->allVendors = $this->filteredPeoples ?: $this->vendors;
         return view('livewire.vendors');
     }

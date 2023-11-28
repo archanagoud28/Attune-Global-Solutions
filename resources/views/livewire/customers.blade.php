@@ -178,14 +178,14 @@
         {{ session('success') }}
     </div>
     @elseif(session()->has('sales-order'))
-    <div id="purchaseOrderAlert" style="text-align: center;" class="alert alert-success">
+    <div id="salesOrderAlert" style="text-align: center;" class="alert alert-success">
         {{ session('sales-order') }}
     </div>
     @endif
     <script>
         setTimeout(function() {
             document.getElementById('successAlert').style.display = 'none';
-            document.getElementById('purchaseOrderAlert').style.display = 'none';
+            document.getElementById('salesOrderAlert').style.display = 'none';
         }, 5000);
     </script>
     <div class="row" style="height:150px">
@@ -241,79 +241,8 @@
             </div>
 
             @elseif (!$customers->isEmpty())
-            @if($poList=="true")
-            <div style="text-align: end;">
-                <button wire:click="closePOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
-            </div>
-            <!-- resources/views/livewire/purchase-order-table.blade.php -->
 
-            <div>
-                <style>
-                    /* Add your custom CSS styles here */
-                    .table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 20px;
-                    }
 
-                    th,
-                    td {
-                        border: 1px solid #ddd;
-                        padding: 8px;
-                        text-align: left;
-                        font-size: 12px;
-                        /* Set font size to 12px */
-                    }
-
-                    th {
-                        background-color: #f2f2f2;
-                        font-size: 12px;
-
-                    }
-
-                    tr:hover {
-                        background-color: #f5f5f5;
-                        font-size: 12px;
-
-                    }
-                </style>
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>PO Number</th>
-                            <th>Customer ID</th>
-                            <th>Vendor ID</th>
-                            <th>Vendor Name</th>
-                            <th>Rate</th>
-                            <th>Time Sheet Type</th>
-                            <th>Time Sheet Begins</th>
-                            <th>Invoice Type</th>
-                            <th>Payment Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($showPOLists as $purchaseOrder)
-                        <tr>
-                            <td>{{ $purchaseOrder->po_number }}</td>
-                            <td>{{ $purchaseOrder->customer_id }}</td>
-                            <td>{{ $purchaseOrder->vendor_id }}</td>
-                            <td>{{ $purchaseOrder->vendor->vendor_name }}</td>
-                            <td>{{ $purchaseOrder->rate }}</td>
-                            <td>{{ $purchaseOrder->time_sheet_type }}</td>
-                            <td>{{ $purchaseOrder->time_sheet_begins }}</td>
-                            <td>{{ $purchaseOrder->invoice_type }}</td>
-                            <td>{{ $purchaseOrder->payment_type }}</td>
-                        </tr>
-                        @empty
-                        <div style="text-align: center; margin-top: 10px;">Purchase Orders Not Found</div>
-                        @endforelse
-
-                    </tbody>
-                </table>
-            </div>
-
-            @else
             <!-- Display details of the first person in the list -->
             @php
             $firstPerson = $customers->first();
@@ -354,7 +283,6 @@
                     </div>
                 </div>
             </div>
-            @endif
             @endif
 
         </div>
@@ -529,7 +457,7 @@
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="rate">Job Title:</label>
                                 <div class="input-group">
-                                    <input style="font-size: 12px;" type="number" class="form-control" id="rate" wire:model="job_title" readonly> 
+                                    <input style="font-size: 12px;" type="text" class="form-control" id="rate" wire:model="job_title" readonly>
                                 </div> <br>
                                 @error('job_title') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
 
@@ -639,9 +567,9 @@
 
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="paymentType">Payment Terms:</label>
-                                <input style="font-size: 12px;" type="text" class="form-control" id="rate" wire:model="rate" placeholder="Ex: Net 0,Net 10,........">
+                                <input style="font-size: 12px;" type="text" class="form-control" id="rate" wire:model="paymentTerms" placeholder="Ex: Net 0,Net 10,........">
 
-                                @error('paymentType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                                @error('paymentTerms') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                             </div>
                             <div style="text-align: center;">
                                 <button style="margin-top: 15px;font-size:12px" type="submit" class="btn btn-success">Submit Sales Order</button>
@@ -657,77 +585,9 @@
     <div class="modal-backdrop fade show blurred-backdrop"></div>
     @endif
 
-    <!-- Everyone tab content -->
-    @if($poList=="true")
-    <div style="text-align: end;">
-        <button wire:click="closePOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
-    </div>
-    <!-- resources/views/livewire/purchase-order-table.blade.php -->
 
-    <div>
-        <style>
-            /* Add your custom CSS styles here */
-            .table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }
 
-            th,
-            td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-                font-size: 12px;
-                /* Set font size to 12px */
-            }
-
-            th {
-                background-color: #f2f2f2;
-            }
-
-            tr:hover {
-                background-color: #f5f5f5;
-            }
-        </style>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>PO Number</th>
-                    <th>Customer ID</th>
-                    <th>Vendor ID</th>
-                    <th>Vendor Name</th>
-                    <th>Rate</th>
-                    <th>Time Sheet Type</th>
-                    <th>Time Sheet Begins</th>
-                    <th>Invoice Type</th>
-                    <th>Payment Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($showPOLists as $purchaseOrder)
-                <tr>
-                    <td>{{ $purchaseOrder->po_number }}</td>
-                    <td>{{ $purchaseOrder->customer_id }}</td>
-                    <td>{{ $purchaseOrder->vendor_id }}</td>
-                    <td>{{ $purchaseOrder->vendor->vendor_name }}</td>
-                    <td>{{ $purchaseOrder->rate }}</td>
-                    <td>{{ $purchaseOrder->time_sheet_type }}</td>
-                    <td>{{ $purchaseOrder->time_sheet_begins }}</td>
-                    <td>{{ $purchaseOrder->invoice_type }}</td>
-                    <td>{{ $purchaseOrder->payment_type }}</td>
-                </tr>
-                @empty
-                <div style="text-align: center; margin-top: 10px;">Purchase Orders Not Found</div>
-                @endforelse
-
-            </tbody>
-        </table>
-    </div>
-
-    @else
-    <div class="row" style="margin-top: 15px;height:400px">
+    <div class="row" style="margin-top: 15px;height:300px">
         <div class="col-md-3" style="background-color:#f2f2f2;height: auto; padding: 5px;margin-right:5px;max-height:500px;overflow-y:auto">
             <div class="container" style="margin-top: 8px;margin-bottom:8px">
                 <div class="row">
@@ -769,12 +629,16 @@
 
         <!-- Details of the selected person -->
         <div class="col-md-8" style="height:auto; background-color: #f2f2f2; padding: 8px">
+            @php
+            $selectedPerson = $selectedCustomer ?? $customers->first();
+            $isActive = $selectedPerson->status == 'active';
+            @endphp
             <div style="text-align: start;">
                 <button wire:click="$set('activeButton', 'Invoices')" style="{{ $activeButton === 'Invoices' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 10px; border-radius: 5px; border: none;">
                     Invoices & Payments
                 </button>
 
-                <button wire:click="$set('activeButton', 'SO')" style="{{ $activeButton === 'SO' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="updateAndShowSoList('{{$selectedPerson->customer_id}}')"  style="{{ $activeButton === 'SO' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 10px; border-radius: 5px; border: none;">
                     SO
                 </button>
 
@@ -789,9 +653,82 @@
                 </button>
 
             </div>
+            @if($activeButton=="SO")
+
+            <!-- resources/views/livewire/purchase-order-table.blade.php -->
+
+            <div>
+                <style>
+                    /* Add your custom CSS styles here */
+                    .table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                    }
+
+                    th,
+                    td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: left;
+                        font-size: 8px;
+                        /* Set font size to 12px */
+                    }
+
+                    th {
+                        background-color: #f2f2f2;
+                        font-size: 8px;
+
+                    }
+
+                    tr:hover {
+                        background-color: #f5f5f5;
+                        font-size: 8px;
+
+                    }
+                </style>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SO Number</th>
+                            <th>Customer ID</th>
+                            <th>Customer Name</th>
+                            <th>Employee Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Time Sheet Type</th>
+                            <th>Time Sheet Begins</th>
+                            <th>Invoice Type</th>
+                            <th>Payment Terms</th>
+                            <th>SO to</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($showSOLists as $salesOrder)
+                        <tr>
+                            <td>{{ $salesOrder->so_number }}</td>
+                            <td>{{ $salesOrder->customer_id }}</td>
+                            <td>{{ $salesOrder->cus->customer_company_name }}</td>
+                            <td>{{ $salesOrder->emp->first_name }} {{ $salesOrder->emp->last_name }}</td>
+                            <td>{{ $salesOrder->start_date }}</td>
+                            <td>{{ $salesOrder->end_date }}</td>
+                            <td>{{ $salesOrder->time_sheet_type }}</td>
+                            <td>{{ $salesOrder->time_sheet_begins }}</td>
+                            <td>{{ $salesOrder->invoice_type }}</td>
+                            <td>{{ $salesOrder->payment_terms }}</td>
+                            <td>{{ $salesOrder->com->company_name }}</td>
+                        </tr>
+                        @empty
+                        <div style="text-align: center; margin-top: 10px;">Sales Orders Not Found</div>
+                        @endforelse
+
+                    </tbody>
+                </table>
+            </div>
+            @endif
 
         </div>
     </div>
-    @endif
     <!-- End of Everyone tab content -->
 </div>
