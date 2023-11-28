@@ -1,5 +1,8 @@
 <div>
 <style>
+    body{
+        font-family: 'Roboto', sans-serif;
+    }
 .form-group{
     display:flex;
     flex-direction:column;
@@ -15,7 +18,7 @@
 }
 .form-group label{
     font-weight:500;
-    color:#47515B;
+    color:#5f6c79;
     margin-bottom:10px;
 }
 a:hover{
@@ -32,8 +35,15 @@ a:hover{
 .employee-details{
     border:1px solid #ccc;
     padding:5px 10px;
+    font-size:0.925rem;
     border-radius:10px;
     background:#fff;
+}
+
+.employee-details h5{
+   font-weight:400;
+   font-size:18px;
+   color:rgb(2, 17, 79);
 }
 .alert-container {
     position: fixed;
@@ -75,6 +85,11 @@ a:hover{
             background-color: #0056b3;
             color:#fff;
         }
+        .placeholder-small::placeholder {
+    font-size: 0.625rem; /* Adjust the font size as needed */
+    color: #6c757d; /* Muted color */
+}
+
 </style>
 <div>
     <div class="container" style="padding:0px;margin:30px 0;">
@@ -109,7 +124,7 @@ a:hover{
                      <a style="text-decoration:none;font-weight:600;color:#00459c;"href="{{route('employee-list-page')}}"><button class="view-button">View Employees</button></a>
                      <a style="text-decoration:none;font-weight:600;color:#00459c;"href="{{route('contractor-page')}}"><button class="view-button">View Contractors</button></a>
                     </div>
-                    <div class="card-header" style="background-color: #00234f;padding:10px;width:50%;margin-left:20%; border-radius:20px;;">
+                    <div class="card-header" style="background-color: #00234f;padding:7px;width:50%;margin-left:20%; border-radius:20px;;">
                         <h5 class="mb-0" style="text-align: center;color:white;">Employee Registration Form</h5>
                     </div>
                     <div class="card-body">
@@ -119,7 +134,7 @@ a:hover{
                                 <div class="col-md-6" >
                                 <div class="emp" >
                                <div class=" employee-details" > 
-                                <div style="margin:5px 0 20px 0"><h5>Employee Details</h5></div>  
+                                <div style="margin:5px 0 20px 0;"><h5>Employee Details</h5></div>  
                             <div class="form-group" >
                                 <label for="first_name">First Name :</label>
                                 <input type="text" class="form-control" wire:model="first_name" style="margin-bottom:10px;">
@@ -225,8 +240,8 @@ a:hover{
 
                                 <div class="form-group">
                                     <label for="employee_type">Employee Type:</label>
-                                    <select class="form-control custom-select" wire:model="employee_type" style="margin-bottom: 10px; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'grey\' class=\'bi bi-chevron-down\' width=\'22\' height=\'22\' viewBox=\'0 0 20 16\'><path d=\'M1 5l7 7 7-7H1z\'/></svg>'); background-repeat: no-repeat; background-position: right;">
-                                        <option value="defualt">Select Employee Type</option>
+                                    <select class="form-control custom-select placeholder-small" wire:model="employee_type" style="margin-bottom: 10px; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'grey\' class=\'bi bi-chevron-down\' width=\'22\' height=\'22\' viewBox=\'0 0 20 16\'><path d=\'M1 5l7 7 7-7H1z\'/></svg>'); background-repeat: no-repeat; background-position: right;">
+                                        <option value="defualt" disabled selected >Select Employee Type</option>
                                         <option value="full-time">Full-Time</option>
                                         <option value="part-time">Part-Time</option>
                                         <option value="contract">Contract</option>
@@ -238,7 +253,7 @@ a:hover{
                                     <label for="employee_status">Employee Status:</label>
                                     <div class="input-group">
                                     <select class="form-control custom-select" wire:model="employee_status" style="margin-bottom: 10px; background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'grey\' class=\'bi bi-chevron-down\' width=\'22\' height=\'22\' viewBox=\'0 0 20 16\'><path d=\'M1 5l7 7 7-7H1z\'/></svg>'); background-repeat: no-repeat; background-position: right;">
-                                            <option value="defualt">Select Employee Status</option>
+                                            <option value="defualt" disabled selected>Select Employee Status</option>
                                             <option value="active">Active</option>
                                             <option value="on-leave">On Leave</option>
                                             <option value="terminated">Terminated</option>

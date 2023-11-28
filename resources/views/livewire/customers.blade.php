@@ -581,6 +581,7 @@
                                 @error('customerName') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                             </div>
 
+
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="endClientTimesheetRequired">End Client Time sheet required:</label>
                                 <select style="font-size: 12px;" class="form-control" id="endClientTimesheetRequired" wire:model="endClientTimesheetRequired">
@@ -759,6 +760,9 @@
                         </div>
                         <div class="col-md-4">
                             <h6 class="username" style="font-size: 8px; color: black;">#({{ $customer->customer_id }})</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="username" style="font-size: 12px; color: black;">#({{ $customer->customer_id }})</h6>
                         </div>
                     </div>
                 </div>
