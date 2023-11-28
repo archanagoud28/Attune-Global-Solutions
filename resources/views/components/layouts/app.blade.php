@@ -26,7 +26,7 @@
         }
  
         .menu-link {
-            font-size: 12px;
+            font-size: 0.825rem;
             color: white;
             text-decoration: none;
             display: flex;
@@ -93,6 +93,12 @@
             height: auto;
             overflow: auto;
         }
+ 
+        .menu-link.active {
+        color: orange;
+        font-size:0.975rem;
+        /* width:97% You can adjust the text color for the active state */
+    }
     </style>
 </head>
  
@@ -104,16 +110,28 @@
         <div class="container-fluid">
             <div class="col-md-2">
                 <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-                <a class="menu-link" href="/"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
-                <a class="menu-link" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
-                <a class="menu-link" href="/vendor-page"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
-                <a class="menu-link" href="employee-list-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
-                <a class="menu-link" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
-                <a class="menu-link" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Sales / Purchase Orders</span></a><br>
-                <a class="menu-link" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
-                <a class="menu-link" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a> <br>
-                <a class="menu-link" href="/time-sheet-display"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
-            </div></div>
+                <div style="margin-top:30px;">
+                <a class="menu-link {{ Request::is('/') ? 'active' : '' }}" href="/"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+ 
+                <a class="menu-link {{ Request::is('customers') ? 'active' : '' }}" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
+
+                <a class="menu-link {{ Request::is('vendor-page') ? 'active' : '' }}" href="/vendor-page"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
+
+                <a class="menu-link {{ Request::is('employee-list-page') ? 'active' : '' }}" href="employee-list-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
+
+                <a class="menu-link {{ Request::is('contractor-page') ? 'active' : '' }}" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
+
+                <a class="menu-link {{ Request::is('sales-purchase-orders') ? 'active' : '' }}" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Sales / Purchase Orders</span></a><br>
+
+                <a class="menu-link {{ Request::is('bills') ? 'active' : '' }}" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
+
+                <a class="menu-link {{ Request::is('invoice') ? 'active' : '' }}" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a><br>
+
+                <a class="menu-link {{ Request::is('time-sheet-display') ? 'active' : '' }}" href="/time-sheet-display"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
+
+                </div>
+            </div>
+        </div>
         @elseif(Auth::guard('vendor')->check())
             <div class="container-fluid">
                 <div class="col-md-2">
@@ -152,10 +170,13 @@
         @endif
  
         <div class="col-md-10">
-            <div class="row-header d-flex justify-content-between align-items-center" style="z-index: 1000;">
-                <h4 style="color: white; margin-left:40%" class="text-center mb-0">Vendor Bloom</h4>
-                @livewire('log-out')
+             <div class="row-header" style="z-index: 1000;">
+             <div style="display:flex;align-items: center;margin-left:10px; ">@livewire('page-title')</div>
+            <div style="display: flex; align-items: center; color: white; margin-left: 65%;  padding: 5px; gap: 15px;">
+            <div style="flex-grow: 1; white-space: nowrap;">@livewire('user-login-info')</div>
+                <div>@livewire('log-out')</div>
             </div>
+        </div>
  
             <div class="row-content">
                 <div class="overflow-auto">
@@ -169,6 +190,14 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ 
+ 
+ 
+ 
+ 
+    <!-- Add this script inside the head tag or at the end of the body tag -->
+ 
+ 
 </body>
  
 </html>

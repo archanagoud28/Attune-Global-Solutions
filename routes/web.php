@@ -21,6 +21,7 @@ use App\Livewire\SalesOrPurchaseOrders;
 use App\Livewire\TimeSheetDisplay;
 use App\Livewire\VendorRegister;
 use App\Livewire\Vendors;
+use App\Livewire\PageTitle;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -112,3 +113,4 @@ Route::middleware(['auth:contractor'])->group(function () {
     Route::get('/contractor-home', HomePage::class)->name('contractor-home');
     Route::get('/contractor-pages', ContractorPage::class)->name('contractor-pages');
 });
+Route::get('/page-title', PageTitle::class)->name('page-title');
