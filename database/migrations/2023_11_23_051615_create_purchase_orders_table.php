@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('customer_id'); // Assuming a 'vendors' table exists
             $table->string('vendor_id'); // Assuming a 'vendors' table exists
             $table->string('rate');
-            $table->string('end_client_timesheet_required')->nullable()->default('not required');
+            $table->string('end_client_timesheet_required')->nullable();
             $table->string('time_sheet_type')->nullable();
             $table->string('time_sheet_begins')->nullable();
             $table->string('invoice_type');

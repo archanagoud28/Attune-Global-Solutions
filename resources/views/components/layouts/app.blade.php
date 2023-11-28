@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="{{asset('/images/fav.png')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('/images/Small.png')}}">
     <title>Attune Global Solutions</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -24,7 +25,8 @@
             display: block;
             margin: auto;
         }
- 
+
+
         .menu-link {
             font-size: 0.825rem;
             color: white;
@@ -34,28 +36,34 @@
             margin-right: 15px;
             margin-left: 15px;
         }
- 
+
+
         .menu-link:hover,
         .menu-link.active {
             color: orange;
         }
- 
- 
+
+
+
+
         .fas {
             width: 25px;
         }
- 
+
+
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
         }
- 
+
+
         .container-fluid {
             padding: 0;
             margin: 0;
             display: flex;
         }
- 
+
+
         .col-md-2 {
             background-color: rgb(2, 17, 79);
             color: white;
@@ -65,11 +73,13 @@
             height: 100%;
             width: 17%;
         }
- 
+
+
         .col-md-10 {
             margin-left: 17%;
         }
- 
+
+
         .row-header {
             background-color: rgb(2, 17, 79);
             height: 50px;
@@ -82,13 +92,16 @@
             justify-content: center;
             align-items: center;
         }
- 
+
+
         .row-content {
             background-color: #fff;
             margin-top: 20px;
- 
+
+
         }
- 
+
+
         .overflow-auto {
             height: auto;
             overflow: auto;
@@ -101,10 +114,11 @@
     }
     </style>
 </head>
- 
+
+
 <body>
     @guest
-        @livewire('hr-login')
+    @livewire('hr-login')
     @else
         @if(Auth::guard('hr')->check())
         <div class="container-fluid">
@@ -136,39 +150,51 @@
             <div class="container-fluid">
                 <div class="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-                    <a class="menu-link" href="/vendor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
-                 <a class="menu-link" href="vendor-pages"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
+                    <a class="menu-link {{ Request::is('vendor-home') ? 'active' : '' }}" href="/vendor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+
+                <a class="menu-link {{ Request::is('vendor-pages') ? 'active' : '' }}" href="/vendor-pages"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
+                 {{-- <a class="menu-link" href="vendor-pages"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>  --}}
                 </div>
             </div>
         @elseif(Auth::guard('customer')->check())
             <div class="container-fluid">
                 <div class="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-                    <a class="menu-link" href="/customer-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
-                    <a class="menu-link" href="/customer-pages"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
+                    <a class="menu-link {{ Request::is('customer-home') ? 'active' : '' }}" href="/customer-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+
+                    <a class="menu-link {{ Request::is('customer-pages') ? 'active' : '' }}" href="/customer-pages"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
+                    {{-- <a class="menu-link" href="/customer-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link" href="/customer-pages"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br> --}}
                 </div>
             </div>
         @elseif(Auth::guard('contractor')->check())
             <div class="container-fluid">
                 <div class="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-                    <a class="menu-link" href="/contractor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
-                    <a class="menu-link" href="contractor-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
+                    <a class="menu-link {{ Request::is('contractor-home') ? 'active' : '' }}" href="/contractor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+
+                    <a class="menu-link {{ Request::is('contractor-pages') ? 'active' : '' }}" href="/contractor-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
+                    {{-- <a class="menu-link" href="/contractor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link" href="contractor-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br> --}}
                 </div>
             </div>
- 
+
             @elseif(Auth::guard('employee')->check())
             <div class="container-fluid">
                 <div class="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-                    <a class="menu-link" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link {{ Request::is('employee-home') ? 'active' : '' }}" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                    <a class="menu-link {{ Request::is('employee-pages') ? 'active' : '' }}" href="/employee-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Employees</span></a><br>
+                    <a class="menu-link {{ Request::is('time-sheets-display') ? 'active' : '' }}" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text"> Time Sheets</span></a><br>
+
+                    {{-- <a class="menu-link" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
                     <a class="menu-link" href="employee-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Employees</span></a><br>
-                    <a class="menu-link" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text">Time Sheets</span></a><br>
+                    <a class="menu-link" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text">Time Sheets</span></a><br> --}}
                 </div>
             </div>
- 
+
         @endif
- 
+
         <div class="col-md-10">
              <div class="row-header" style="z-index: 1000;">
              <div style="display:flex;align-items: center;margin-left:10px; ">@livewire('page-title')</div>
@@ -185,20 +211,29 @@
             </div>
         </div>
     @endif
- 
+
+
     @livewireScripts
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- 
- 
- 
- 
- 
+
+
+
+
+
     <!-- Add this script inside the head tag or at the end of the body tag -->
- 
- 
+
+
+
+
+
+
+
+    <!-- Add this script inside the head tag or at the end of the body tag -->
+
+
 </body>
- 
+
+
 </html>
- 

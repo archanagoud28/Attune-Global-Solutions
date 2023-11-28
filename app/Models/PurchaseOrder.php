@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class PurchaseOrder extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'employees_and_skills' => 'array',
+    ];
     protected $fillable = [
         'po_number',
         'customer_id',
         'vendor_id',
         'rate',
+        'employees_and_skills',
         'end_client_timesheet_required',
         'time_sheet_type',
         'time_sheet_begins',

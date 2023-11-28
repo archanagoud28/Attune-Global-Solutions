@@ -87,6 +87,7 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/contractor-page', ContractorPage::class)->name('contractor-page');
     Route::get('/vendor-page', Vendors::class)->name('vendor-page');
     Route::get('/customers', Customers::class)->name('customer-page');
+    Route::get('/salesOrPurchase', SalesOrPurchaseOrders::class);
     Route::get('/sales-or-purchase-orders', SalesOrPurchaseOrders::class);
     Route::get('/time-sheet-display', TimeSheetDisplay::class)->name('time-sheet-display');
     Route::get('/purchase-order', PurchaseOrder::class)->name('purchase-order');

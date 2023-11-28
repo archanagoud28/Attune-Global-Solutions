@@ -15,22 +15,31 @@ return new class extends Migration
         Schema::create('sales_orders', function (Blueprint $table) {
             $table->id();
             $table->string('so_number')->nullable()->default(null)->unique();
-            $table->string('vendor_id'); // Assuming a 'vendors' table exists
-            $table->string('customer_id'); // Assuming a 'vendors' table exists
+            $table->string('emp_id');
+            $table->string('job_title');
+            $table->string('start_date'); // Assuming a 'vendors' table exists
+            $table->string('end_date'); // Assuming a 'vendors' table exists
             $table->string('rate');
-            $table->string('end_client_timesheet_required')->nullable()->default('not required');
+            $table->string('customer_id'); // Assuming a 'vendors' table exists
+            $table->string('end_client_timesheet_required')->nullable();
             $table->string('time_sheet_type')->nullable();
             $table->string('time_sheet_begins')->nullable();
             $table->string('invoice_type');
-            $table->string('payment_type');
-            $table->foreign('vendor_id')
-                ->references('vendor_id')
-                ->on('vendor_details')
+            $table->string('payment_terms');
+            $table->string('company_id');
+            $table->foreign('company_id')
+                ->references('company_id')
+                ->on('company_details')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
             $table->foreign('customer_id')
                 ->references('customer_id')
                 ->on('customer_details')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+            $table->foreign('emp_id')
+                ->references('emp_id')
+                ->on('emp_details')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
             $table->timestamps();
