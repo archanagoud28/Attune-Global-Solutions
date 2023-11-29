@@ -2,6 +2,33 @@
 
     <!-- Add this to your HTML file -->
     <style>
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-size: 8px;
+            /* Set font size to 12px */
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-size: 8px;
+
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+            font-size: 8px;
+
+        }
+
         .customer-image {
             border-radius: 2;
             height: 100px;
@@ -170,8 +197,8 @@
     </style>
 
     <p style="text-align: start;margin-top:15px">
-        <button style="margin-right: 10px;" wire:click="open" class="button">ADD Vendors</button>
-        <button style="margin-right: 10px;" wire:click="addPO" class="button">ADD PO</button>
+        <button style="margin-right: 5px;" wire:click="open" class="button">ADD Vendors</button>
+        <button style="margin-right: 5px;" wire:click="addPO" class="button">ADD PO</button>
 
     </p>
     @if(session()->has('vendor'))
@@ -583,7 +610,7 @@
     <!-- Everyone tab content -->
 
     <div class="row" style="margin-top: 15px;height:300px">
-        <div class="col-md-3" style="background-color:#f2f2f2; height: auto; padding: 5px;margin-right:5px;max-height:500px;overflow-y:auto">
+        <div class="col-md-3" style="background-color:#f2f2f2; height: auto; padding: 5px;margin-right:5px;max-height:300px;overflow-y:auto">
             <div class="container" style="margin-top: 8px;margin-bottom:8px">
                 <div class="row">
                     <div class="col" style="margin: 0px; padding: 0px">
@@ -623,27 +650,27 @@
         </div>
 
         <!-- Details of the selected person -->
-        <div class="col-md-8" style="height:auto; background-color: #f2f2f2; padding: 5px">
+        <div class="col-md-8" style="background-color: #f2f2f2; padding: 5px;max-height:300px;overflow-y:auto">
             @php
             $selectedPerson = $selectedVendor ?? $vendors->first();
             $isActive = $selectedPerson->status == 'active';
             @endphp
             <div style="text-align: start;">
-                <button wire:click="$set('activeButton', 'Bills')" style="{{ $activeButton === 'Bills' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="showBills('{{$selectedPerson->vendor_id}}')" style="{{ $activeButton === 'Bills' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 5px; border-radius: 5px; border: none;">
                     Bills & Sent Payments
                 </button>
 
-                <button wire:click="updateAndShowPoList('{{$selectedPerson->vendor_id}}')" style="{{ $activeButton === 'PO' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="updateAndShowPoList('{{$selectedPerson->vendor_id}}')" style="{{ $activeButton === 'PO' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 5px; border-radius: 5px; border: none;">
                     PO
                 </button>
 
-                <button wire:click="$set('activeButton', 'EmailActivities')" style="{{ $activeButton === 'EmailActivities' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="$set('activeButton', 'EmailActivities')" style="{{ $activeButton === 'EmailActivities' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 5px; border-radius: 5px; border: none;">
                     Email Activities
                 </button>
-                <button wire:click="$set('activeButton', 'Notes')" style="{{ $activeButton === 'Notes' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="$set('activeButton', 'Notes')" style="{{ $activeButton === 'Notes' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 5px; border-radius: 5px; border: none;">
                     Notes
                 </button>
-                <button wire:click="$set('activeButton', 'Contacts')" style="{{ $activeButton === 'Contacts' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="$set('activeButton', 'Contacts')" style="{{ $activeButton === 'Contacts' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 5px; border-radius: 5px; border: none;">
                     Contacts
                 </button>
             </div>
@@ -652,36 +679,6 @@
             <!-- resources/views/livewire/purchase-order-table.blade.php -->
 
             <div>
-                <style>
-                    /* Add your custom CSS styles here */
-                    .table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 20px;
-                    }
-
-                    th,
-                    td {
-                        border: 1px solid #ddd;
-                        padding: 8px;
-                        text-align: left;
-                        font-size: 8px;
-                        /* Set font size to 12px */
-                    }
-
-                    th {
-                        background-color: #f2f2f2;
-                        font-size: 8px;
-
-                    }
-
-                    tr:hover {
-                        background-color: #f5f5f5;
-                        font-size: 8px;
-
-                    }
-                </style>
-
                 <table class="table">
                     <thead>
                         <tr>
@@ -714,13 +711,56 @@
                             <td>{{ $salesOrder->com->company_name }}</td>
                         </tr>
                         @empty
-                        <div style="text-align: center; margin-top: 10px;">Purchase Orders Not Found</div>
+                        <tr>
+                            <td colspan="11" style="text-align: center;">PurchaseOrders Not Found</td>
+                        </tr>
                         @endforelse
 
                     </tbody>
                 </table>
             </div>
             @endif
+
+            @if($activeButton=="Bills")
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Bill Number</th>
+                        <th>Vendor ID</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                        <th>Payment Terms</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Currency</th>
+                        <th>Notes</th>
+                        <th>Billed By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($bills as $bill)
+                    <tr>
+                        <td>{{ $bill->bill_number }}</td>
+                        <td>{{ $bill->vendor_id }}</td>
+                        <td>{{ $bill->amount }}</td>
+                        <td>{{ $bill->due_date }}</td>
+                        <td>{{ $bill->payment_terms }}</td>
+                        <td>{{ $bill->description }}</td>
+                        <td>{{ $bill->status }}</td>
+                        <td>{{ $bill->currency }}</td>
+                        <td>{{ $bill->notes }}</td>
+                        <td>{{ $bill->company->company_name }}</td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="10" style="text-align: center;">Bills Not Found</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+            @endif
+
 
 
         </div>

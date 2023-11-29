@@ -2,9 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\Bill;
 use App\Models\CompanyDetails;
 use App\Models\CustomerDetails;
 use App\Models\EmpDetails;
+use App\Models\Invoice;
 use App\Models\PurchaseOrder;
 use App\Models\SalesOrder;
 use App\Models\VendorDetails;
@@ -39,9 +41,18 @@ class Customers extends Component
         $this->activeButton = 'SO';
         $this->showSoList($customerId);
     }
+    public $invoices;
+    public function showInvoices($customerId){
+        $companyId = auth()->user()->company_id;
+
+        $this->activeButton = 'Invoices';
+        $this->invoices = Invoice::with('customer','company')->where('company_id',$companyId)->where('customer_id',$customerId)->orderBy('created_at','desc')->get();
+    }
     public function showSoList($customerId)
     {
-        $this->showSOLists = SalesOrder::with('cus','com','emp')->where('customer_id', $customerId)->get();
+        $companyId = auth()->user()->company_id;
+
+        $this->showSOLists = SalesOrder::with('cus','com','emp')->where('company_id',$companyId)->where('customer_id', $customerId)->orderBy('created_at','desc')->get();
         $this->soList = true;
     }
     public function closeSOList()
@@ -151,7 +162,7 @@ class Customers extends Component
         $this->show = false;
     }
     public $edit = false;
-    public $activeButton = 'Invoices';
+    public $activeButton = '';
 
     public $selectedCustomerId;
     public function editCustomers($customerId)

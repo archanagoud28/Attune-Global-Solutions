@@ -4,11 +4,11 @@
       <button wire:click="$set('tab', 'timeSheet')" style="background-color:  rgb(2, 17, 79);color:white;border-radius:5px;border:5px">Employee TimeSheet</button>
     </div>
     <div class="col">
-     <button wire:click="$set('tab', 'empInfo')" style="background-color:  rgb(2, 17, 79);color:white;border-radius:5px;border:5px"> Employee Info</button>
+      <button wire:click="$set('tab', 'empInfo')" style="background-color:  rgb(2, 17, 79);color:white;border-radius:5px;border:5px"> Employee Info</button>
     </div>
   </div>
-@if($tab=="timeSheet")
-<div>
+  @if($tab=="timeSheet")
+  <div>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -20,36 +20,36 @@
     <body>
       <div class="container" style="margin-top:40px;">
         <div class="form-row">
-         <div class="row">
-         <div class="col">
-            <label for="selectMonth">Month</label>
-            <select class="form-control" id="selectMonth">
-              <option value="1">January</option>
-              <option value="2">February</option>
-              <option value="3">March</option>
-              <option value="4">April</option>
-              <option value="5">May</option>
-              <option value="6">June</option>
-              <option value="7">July</option>
-              <option value="8">August</option>
-              <option value="9">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
-              <!-- Add options for all months -->
+          <div class="row">
+            <div class="col">
+              <label for="selectMonth">Month</label>
+              <select class="form-control" id="selectMonth">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+                <!-- Add options for all months -->
 
-            </select>
+              </select>
+            </div>
+            <div class="col">
+              <label for="selectYear">Year</label>
+              <select class="form-control" id="selectYear">
+                <!-- Add options for years as needed -->
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <!-- Add more years if necessary -->
+              </select>
+            </div>
           </div>
-          <div class="col">
-            <label for="selectYear">Year</label>
-            <select class="form-control" id="selectYear">
-              <!-- Add options for years as needed -->
-              <option value="2023">2023</option>
-              <option value="2024">2024</option>
-              <!-- Add more years if necessary -->
-            </select>
-          </div>
-         </div>
         </div>
 
         <h2>Employee Time Sheet</h2>
@@ -106,9 +106,9 @@
     </html>
 
   </div>
-@endif
-@if($tab=="empInfo")
-<div>
+  @endif
+  @if($tab=="empInfo")
+  <div>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -206,5 +206,5 @@
     </html>
 
   </div>
-@endif
+  @endif
 </div>

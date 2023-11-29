@@ -1,10 +1,11 @@
 <div style="padding:20px">
     <html>
     <style>
-        .error{
+        .error {
             font-size: 12px;
             color: red;
         }
+
         .table {
             width: 100%;
             font-size: 12px;
@@ -317,6 +318,7 @@
                         <th>Vendor ID</th>
                         <th>Vendor Name</th>
                         <th>Employee Name</th>
+                        <th>Employee Type</th>
                         <th>Job Title</th>
                         <th>Start Date</th>
                         <th>End Date</th>
@@ -334,6 +336,7 @@
                         <td>{{ $salesOrder->vendor_id }}</td>
                         <td>{{ $salesOrder->ven->vendor_name }}</td>
                         <td>{{ $salesOrder->emp->first_name }} {{ $salesOrder->emp->last_name }}</td>
+                        <td>{{ $salesOrder->emp->employee_type }}</td>
                         <td>{{ $salesOrder->emp->job_title }}</td>
                         <td>{{ $salesOrder->start_date }}</td>
                         <td>{{ $salesOrder->end_date }}</td>
@@ -344,9 +347,10 @@
                         <td>{{ $salesOrder->com->company_name }}</td>
                     </tr>
                     @empty
-                    <div style="text-align: center; margin-top: 10px;">Purchase Orders Not Found</div>
+                    <tr>
+                        <td colspan="13" style="text-align: center;">PurchaseOrders Not Found</td>
+                    </tr>
                     @endforelse
-
                 </tbody>
             </table>
         </div>
@@ -562,6 +566,7 @@
                         <th>Customer ID</th>
                         <th>Customer Name</th>
                         <th>Employee Name</th>
+                        <th>Employee Type</th>
                         <th>Job Title</th>
                         <th>Start Date</th>
                         <th>End Date</th>
@@ -579,6 +584,7 @@
                         <td>{{ $salesOrder->customer_id }}</td>
                         <td>{{ $salesOrder->cus->customer_company_name }}</td>
                         <td>{{ $salesOrder->emp->first_name }} {{ $salesOrder->emp->last_name }}</td>
+                        <td>{{ $salesOrder->emp->employee_type }}</td>
                         <td>{{ $salesOrder->emp->job_title }}</td>
                         <td>{{ $salesOrder->start_date }}</td>
                         <td>{{ $salesOrder->end_date }}</td>
@@ -589,7 +595,9 @@
                         <td>{{ $salesOrder->com->company_name }}</td>
                     </tr>
                     @empty
-                    <div style="text-align: center; margin-top: 10px;">Sales Orders Not Found</div>
+                    <tr>
+                        <td colspan="13" style="text-align: center;">SalesOrders Not Found</td>
+                    </tr>
                     @endforelse
 
                 </tbody>

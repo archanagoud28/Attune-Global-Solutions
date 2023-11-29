@@ -125,8 +125,8 @@ class SalesOrPurchaseOrders extends Component
     {
         $companyId = auth()->user()->company_id;
         $this->employees = EmpDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
-        $this->showSOLists = SalesOrder::with('cus', 'com', 'emp')->orderBy('created_at','desc')->get();
-        $this->showPOLists = PurchaseOrder::with('ven', 'com', 'emp')->orderBy('created_at','desc')->get();
+        $this->showSOLists = SalesOrder::with('cus', 'com', 'emp')->where('company_id', $companyId)->orderBy('created_at','desc')->get();
+        $this->showPOLists = PurchaseOrder::with('ven', 'com', 'emp')->where('company_id', $companyId)->orderBy('created_at','desc')->get();
         $this->customers = CustomerDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
         $this->vendors = VendorDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
 

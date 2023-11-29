@@ -2,9 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\Bill;
 use App\Models\CompanyDetails;
 use App\Models\CustomerDetails;
 use App\Models\EmpDetails;
+use App\Models\Invoice;
 use App\Models\PurchaseOrder;
 use App\Models\SalesOrder;
 use App\Models\VendorDetails;
@@ -40,8 +42,17 @@ class Vendors extends Component
     }
     public function showPOList($vendorId)
     {
-        $this->showPOLists = PurchaseOrder::with('ven','com','emp')->where('vendor_id', $vendorId)->get();
+        $companyId = auth()->user()->company_id;
+
+        $this->showPOLists = PurchaseOrder::with('ven','com','emp')->where('company_id',$companyId)->where('vendor_id', $vendorId)->orderBy('created_at','desc')->get();
         $this->poList = true;
+    }
+    public $bills;
+    public function showBills($vendorId){
+        $companyId = auth()->user()->company_id;
+
+        $this->activeButton = 'Bills';
+        $this->bills =Bill::with('vendor','company')->where('company_id',$companyId)->where('vendor_id',$vendorId)->orderBy('created_at','desc')->get();
     }
     public function closePOList()
     {
@@ -55,7 +66,7 @@ class Vendors extends Component
         $this->employeeSkillsPairs[] = ['employees' => '', 'skills' => ''];
     }
 
-    public $activeButton = 'Bills';
+    public $activeButton = '';
 
     public function removePair($index)
     {
