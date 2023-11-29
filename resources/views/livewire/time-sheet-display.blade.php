@@ -1,4 +1,11 @@
+
+
 <div>
+  
+<meta charset="UTF-8">
+    <title>Save Icon Button</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- Font Awesome CDN link -->
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
   <div class="row" style="margin-top:50px">
     <div class="col" style="text-align: center;">
       <button wire:click="$set('tab', 'timeSheet')" style="background-color:  rgb(2, 17, 79);color:white;border-radius:5px;border:5px">Employee TimeSheet</button>
@@ -108,31 +115,25 @@
   </div>
 @endif
 @if($tab=="empInfo")
-<div>
-    <!DOCTYPE html>
-    <html lang="en">
+<div style="display: flex; align-items: center; margin-left: 40px;margin-top:20px">
+    <h4 style="margin-right: 20px;">Employee Information</h4>
 
-    <head>
-      <meta charset="UTF-8">
-      <title>Time Sheet Entry</title>
-    </head>
+</div>
 
-    <body>
-      <div class="container mt-4">
-        <h2>Employee Information</h2>
-        <div class="row">
-          <div class="col-md-6">
-            <!-- Dummy employee names -->
-            <select id="dropdown">
-              <option value="option1">John Doe</option>
-              <option value="option2">Jane Smith</option>
-              <option value="option3">Michael Johnson</option>
-              <option value="option4">Emily Davis</option>
-            </select>
-            <!-- Add more employee names as needed -->
-          </div>
+
+    <div class="row" style="margin-left:40px">
+        <div class="col-md-6">
+      
         </div>
-        <div class="form-row mb-3">
+
+
+
+
+
+    </div>
+
+
+    <div class="form-row mb-3" style="margin-left:40px">
           <div class="col-md-4">
             <label for="employeeName">Name : </label>
             <strong><label for="">John Doe</label></strong>
@@ -146,65 +147,155 @@
             <label for="">001</label>
           </div>
         </div>
+ 
+    @if($tab=="empInfo")
+<div>
+    <!DOCTYPE html>
+    <html lang="en">
 
+
+    <body>
+<div style="display:flex">
         <h2>Time Sheet Entry</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Name of the Company</th>
-              <th>Mon</th>
-              <th>Tue</th>
-              <th>Wed</th>
-              <th>Thu</th>
-              <th>Fri</th>
-              <th>Sat</th>
-              <th>Sun</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Rows for different types of entries -->
-            <!-- Regular, Vacation, Leave, Unpaid, Any Other -->
-            <!-- Input fields for hours for each day of the week -->
-            <tr>
-              <td>Company 1</td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
-            </tr>
-            <tr>
-              <td>Company 2</td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
-            </tr>
-            <tr>
-              <td>Company 3</td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
-            </tr>
-            <!-- Repeat the above block for different types of entries -->
-            <!-- Vacation, Leave, Unpaid, Any Other -->
-          </tbody>
-        </table>
-      </div>
+        
+    <?php
+    // Function to get the start and end date of the current week in dd-mm-yyyy format
+    function getCurrentWeekDates() {
+        // Get the current date
+        $currentDate = new DateTime();
+        
+        // Get the first day of the current week (Sunday)
+        $currentDate->modify('this week');
+        
+        // Get the end date (Saturday) of the current week
+        $endDate = clone $currentDate;
+        $endDate->modify('+6 days');
+        
+        return array($currentDate->format('d-m-Y'), $endDate->format('d-m-Y'));
+    }
 
-    </body>
+    // Call the function to get the current week dates
+    list($startDate, $endDate) = getCurrentWeekDates();
+    ?>
 
-    </html>
+    <form action="your_action_here.php" method="post">
+        <button type="submit" name="current_week" style="margin-left:400px">
+            From <?php echo $startDate; ?> to <?php echo $endDate; ?>
+        </button>
+    </form>
+</div>
+        <table class="table table-bordered">
+        <thead>
+        <td>Leave</td>
+        @foreach($daysOfWeek as $day)
+            <th>{{ $day->format('D') }} <br> {{ $day->format('d-m-Y') }}</th>
+        @endforeach
+        <td>Total Hours</td>
+        </thead>
+        <tbody>
+       
+                <td>Holiday</td>
+                <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+                <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
+             
+            </tr>
+            <tr>
+                <td>Vacation</td>
+                <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+                <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
+             
+            </tr>
+       
+            </tr>
+            <tr>
+                <td>Sick</td>
+                <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+                <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
+             
+            </tr>
+            <tr style="background:grey">
+                <td>Total</td>
+                <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+                <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
+              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
+             
+            </tr>
+        
+            </tr>
+            <!-- Repeat this block for different companies -->
+        </tbody>
+    </table>
 
-  </div>
+
 @endif
+</div>
+
+
+    <button type="submit" class="save-button" style="width: 80px; margin-left: 50px;">
+        <i class="fas fa-save icon" style="margin-left: -20px; width: 20px;"></i> Save
+    </button>
+    <button style="margin-left: 50px; border: 5px; border-radius: 1px solid silver; width: 180px; height: 30px;">Submit for Approval</button>
+@endif
+
+  </form>
+
+<style>
+ 
+  /* Basic button styles */
+button {
+
+    border: none;
+    border-radius: 4px;
+    background-color:grey;
+    color: white;
+    height:30px;
+   
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+/* Styles for the icon */
+.icon {
+    position: absolute;
+  
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background-image: url('save-icon.png'); /* Replace with your icon image */
+    background-size: cover;
+    display: inline-block;
+   
+}
+
+/* Hover effect */
+
+
+  </style>
+
 </div>
