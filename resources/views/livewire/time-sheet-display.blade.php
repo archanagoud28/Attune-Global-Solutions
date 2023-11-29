@@ -186,34 +186,14 @@
 </div>
         <table class="table table-bordered">
         <thead>
-            <tr>
-                <th>Leave</th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
-                <th>Total Hours</th>
-            </tr>
+        <td>Leave</td>
+        @foreach($daysOfWeek as $day)
+            <th>{{ $day->format('D') }} <br> {{ $day->format('d-m-Y') }}</th>
+        @endforeach
+        <td>Total Hours</td>
         </thead>
         <tbody>
-        <tr>
-                <td>Regular</td>
-        
-                    <!-- PHP code to generate input fields -->
-                 <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-                <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
-              <td><input type="number" value="0" min="0" max="24" class="form-control"></td>
-             
-
-            <tr>
+       
                 <td>Holiday</td>
                 <td><input type="number" value="8" min="0" max="24" class="form-control"></td>
                 <td><input type="number" value="8" min="0" max="24" class="form-control"></td>

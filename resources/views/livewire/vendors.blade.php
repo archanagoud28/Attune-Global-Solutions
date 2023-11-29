@@ -169,14 +169,11 @@
         }
     </style>
 
-    <h4 style="margin-top: 50px;text-align:center;">
-        Vendors
-    </h4>
-    <p style="text-align:end;">
-        <button wire:click="open" class="button">ADD Vendors</button>
+    <p style="text-align: start;margin-top:15px">
+        <button style="margin-right: 10px;" wire:click="open" class="button">ADD Vendors</button>
+        <button style="margin-right: 10px;" wire:click="addPO" class="button">ADD PO</button>
+
     </p>
-
-
     @if(session()->has('vendor'))
     <div id="successAlert" style="text-align: center;" class="alert alert-success">
         {{ session('vendor') }}
@@ -192,6 +189,184 @@
             document.getElementById('purchaseOrderAlert').style.display = 'none';
         }, 5000);
     </script>
+    <div class="row" style="height:150px">
+        @php
+        $selectedPerson = $selectedVendor ?? $vendors->first();
+        $isActive = $selectedPerson->status == 'active';
+        @endphp
+        <div class="col-md-3" style="background-color: #f2f2f2;margin-right:5px">
+            <img style="height: 160px;" src="https://www.ibousa.org/wp-content/uploads/Vendors-e1503453975329.png" alt="">
+        </div>
+        <div class="col-md-8" style="background-color: #f2f2f2; padding: 8px">
+            <p style="text-align: start">
+                <button style="margin-right: 10px;" wire:click="editVendors('{{$selectedPerson->id}}')" class="button">Edit</button>
+            </p>
+            @if ($selectedVendor)
+            <div class="row" style="font-size: 13px;">
+                <div class="row">
+                    @php
+                    $selectedPerson = $selectedVendor ?? $vendors->first();
+                    $isActive = $selectedPerson->status == 'active';
+                    @endphp
+
+
+                    <div class="col">
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <div style="flex: 1; ">
+
+                                <h2 style="font-size: 10px;"><strong>Vendor Name</strong></h2>
+                                <p style="font-size: 10px;">{{ optional($selectedPerson)->vendor_name }}</p>
+
+                                <h2 style="font-size: 10px;"><strong>Vendor ID</strong></h2>
+                                <p style="font-size: 10px;">(#{{ optional($selectedPerson)->vendor_id }})</p>
+
+
+                            </div>
+
+                            <div style="flex: 1;margin-left: 8%;">
+                                <h2 style="font-size: 10px;"><strong>Address</strong></h2>
+                                <p style="font-size: 10px;">{{ optional($selectedPerson)->address }}</p>
+
+                                <h2 style="font-size: 10px;"><strong>Email</strong></h2>
+                                <p style="font-size: 10px;">{{ optional($selectedPerson)->email }}</p>
+
+
+                            </div>
+                            <div style="flex: 1;margin-left: 8%;">
+
+                                <h2 style="font-size: 10px;"><strong>Contact Phone</strong></h2>
+                                <p style="font-size: 10px;">{{ optional($selectedPerson)->phone_number }}</p>
+                                <h2 style="font-size: 10px;"><strong>Contact Name</strong></h2>
+                                <p style="font-size: 10px;">{{ optional($selectedPerson)->contact_person }}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            @elseif (!$vendors->isEmpty())
+            @if($soList=="true")
+            <div style="text-align: end;">
+                <button wire:click="closeSOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
+            </div>
+            <!-- resources/views/livewire/purchase-order-table.blade.php -->
+
+            <div>
+                <style>
+                    /* Add your custom CSS styles here */
+                    .table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                    }
+
+                    th,
+                    td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: left;
+                        font-size: 12px;
+                        /* Set font size to 12px */
+                    }
+
+                    th {
+                        background-color: #f2f2f2;
+                    }
+
+                    tr:hover {
+                        background-color: #f5f5f5;
+                    }
+                </style>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SO Number</th>
+                            <th>Vendor ID</th>
+                            <th>Customer ID</th>
+                            <th>Customer Name</th>
+                            <th>Rate</th>
+                            <th>End Client Timesheet Required</th>
+                            <th>Time Sheet Type</th>
+                            <th>Time Sheet Begins</th>
+                            <th>Invoice Type</th>
+                            <th>Payment Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($showSOLists as $salesOrder)
+                        <tr>
+                            <td>{{ $salesOrder->so_number }}</td>
+                            <td>{{ $salesOrder->vendor_id }}</td>
+                            <td>{{ $salesOrder->customer_id }}</td>
+                            <td>{{ $salesOrder->customer->customer_company_name }}</td>
+                            <td>{{ $salesOrder->rate }}</td>
+                            <td>{{ $salesOrder->end_client_timesheet_required }}</td>
+                            <td>{{ $salesOrder->time_sheet_type }}</td>
+                            <td>{{ $salesOrder->time_sheet_begins }}</td>
+                            <td>{{ $salesOrder->invoice_type }}</td>
+                            <td>{{ $salesOrder->payment_type }}</td>
+                        </tr>
+                        @empty
+                        <div style="text-align: center; margin-top: 10px;">Sales Orders Not Found</div>
+                        @endforelse
+
+                    </tbody>
+                </table>
+            </div>
+
+            @else
+            <!-- Display details of the first person in the list -->
+            @php
+            $firstPerson = $vendors->first();
+            $starredPerson = DB::table('vendor_details')
+            ->where('vendor_id', $firstPerson->vendor_id)
+            ->first();
+            @endphp
+
+            <div class="row" style="font-size: 13px;">
+                <div class="row">
+
+                    <div class="col" style=" margin-right: 80px">
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <div style="flex: 1;;">
+                                <h2 style="font-size: 10px;"><strong>Vendor Name</strong></h2>
+                                <p style="font-size: 10px;">{{ optional($firstPerson)->vendor_name }}</p>
+
+                                <h2 style="font-size: 10px;"><strong>Vendor ID</strong></h2>
+                                <p style="font-size: 10px;">(#{{ optional($firstPerson)->vendor_id }})</p>
+
+
+
+                            </div>
+
+                            <div style="flex: 1;margin-left: 8%;">
+                                <h2 style="font-size: 10px;"><strong>Address</strong></h2>
+                                <p style="font-size: 10px;">{{ optional($firstPerson)->address }}</p>
+                                <h2 style="font-size: 10px;"><strong>Email</strong></h2>
+                                <p style="font-size: 10px;">{{ optional($firstPerson)->email }}</p>
+
+                            </div>
+                            <div style="flex: 1;margin-left: 8%;">
+                                <h2 style="font-size: 10px;"><strong>Vendor Phone</strong></h2>
+                                <p style="font-size: 10px;">{{ optional($firstPerson)->phone_number }}</p>
+                                <h2 style="font-size: 10px;"><strong>Contact Name</strong></h2>
+                                <p style="font-size: 10px;">{{ optional($firstPerson)->contact_person }}</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @endif
+            @endif
+        </div>
+    </div>
+
+
+
     @if($show=="true")
     <div class="modal" tabindex="-1" role="dialog" style="display: block; overflow-y: auto;">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -209,18 +384,6 @@
                             <input type="file" wire:model="vendor_profile">
                             @error('vendor_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
-
-                        <div style="margin-bottom:10px">
-                            <label for="company_id" style="font-size: 12px;">Company ID:</label>
-                            <select wire:model="company_id">
-                                <option value="">Select Company</option>
-                                @foreach($companies as $company)
-                                <option value="{{ $company->company_id }}">{{ $company->company_id }}</option>
-                                @endforeach
-                            </select>
-                            @error('company_id') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
 
                         <div>
                             <label for="customer_name" style="font-size: 12px;">Vendor Name:</label>
@@ -282,18 +445,6 @@
                             @error('vendor_profile') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                         </div>
 
-                        <div style="margin-bottom:10px">
-                            <label for="company_id" style="font-size: 12px;">Company ID:</label>
-                            <select wire:model="company_id">
-                                <option value="">Select Company</option>
-                                @foreach($companies as $company)
-                                <option value="{{ $company->company_id }}">{{ $company->company_id }}</option>
-                                @endforeach
-                            </select>
-                            @error('company_id') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                        </div>
-
-
                         <div>
                             <label for="customer_name" style="font-size: 12px;">Vendor Name:</label>
                             <input type="text" wire:model="vendor_name">
@@ -338,13 +489,13 @@
 
 
 
-    @if($so=="true")
+    @if($po=="true")
     <div class="modal" tabindex="-1" role="dialog" style="display: block; overflow-y: auto;">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: rgb(2, 17, 79); height: 50px;">
-                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>ADD Sales Order</b></h5>
-                    <button wire:click="cancelSO" type="button" class="close" style="border:none" data-dismiss="modal" aria-label="Close">
+                    <h5 style="padding: 5px; color: white; font-size: 12px;" class="modal-title"><b>ADD Purchase Order</b></h5>
+                    <button wire:click="cancelPO" type="button" class="close" style="border:none" data-dismiss="modal" aria-label="Close">
                         <span style="color:rgb(2, 17, 79)" aria-hidden="true" style="color: white;">×</span>
                     </button>
                 </div>
@@ -355,18 +506,39 @@
                                 margin-bottom: 10px;
                             }
                         </style>
-                        <form wire:submit.prevent="saveSalesOrder">
+                        <form wire:submit.prevent="savePurchaseOrder">
                             @csrf
                             <div class="form-group">
-                                <label style="font-size: 12px;" for="vendorName" style="font-size: 12px;">Customer Name:</label>
+                                <label style="font-size: 12px;" for="vendorName" style="font-size: 12px;">Consultant Name:</label>
                                 <select style="font-size: 12px;" class="form-control" id="vendorName" wire:model="customerId">
-                                    <option style="font-size: 12px;" value="">Select Customer</option>
+                                    <option style="font-size: 12px;" value="">Select Consultant</option>
                                     @foreach($customers as $customer)
                                     <option style="font-size: 12px;" value="{{ $customer->customer_id }}">{{ $customer->customer_company_name }}</option>
                                     @endforeach
                                 </select>
                                 @error('customerId') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                             </div>
+
+                            <div class="form-group">
+                                <label style="font-size: 12px;" for="rate">Job Title:</label>
+                                <div class="input-group">
+                                    <input style="font-size: 12px;" type="number" class="form-control" id="rate" wire:model="rate">
+                                    @error('rate') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <label style="font-size: 12px;" for="start_date">Start Date:</label>
+                                    <input style="font-size: 12px;" type="date" wire:model="startDate" id="start_date" class="form-control">
+                                </div>
+                                <div class="col">
+                                    <label style="font-size: 12px;" for="end_date">End Date:</label>
+                                    <input style="font-size: 12px;" type="date" wire:model="endDate" id="end_date" class="form-control">
+                                </div>
+                            </div>
+
 
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="rate">Rate:</label>
@@ -376,65 +548,65 @@
 
                                     <select style="font-size: 12px;" class="form-control" id="rateType" wire:model="rateType">
                                         <option style="font-size: 12px;">Select Rate Type</option>
-                                        <option style="font-size: 12px;" value="hourly">Per Hour</option>
-                                        <option style="font-size: 12px;" value="daily">Per Day</option>
-                                        <option style="font-size: 12px;" value="weekly">Per Week</option>
-                                        <option style="font-size: 12px;" value="monthly">Per Month</option>
+                                        <option style="font-size: 12px;" value="Hourly">Per Hour</option>
+                                        <option style="font-size: 12px;" value="Daily">Per Day</option>
+                                        <option style="font-size: 12px;" value="Weekly">Per Week</option>
+                                        <option style="font-size: 12px;" value="Monthly">Per Month</option>
                                     </select>
                                     @error('rateType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <div class="row">
-                                    <div class="col">
-                                        <label style="font-size: 12px;" for="endClientTimesheetRequired" class="col-form-label">End Client Time sheet required:</label>
-                                    </div>
-                                    <div class="col">
-                                        <input style="font-size: 12px;" type="checkbox" id="endClientTimesheetRequired" wire:model="endClientTimesheetRequired">
+                                <label style="font-size: 12px;" for="endClientTimesheetRequired">End Client Time sheet required:</label>
+                                <select style="font-size: 12px;" class="form-control" id="endClientTimesheetRequired" wire:model="endClientTimesheetRequired">
+                                    <option style="font-size: 12px;">Select required or not</option>
+                                    <option style="font-size: 12px;" value="Required">Required</option>
+                                    <option style="font-size: 12px;" value="Not required">Not Required</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                                @error('endClientTimesheetRequired') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label style="font-size: 12px;" for="timeSheetType">Time Sheet Type:</label>
+                                        <select style="font-size: 12px;" class="form-control" id="timeSheetType" wire:model="timeSheetType">
+                                            <option style="font-size: 12px;">Select Time Sheet Type</option>
+                                            <option style="font-size: 12px;" value="Weekly">Weekly</option>
+                                            <option style="font-size: 12px;" value="Semi-Monthly">Semi Monthly</option>
+                                            <option style="font-size: 12px;" value="Monthly">Monthly</option>
+                                            <!-- Add more options as needed -->
+                                        </select>
+                                        @error('timeSheetType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
-                                @error('endClientTimesheetRequired')
-                                <span class="error" style="font-size: 12px;">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label style="font-size: 12px;" for="timeSheetType">Time Sheet Type:</label>
-                                <select style="font-size: 12px;" class="form-control" id="timeSheetType" wire:model="timeSheetType">
-                                    <option style="font-size: 12px;">Select Time Sheet Type</option>
-                                    <option style="font-size: 12px;" value="weekly">Weekly</option>
-                                    <option style="font-size: 12px;" value="semi-monthly">Semi Monthly</option>
-                                    <option style="font-size: 12px;" value="monthly">Monthly</option>
-                                    <!-- Add more options as needed -->
-                                </select>
-                                @error('timeSheetType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label style="font-size: 12px;" for="timeSheetBegins">Time Sheet Begins:</label>
-                                <select style="font-size: 12px;" class="form-control" id="timeSheetBegins" wire:model="timeSheetBegins">
-                                    <option style="font-size: 12px;">Select Time Sheet Begins</option>
-                                    <option style="font-size: 12px;" value="mon-fri">Monday to Friday</option>
-                                    <option style="font-size: 12px;" value="mon-sat">Monday to Saturday</option>
-                                    <option style="font-size: 12px;" value="sun">Sunday</option>
-                                    <option style="font-size: 12px;" value="mon-wed-fri">Monday, Wednesday, Friday</option>
-                                    <option style="font-size: 12px;" value="tue-thu">Tuesday, Thursday</option>
-                                    <!-- Add more options as needed -->
-                                </select>
-                                @error('timeSheetBegins') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label style="font-size: 12px;" for="timeSheetBegins">Time Sheet Begins:</label>
+                                        <select style="font-size: 12px;" class="form-control" id="timeSheetBegins" wire:model="timeSheetBegins">
+                                            <option style="font-size: 12px;">Select Time Sheet Begins</option>
+                                            <option style="font-size: 12px;" value="Mon-Sun">Monday to Sunday</option>
+                                            <option style="font-size: 12px;" value="Sun-Sat">Sunday to Saturday</option>
+                                            <option style="font-size: 12px;" value="Sat-Fri">Saturday to Friday</option>
+                                            <!-- Add more options as needed -->
+                                        </select>
+                                        @error('timeSheetBegins') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="invoiceType">Invoice Type:</label>
                                 <select style="font-size: 12px;" class="form-control" id="invoiceType" wire:model="invoiceType">
                                     <option style="font-size: 12px;">Select Invoice Type</option>
-                                    <option style="font-size: 12px;" value="hourly">Hourly</option>
-                                    <option style="font-size: 12px;" value="daily">Daily</option>
-                                    <option style="font-size: 12px;" value="weekly">Weekly</option>
-                                    <option style="font-size: 12px;" value="monthly">Monthly</option>
-                                    <option style="font-size: 12px;" value="project">Project-Based</option>
-                                    <option style="font-size: 12px;" value="custom">Custom</option>
+                                    <option style="font-size: 12px;" value="Hourly">Hourly</option>
+                                    <option style="font-size: 12px;" value="Daily">Daily</option>
+                                    <option style="font-size: 12px;" value="Weekly">Weekly</option>
+                                    <option style="font-size: 12px;" value="Monthly">Monthly</option>
+                                    <option style="font-size: 12px;" value="Project">Project-Based</option>
+                                    <option style="font-size: 12px;" value="Custom">Custom</option>
                                     <!-- Add more options as needed -->
                                 </select>
                                 @error('invoiceType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
@@ -444,14 +616,20 @@
                                 <label style="font-size: 12px;" for="paymentType">Payment Type:</label>
                                 <select style="font-size: 12px;" class="form-control" id="paymentType" wire:model="paymentType">
                                     <option style="font-size: 12px;">Select Payment Type</option>
-                                    <option style="font-size: 12px;" value="credit card">Credit Card</option>
-                                    <option style="font-size: 12px;" value="bank transfer">Bank Transfer</option>
-                                    <option style="font-size: 12px;" value="paypal">PayPal</option>
-                                    <option style="font-size: 12px;" value="check">Check</option>
-                                    <option style="font-size: 12px;" value="cash">Cash</option>
-                                    <option style="font-size: 12px;" value="other">Other</option>
+                                    <option style="font-size: 12px;" value="Credit Card">Credit Card</option>
+                                    <option style="font-size: 12px;" value="Bank Transfer">Bank Transfer</option>
+                                    <option style="font-size: 12px;" value="Paypal">PayPal</option>
+                                    <option style="font-size: 12px;" value="Check">Check</option>
+                                    <option style="font-size: 12px;" value="Cash">Cash</option>
+                                    <option style="font-size: 12px;" value="Other">Other</option>
                                     <!-- Add more options as needed -->
                                 </select>
+                                @error('paymentType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="form-group">
+                                <label style="font-size: 12px;" for="paymentType">Payment Terms:</label>
+                                <input style="font-size: 12px;" type="text" class="form-control" id="rate" wire:model="rate" placeholder="Ex: Net 0,Net 10,........">
+
                                 @error('paymentType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                             </div>
                             <div style="text-align: center;">
@@ -544,8 +722,8 @@
     </div>
     @else
     <div class="row" style="margin-top: 15px;">
-        <div class="col-md-3" style="background-color:#f2f2f2; border-radius: 5px; height: auto; padding: 5px;margin-right:20px;max-height:500px;overflow-y:auto">
-            <div class="container" style="margin-top: 15px">
+        <div class="col-md-3" style="background-color:#f2f2f2; height: auto; padding: 5px;margin-right:5px;max-height:500px;overflow-y:auto">
+            <div class="container" style="margin-top: 8px;margin-bottom:8px">
                 <div class="row">
                     <div class="col" style="margin: 0px; padding: 0px">
                         <div class="input-group">
@@ -565,13 +743,16 @@
                 <div class="container" style="text-align: center; color: gray;">No Vendors Found</div>
                 @else
                 @foreach($allVendors as $vendor)
-                <div wire:click="selectVendor('{{ $vendor->vendor_id }}')" class="container" style="height:45px;cursor: pointer; background-color: {{ $selectedVendor && $selectedVendor->vendor_id == $vendor->vendor_id ? '#ccc' : 'white' }}; width: 500px; border-radius: 5px;padding:2px">
+                <div wire:click="selectVendor('{{ $vendor->vendor_id }}')" class="container-1" style="margin-bottom:2px;height:25px;cursor: pointer; background-color: {{ $selectedVendor && $selectedVendor->vendor_id == $vendor->vendor_id ? '#ccc' : 'white' }}; width: 500px; border-radius: 5px;padding:5px">
                     <div class="row align-items-center">
-                        <div class="col-md-4">
-                            <img style="border-radius: 50%" class="profile-image" src="{{ asset('/storage/' . $vendor->vendor_image) }}" alt="Profile Image">
+                        <div class="col-md-5">
+                            <h6 class="username" style="font-size: 10px; color: black;">{{ $vendor->vendor_name }}</h6>
                         </div>
-                        <div class="col-md-8">
-                            <h6 class="username" style="font-size: 12px; color: black;">{{ $vendor->vendor_name }}</h6>
+                        <div class="col-md-3">
+                            <h6 class="username" style="font-size: 8px; color: black;">{{ $vendor->phone_number }}</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="username" style="font-size: 8px; color: black;">#({{ $vendor->vendor_id }})</h6>
                         </div>
                     </div>
                 </div>
@@ -581,180 +762,27 @@
         </div>
 
         <!-- Details of the selected person -->
-        <div class="col-md-8" style="height:auto; background-color: #f2f2f2; border-radius: 5px; padding: 5px">
-            @if ($selectedVendor)
-            <div class="row" style="font-size: 13px;">
-                <div class="row">
-                    <div style="text-align: center; margin-top:15px">
-                        @php
-                        $selectedPerson = $selectedVendor ?? $vendors->first();
-                        $isActive = $selectedPerson->status == 'active';
-                        @endphp
-                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD Employee</button> -->
-                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button> -->
-                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Invoices</button>
-                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Time Sheets</button>
-                        <button wire:click="showSoList('{{ $selectedPerson->vendor_id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79);border-radius:5px;border:none;color:white">View SO</button>
-                        <button wire:click="addSO('{{ $selectedPerson->vendor_id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79);border-radius:5px;border:none;color:white">ADD SO</button>
+        <div class="col-md-8" style="height:auto; background-color: #f2f2f2; padding: 5px">
+            <div style="text-align: start;">
+                <button wire:click="$set('activeButton', 'Bills')" style="{{ $activeButton === 'Bills' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 10px; border-radius: 5px; border: none;">
+                    Bills & Sent Payments
+                </button>
 
-                        <button wire:click="editVendors('{{ $selectedPerson->id }}')" class="action-button" style="margin-right: 10px;background-color: rgb(2, 17, 79);border-radius:5px;border:none; color: white;">Edit</button>
-                    </div>
-                    <div class="row">
-                        <img class="customer-image" src="{{ asset('storage/' . optional($selectedPerson)->vendor_image) }}" alt="Profile Image">
-                    </div>
-                    <div class="col" style="margin-top: 50px; margin-right: 80px">
-                        <div style="display: flex; flex-wrap: wrap;">
-                            <div style="flex: 1; margin-left: 22%;">
+                <button wire:click="$set('activeButton', 'PO')" style="{{ $activeButton === 'PO' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 10px; border-radius: 5px; border: none;">
+                    PO
+                </button>
 
-                                <h2 style="font-size: 12px;"><strong>Vendor Name</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($selectedPerson)->vendor_name }}</p>
-
-                                <h2 style="font-size: 12px;"><strong>Vendor ID</strong></h2>
-                                <p style="font-size: 12px;">(#{{ optional($selectedPerson)->vendor_id }})</p>
-
-                                <h2 style="font-size: 12px;"><strong>Contact Phone</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($selectedPerson)->phone_number }}</p>
-                            </div>
-
-                            <div style="flex: 1;margin-left: 8%;">
-                                <h2 style="font-size: 12px;"><strong>Address</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($selectedPerson)->address }}</p>
-
-                                <h2 style="font-size: 12px;"><strong>Email</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($selectedPerson)->email }}</p>
-
-                                <h2 style="font-size: 12px;"><strong>Contact Name</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($selectedPerson)->contact_person }}</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                <button wire:click="$set('activeButton', 'EmailActivities')" style="{{ $activeButton === 'EmailActivities' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 10px; border-radius: 5px; border: none;">
+                    Email Activities
+                </button>
+                <button wire:click="$set('activeButton', 'Notes')" style="{{ $activeButton === 'Notes' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 10px; border-radius: 5px; border: none;">
+                    Notes
+                </button>
+                <button wire:click="$set('activeButton', 'Contacts')" style="{{ $activeButton === 'Contacts' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 10px; border-radius: 5px; border: none;">
+                    Contacts
+                </button>
             </div>
 
-            @elseif (!$vendors->isEmpty())
-            @if($soList=="true")
-            <div style="text-align: end;">
-                <button wire:click="closeSOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
-            </div>
-            <!-- resources/views/livewire/purchase-order-table.blade.php -->
-
-            <div>
-                <style>
-                    /* Add your custom CSS styles here */
-                    .table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 20px;
-                    }
-
-                    th,
-                    td {
-                        border: 1px solid #ddd;
-                        padding: 8px;
-                        text-align: left;
-                        font-size: 12px;
-                        /* Set font size to 12px */
-                    }
-
-                    th {
-                        background-color: #f2f2f2;
-                    }
-
-                    tr:hover {
-                        background-color: #f5f5f5;
-                    }
-                </style>
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>SO Number</th>
-                            <th>Vendor ID</th>
-                            <th>Customer ID</th>
-                            <th>Customer Name</th>
-                            <th>Rate</th>
-                            <th>End Client Timesheet Required</th>
-                            <th>Time Sheet Type</th>
-                            <th>Time Sheet Begins</th>
-                            <th>Invoice Type</th>
-                            <th>Payment Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($showSOLists as $salesOrder)
-                        <tr>
-                            <td>{{ $salesOrder->so_number }}</td>
-                            <td>{{ $salesOrder->vendor_id }}</td>
-                            <td>{{ $salesOrder->customer_id }}</td>
-                            <td>{{ $salesOrder->customer->customer_company_name }}</td>
-                            <td>{{ $salesOrder->rate }}</td>
-                            <td>{{ $salesOrder->end_client_timesheet_required }}</td>
-                            <td>{{ $salesOrder->time_sheet_type }}</td>
-                            <td>{{ $salesOrder->time_sheet_begins }}</td>
-                            <td>{{ $salesOrder->invoice_type }}</td>
-                            <td>{{ $salesOrder->payment_type }}</td>
-                        </tr>
-                        @empty
-                        <div style="text-align: center; margin-top: 10px;">Sales Orders Not Found</div>
-                        @endforelse
-
-                    </tbody>
-                </table>
-            </div>
-
-            @else
-            <!-- Display details of the first person in the list -->
-            @php
-            $firstPerson = $vendors->first();
-            $starredPerson = DB::table('vendor_details')
-            ->where('vendor_id', $firstPerson->vendor_id)
-            ->first();
-            @endphp
-
-            <div class="row" style="font-size: 13px;">
-                <div class="row">
-                    <div style="text-align: center; margin-top:15px">
-                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD Employee</button> -->
-                        <!-- <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Bills</button> -->
-                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Invoices</button>
-                        <button style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Time Sheets</button>
-                        <button wire:click="showSoList('{{ $firstPerson->vendor_id }}')" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">View SO</button>
-                        <button wire:click="addSO('{{ $firstPerson->vendor_id }}')" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">ADD SO</button>
-                        <button wire:click="editVendors('{{ $firstPerson->id }}')" class="action-button" style="margin-right: 10px;background-color:rgb(2, 17, 79) ;border-radius:5px;border:none; color: white;">Edit</button>
-                    </div>
-                    <div class="row">
-                        <img class="customer-image" src="{{ asset('storage/' . optional($firstPerson)->vendor_image) }}" alt="Profile Image">
-                    </div>
-                    <div class="col" style="margin-top: 50px; margin-right: 80px">
-                        <div style="display: flex; flex-wrap: wrap;">
-                            <div style="flex: 1; margin-left: 22%;">
-                                <h2 style="font-size: 12px;"><strong>Vendor Name</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($firstPerson)->vendor_name }}</p>
-
-                                <h2 style="font-size: 12px;"><strong>Vendor ID</strong></h2>
-                                <p style="font-size: 12px;">(#{{ optional($firstPerson)->vendor_id }})</p>
-
-                                <h2 style="font-size: 12px;"><strong>Vendor Phone</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($firstPerson)->phone }}</p>
-
-                            </div>
-
-                            <div style="flex: 1;margin-left: 8%;">
-                                <h2 style="font-size: 12px;"><strong>Address</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($firstPerson)->address }}</p>
-                                <h2 style="font-size: 12px;"><strong>Email</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($firstPerson)->email }}</p>
-                                <h2 style="font-size: 12px;"><strong>Contact Name</strong></h2>
-                                <p style="font-size: 12px;">{{ optional($firstPerson)->contact_person }}</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            @endif
-            @endif
 
         </div>
     </div>

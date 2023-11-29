@@ -81,7 +81,7 @@
                     @endif
                     <form wire:submit.prevent="empLogin" class="login-form-with-shadow">
                         <div class="logo text-center mb-1" style="padding-top: 20px;">
-                            <img src="{{asset('/images/vendorbloom2.png')}}" alt="Company Logo" width="200" height="100">
+                            <img src="{{asset('/images/CMSLogo.png')}}" alt="Company Logo" width="200" height="100">
                         </div>
                         <br>
                         @if ($error)
