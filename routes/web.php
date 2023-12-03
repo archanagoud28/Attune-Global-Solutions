@@ -89,7 +89,6 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/customers', Customers::class)->name('customer-page');
     Route::get('/salesOrPurchase', SalesOrPurchaseOrders::class);
     Route::get('/sales-or-purchase-orders', SalesOrPurchaseOrders::class);
-    Route::get('/time-sheet-display', TimeSheetDisplay::class)->name('time-sheet-display');
     Route::get('/purchase-order', PurchaseOrder::class)->name('purchase-order');
     Route::get('/employee-list-page', EmployeeListPage::class)->name('employee-list-page');
 });
@@ -107,7 +106,7 @@ Route::middleware(['auth:customer'])->group(function () {
 Route::middleware(['auth:employee'])->group(function () {
     Route::get('/employee-home', HomePage::class)->name('employee-home');
     Route::get('/employee-pages', EmployeePage::class)->name('employee-pages');
-    Route::get('/time-sheets-display', TimeSheetDisplay::class)->name('time-sheets-display');
+    Route::get('/time-sheet-display', TimeSheetDisplay::class)->name('time-sheet-display');
 });
 
 Route::middleware(['auth:contractor'])->group(function () {

@@ -141,7 +141,7 @@
 
                 <a class="menu-link {{ Request::is('invoice') ? 'active' : '' }}" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a><br>
 
-                <a class="menu-link {{ Request::is('time-sheet-display') ? 'active' : '' }}" href="/time-sheet-display"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
+                
 
                 </div>
             </div>
@@ -191,11 +191,13 @@
                     <div style="margin-top:30px;">
                     <a class="menu-link {{ Request::is('employee-home') ? 'active' : '' }}" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
                     <a class="menu-link {{ Request::is('employee-pages') ? 'active' : '' }}" href="/employee-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Employees</span></a><br>
-                    <a class="menu-link {{ Request::is('time-sheets-display') ? 'active' : '' }}" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text"> Time Sheets</span></a><br>
+                    <a class="menu-link {{Request::is('time-sheet-display') ? 'active' : '' }}" href="/time-sheet-display">
+                <i class="fas fa-user-tie"></i><span class="icon-text"> Time Sheets</span>
+            </a><br>
 
-                    {{-- <a class="menu-link" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
+                   <!-- <a class="menu-link" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
                     <a class="menu-link" href="employee-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Employees</span></a><br>
-                    <a class="menu-link" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text">Time Sheets</span></a><br> --}}
+                    <a class="menu-link" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text">Time Sheets</span></a><br>   -->
                     </div>
                 </div>
             </div>
