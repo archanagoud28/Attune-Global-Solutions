@@ -14,14 +14,17 @@ return new class extends Migration
         Schema::create('time_sheet_entries', function (Blueprint $table) {
             $table->id();
             $table->string('emp_id');
-            $table->string('day');
-            $table->integer('regular');
+            $table->date('day');
+            $table->integer('regular'); 
             $table->integer('casual');
             $table->integer('sick');
             $table->unique(['emp_id', 'day']);
             $table->foreign('emp_id')->references('emp_id')->on('emp_details')->onDelete('cascade');
+
             $table->timestamps();
+
         });
+
     }
 
     /**

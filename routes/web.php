@@ -38,21 +38,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+ 
 Route::middleware(['checkAuth'])->group(function () {
     Route::get('/HrLogin', HrLogin::class)->name('hr-login');
 });
-
-
+ 
+ 
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/', function () {
 //         // Get the currently authenticated user
 //         $user = Auth::user();
-
+ 
 //         // Check if a user is authenticated
 //         if ($user) {
 //             // Get the role of the user
 //             $role = $user->role;
-
+ 
 //             // Redirect based on the user's role
 //             switch ($role) {
 //                 case 'hr':
@@ -80,7 +92,7 @@ Route::middleware(['checkAuth'])->group(function () {
 //         }
 //     });
 // });
-
+ 
 Route::middleware(['auth:hr'])->group(function () {
     Route::get('/', HomePage::class)->name('home-page');
     Route::get('/emp-register', EmpRegister::class)->name('emp-register');
@@ -96,23 +108,23 @@ Route::middleware(['auth:hr'])->group(function () {
     Route::get('/purchase-order', PurchaseOrder::class)->name('purchase-order');
     Route::get('/employee-list-page', EmployeeListPage::class)->name('employee-list-page');
 });
-
+ 
 Route::middleware(['auth:vendor'])->group(function () {
     Route::get('/vendor-home', HomePage::class)->name('vendor-home');
     Route::get('/vendor-pages', Vendors::class)->name('vendor-pages');
 });
-
+ 
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('/customer-home', HomePage::class)->name('customer-home');
     Route::get('/customer-pages', Customers::class)->name('customer-pages');
 });
-
+ 
 Route::middleware(['auth:employee'])->group(function () {
     Route::get('/employee-home', HomePage::class)->name('employee-home');
     Route::get('/employee-pages', EmployeePage::class)->name('employee-pages');
     Route::get('/time-sheets-display', TimeSheetDisplay::class)->name('time-sheets-display');
 });
-
+ 
 Route::middleware(['auth:contractor'])->group(function () {
     Route::get('/contractor-home', HomePage::class)->name('contractor-home');
     Route::get('/contractor-pages', ContractorPage::class)->name('contractor-pages');
