@@ -82,6 +82,7 @@
  
         .row-header {
             background-color: rgb(2, 17, 79);
+
             height: 50px;
             position: fixed;
             top: 0;
@@ -91,6 +92,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
+
+            /* height: 50px; */
+            /* position: fixed; */
+            /* top: 0;
+            left: 0; */
+            /* width: 83%; */
+            /* margin-left: 17%; */
+            /* display: flex; */
+            /* justify-content: center;
+            align-items: center; */ 
+
         }
  
  
@@ -134,21 +146,31 @@
                 <a class="menu-link {{ Request::is('employee-list-page') ? 'active' : '' }}" href="employee-list-page"><i class="fas fa-users"></i><span class="icon-text"> Employees</span></a><br>
  
                 <a class="menu-link {{ Request::is('contractor-page') ? 'active' : '' }}" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
- 
+
                 <a class="menu-link {{ Request::is('sales-purchase-orders') ? 'active' : '' }}" href="#"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Sales / Purchase Orders</span></a><br>
  
                 <a class="menu-link {{ Request::is('bills') ? 'active' : '' }}" href="#"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills</span></a><br>
  
                 <a class="menu-link {{ Request::is('invoice') ? 'active' : '' }}" href="#"><i class="fas fa-receipt"></i><span class="icon-text"> Invoice</span></a><br>
- 
+
+
+                <a class="menu-link {{ Request::is('sales-purchase-orders') ? 'active' : '' }}" href="/salesOrPurchase"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Sales / Purchase Orders</span></a><br>
+
+                <a class="menu-link {{ Request::is('bills') ? 'active' : '' }}" href="/billsOrInvoices"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills / Invoices</span></a><br>
+
+
                 <a class="menu-link {{ Request::is('time-sheet-display') ? 'active' : '' }}" href="/time-sheet-display"><i class="fas fa-clipboard-list"></i><span class="icon-text"> Time Sheets</span></a><br>
  
                 </div>
             </div>
         </div>
         @elseif(Auth::guard('vendor')->check())
+
             <div class="container-fluid">
                 <div class="col-md-2">
+
+                <div class="col-md-2 displayNone" id="col-md-2">
+
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
                      <div  style="margin-top:30px;">
                       <a class="menu-link {{ Request::is('vendor-home') ? 'active' : '' }}" href="/vendor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
@@ -157,10 +179,8 @@
                       {{-- <a class="menu-link" href="vendor-pages"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>  --}}
                      </div>
                 </div>
-            </div>
         @elseif(Auth::guard('customer')->check())
-            <div class="container-fluid">
-                <div class="col-md-2">
+                <div class="col-md-2 displayNone" id="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
                      <div  style="margin-top:30px;">
                         <a class="menu-link {{ Request::is('customer-home') ? 'active' : '' }}" href="/customer-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
@@ -169,10 +189,8 @@
                         <a class="menu-link" href="/customer-pages"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br> --}}
                      </div>
                 </div>
-            </div>
         @elseif(Auth::guard('contractor')->check())
-            <div class="container-fluid">
-                <div class="col-md-2">
+                <div class="col-md-2 displayNone" id="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
                     <div style="margin-top:30px;">
                        <a class="menu-link {{ Request::is('contractor-home') ? 'active' : '' }}" href="/contractor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
@@ -182,11 +200,13 @@
                         <a class="menu-link" href="contractor-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br> --}}
                       </div>
                 </div>
+
             </div>
  
+
+
             @elseif(Auth::guard('employee')->check())
-            <div class="container-fluid">
-                <div class="col-md-2">
+                <div class="col-md-2 displayNone" id="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
                     <div style="margin-top:30px;">
                     <a class="menu-link {{ Request::is('employee-home') ? 'active' : '' }}" href="/employee-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
@@ -198,16 +218,30 @@
                     <a class="menu-link" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text">Time Sheets</span></a><br> --}}
                     </div>
                 </div>
+
             </div>
  
+
+
         @endif
  
         <div class="col-md-10">
              <div class="row-header" style="z-index: 1000;">
+
              <div style="display:flex;align-items: center; ">@livewire('page-title')</div>
             <div style="display: flex; align-items: center; color: white; margin-left: 62%;  padding: 5px; gap: 15px;">
             <div style="flex-grow: 1; white-space: nowrap;">@livewire('user-login-info')</div>
                 <div>@livewire('log-out')</div>
+
+             
+            <div class="m-0 row" style="color: white; padding: 5px;">
+                <div class="col-md-3 p-0 fs-4 m-auto">
+                    <i class="fas fa-bars hideHamburger" style="float: left; color: #fff; font-size: 20px; margin: 0px 10px; cursor: pointer;" onclick="myMenu()"></i>
+                    @livewire('page-title')
+                </div>
+                <div style="margin: auto; text-align: right;" class="col-md-6 p-0">@livewire('user-login-info')</div>
+                <div class="col-md-3 p-0" style="text-align: right;">@livewire('log-out')</div>
+
             </div>
         </div>
             <div class="row-content">
