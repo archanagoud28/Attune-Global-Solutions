@@ -7,8 +7,10 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TimeSheetEntry;
 use Illuminate\Support\Carbon;
+
 use App\Models\EmpDetails;
 use DateTime;
+use App\Livewire\Log;
 
 class TimeSheetDisplay extends Component
 {
@@ -21,16 +23,24 @@ class TimeSheetDisplay extends Component
     public $sick=[];
     public $currentWeekStart;
     public $currentWeekEnd;
+    public $currentWeekDates = [];
     public $futureDates = [];
     public $isValueEntered;
     public $empDetails;
-    public $employees;
+    public $emp_id;
     public function mount()
     {
         // Load existing entries from the database
         $emp_id = Auth::user()->emp_id;
         $existingEntries = TimeSheetEntry::where('emp_id', $emp_id)->get();
-   
+        $this->setWeekDates(Carbon::now());
+        $currentWeekStart = now()->startOfWeek();
+        $currentWeekEnd = now()->endOfWeek();
+
+        for ($date = $currentWeekStart; $date->lte($currentWeekEnd); $date->addDay()) {
+            $this->currentWeekDates[] = $date->format('Y-m-d');
+        }
+
         // Populate the $hours variable with existing entries
         foreach ($existingEntries as $entry) {
             $this->hours[$entry->day]['regular'] = $entry->regular;
@@ -63,9 +73,24 @@ class TimeSheetDisplay extends Component
  
             // Add other fields as needed
         }
-   
+    
         $this->timeSheetEntries = $existingEntries; // Set the variable
     }
+    public function getWeeklyTimeSheetEntries()
+{
+    $emp_id = Auth::user()->emp_id;
+    $startDate = now()->startOfWeek();
+    $endDate = now()->endOfWeek();
+
+    // Fetch records for the current week
+    $timeSheetEntries = TimeSheetEntry::where('emp_id', $emp_id)
+        ->whereBetween('day', [$startDate, $endDate])
+        ->get();
+
+    return $timeSheetEntries;
+}
+
+  
     public function setWeekDates($date)
     {
         $date = Carbon::parse($date)->startOfWeek();
@@ -92,41 +117,44 @@ class TimeSheetDisplay extends Component
     {
         return view('livewire.time-sheet-display');
     }
-    
    
     public function store()
     {
         $emp_id = Auth::user()->emp_id;
-        $today = now();
-        $startDate = $today->startOfWeek()->toDateString();
-        $endDate = $today->endOfWeek()->toDateString();
+        $timeSheetEntries = TimeSheetEntry::where('emp_id', $emp_id)
+        ->whereIn('day', $this->currentWeekDates)
+        ->get();
+
+    // Logic to update or create records for the current week's dates
+    foreach ($this->hours as $day => $hours) {
+        $date = Carbon::parse($day);
+        if (in_array($date->format('Y-m-d'), $this->currentWeekDates)) {  
+        $data = [
+                    'emp_id' => $emp_id,
+                    'day' => $date->format('Y-m-d'),
+                    'regular' => $hours['regular'] ?? 0,
+                    'casual' => $hours['casual'] ?? 0,
+                    'sick' => $hours['sick'] ?? 0,
+                    // Add other fields as needed
+                ];
     
-        foreach ($this->hours as $day => $hours) {
-            $data = [
-                'emp_id' => $emp_id,
-                'day' => $day,
-                'regular' => $hours['regular'] ?? 0,
-                'casual' => $hours['casual'] ?? 0,
-                'sick' => $hours['sick'] ?? 0,
-                // Add other fields as needed
-            ];
-    
-            // Validate if the day is within the current week before saving
-            if ($day >= $startDate && $day <= $endDate) {
+                // Ensure to updateOrCreate based on emp_id and day columns
                 TimeSheetEntry::updateOrCreate(
                     [
                         'emp_id' => $emp_id,
-                        'day' => $day,
+                        'day' => $data['day'],
                     ],
                     $data
                 );
             }
         }
-    
-    
-        // After storing entries for the current week, update the displayed entries
+        $this->timeSheetEntries = TimeSheetEntry::where('emp_id', $emp_id)
+        ->whereIn('day', $this->currentWeekDates)
+        ->get();
+   
+        // After storing, retrieve the updated time sheet entries
         $this->timeSheetEntries = TimeSheetEntry::where('emp_id', $emp_id)->get();
-    
+   
         session()->flash('success', 'Working hours updated successfully');
     }
-}    
+}

@@ -1,6 +1,6 @@
 <div>
  
-<a class="menu-link {{ Request::is('time-sheets-display') ? 'active' : '' }}" href="{{ route('employee.time-sheets') }}">
+<a class="menu-link {{ Request::is('time-sheet-display') ? 'active' : '' }}" href=/time-sheet-display>
                 <i class="fas fa-user-tie"></i><span class="icon-text"> Time Sheets</span>
             </a>
     <title>Save Icon Button</title>
@@ -119,23 +119,28 @@
     <h4 style="margin-right: 20px;">Employee Information</h4>
  
 </div>
- 
-@foreach($empDetails as $employee)
-<div class="form-row mb-3" style="margin-left:40px;font-size:12px">
-    <div class="col-md-4">
-        <label for="employeeName">Name: </label>
-        <strong><label for="">{{ $employee->first_name }} {{ $employee->last_name }}</label></strong>
-    </div>
-    <div class="col-md-4">
-        <label for="employeeDesignation">Designation: </label>
-        <label for="">{{ $employee->job_title }}</label>
-    </div>
-    <div class="col-md-4">
-        <label for="employeeID">Employee ID: </label>
-        <label for="">{{ $employee->emp_id }}</label>
-    </div>
-</div>
-@endforeach
+@if ($empDetails && count($empDetails) > 0)
+
+    @foreach ($empDetails as $employee)
+        <div class="form-row mb-3" style="margin-left:40px;font-size:12px">
+            <div class="col-md-4">
+                <label for="employeeName">Name: </label>
+                <strong><label for="">{{ $employee->first_name }} {{ $employee->last_name }}</label></strong>
+            </div>
+            <div class="col-md-4">
+                <label for="employeeDesignation">Designation: </label>
+                <label for="">{{ $employee->job_title }}</label>
+            </div>
+            <div class="col-md-4">
+                <label for="employeeID">Employee ID: </label>
+                <label for="">{{ $employee->emp_id }}</label>
+            </div>
+        </div>
+    @endforeach
+    @else
+    <p>No employee details found</p>
+@endif
+
 
  <div style="display: flex; align-items: center; justify-content: space-between;margin-left:690px">
     <div >
@@ -182,9 +187,9 @@
 <!-- Your Blade view - time-sheet-display.blade.php -->
 
 <div>
-<table class="table">
+<table class="table" style="margin-left:20px;font-size:10px">
     <thead>
-    <tr style="font-size:12px">
+    <tr style="font-size:10px;">
             <th>Leave</th>
             @php
                 $today = now()->startOfWeek(); // Get the start of the current week
@@ -195,19 +200,22 @@
                     $date = $today->format('d-m-Y');
                     $today->addDay(); // Move to the next day
                 @endphp
-                <th>{{ $day }}<br>{{ $date }}</th>
+                <th  class="day-date">{{ $day }}<br>{{ $date }}</th>
             @endfor
             <th>Total Hours</th>
         </tr>
     </thead>
     <tbody>
+        <!-- Regular -->
         <tr>
             <td style="font-size:12px">Regular</td>
-            @foreach(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as $day)
+            @foreach($currentWeekDates  as $day)
                 @php
-                    $isEntered = isset($hours[$day]['regular']) && $hours[$day]['regular'] !== null ||
-                                 isset($hours[$day]['casual']) && $hours[$day]['casual'] !== null ||
-                                 isset($hours[$day]['sick']) && $hours[$day]['sick'] !== null;
+                    $isEntered = (
+                        (isset($hours[$day]['regular']) && $hours[$day]['regular'] !== null && $hours[$day]['regular'] !== 0) ||
+                        (isset($hours[$day]['casual']) && $hours[$day]['casual'] !== null && $hours[$day]['casual'] !== 0) ||
+                        (isset($hours[$day]['sick']) && $hours[$day]['sick'] !== null && $hours[$day]['sick'] !== 0)
+                    );
                 @endphp
                 <td>
                     <input wire:model="hours.{{ $day }}.regular" 
@@ -215,8 +223,9 @@
                            name="regular[{{ $day }}][regular]" 
                            min="0" 
                            max="24" 
+                           placeholder="8"
                            class="form-control"
-                           style="width: 50px;font-size:10px"
+                           style="width: 50px; font-size:10px"
                            value="8"
                            @if($isEntered) readonly @endif
                     >
@@ -230,18 +239,21 @@
                        max="24" 
                        class="form-control" 
                        disabled
-                       style="width: 60px;font-size:10px"
+                       style="width: 60px; font-size:10px"
                 >
             </td>
-
         </tr>
+
+        <!-- Casual -->
         <tr>
             <td style="font-size:12px">Casual</td>
-            @foreach(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as $day)
+            @foreach($currentWeekDates  as $day)
                 @php
-                    $isEntered = isset($hours[$day]['regular']) && $hours[$day]['regular'] !== null ||
-                                 isset($hours[$day]['casual']) && $hours[$day]['casual'] !== null ||
-                                 isset($hours[$day]['sick']) && $hours[$day]['sick'] !== null;
+                    $isEntered = (
+                        (isset($hours[$day]['regular']) && $hours[$day]['regular'] !== null && $hours[$day]['regular'] !== 0) ||
+                        (isset($hours[$day]['casual']) && $hours[$day]['casual'] !== null && $hours[$day]['casual'] !== 0) ||
+                        (isset($hours[$day]['sick']) && $hours[$day]['sick'] !== null && $hours[$day]['sick'] !== 0)
+                    );
                 @endphp
                 <td>
                     <input wire:model="hours.{{ $day }}.casual" 
@@ -249,8 +261,9 @@
                            name="casual[{{ $day }}][casual]" 
                            min="0" 
                            max="24" 
+                           placeholder="8"
                            class="form-control"
-                           style="width: 50px;font-size:10px"
+                           style="width: 50px; font-size:10px"
                            value="8"
                            @if($isEntered) readonly @endif
                     >
@@ -264,17 +277,21 @@
                        max="24" 
                        class="form-control" 
                        disabled
-                       style="width: 60px;font-size:10px"
+                       style="width: 60px; font-size:10px"
                 >
             </td>
         </tr>
+
+        <!-- Sick -->
         <tr>
             <td style="font-size:12px">Sick</td>
-            @foreach(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as $day)
+            @foreach($currentWeekDates  as $day)
                 @php
-                    $isEntered = isset($hours[$day]['regular']) && $hours[$day]['regular'] !== null ||
-                                 isset($hours[$day]['casual']) && $hours[$day]['casual'] !== null ||
-                                 isset($hours[$day]['sick']) && $hours[$day]['sick'] !== null;
+                    $isEntered = (
+                        (isset($hours[$day]['regular']) && $hours[$day]['regular'] !== null && $hours[$day]['regular'] !== 0) ||
+                        (isset($hours[$day]['casual']) && $hours[$day]['casual'] !== null && $hours[$day]['casual'] !== 0) ||
+                        (isset($hours[$day]['sick']) && $hours[$day]['sick'] !== null && $hours[$day]['sick'] !== 0)
+                    );
                 @endphp
                 <td>
                     <input wire:model="hours.{{ $day }}.sick" 
@@ -283,8 +300,9 @@
                            min="0" 
                            max="24" 
                            class="form-control"
-                           style="width: 50px;font-size:10px"
+                           style="width: 50px; font-size:10px"
                            value="8"
+                           placeholder="8"
                            @if($isEntered) readonly @endif
                     >
                 </td>
@@ -297,19 +315,24 @@
                        max="24" 
                        class="form-control" 
                        disabled
-                       style="width:60px;font-size:10px;"
+                       style="width:60px; font-size:10px;"
                 >
             </td>
         </tr>
+     
         <!-- Similar logic for Casual and Sick sections -->
         <!-- ... -->
     </tbody>
 </table>
 
+<button wire:click="store" class="btn btn-primary" style="margin-left:40px;width:70px">
+    <i class="fas fa-save icon" style="margin-left: -20px; width: 20px;"></i>Save
+</button>
 
-    <button wire:click="store" class="btn btn-primary" style="margin-left:40px;width:70px"><i class="fas fa-save icon" style="margin-left: -20px; width: 20px;"></i>Save</button>
+<button style="margin-left: 50px; border: 5px; border-radius: 1px solid silver; width: 180px; height: 30px;">
+    Submit for Approval
+</button>
 
-    <button style="margin-left: 50px; border: 5px; border-radius: 1px solid silver; width: 180px; height: 30px;">Submit for Approval</button>
 </div>
 @endif
 <style>
@@ -342,6 +365,13 @@ button {
     display: inline-block;
    
 }
+
+    .day-date {
+        padding: 6px; /* Adjust this value to reduce the gap */
+        font-size: 10px; /* Adjust the font size if needed */
+    }
+
+
  
 /* Hover effect */
  
