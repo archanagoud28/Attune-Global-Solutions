@@ -2,6 +2,33 @@
 
     <!-- Add this to your HTML file -->
     <style>
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-size: 8px;
+            /* Set font size to 12px */
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-size: 8px;
+
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+            font-size: 8px;
+
+        }
+
         .customer-image {
             border-radius: 2;
             height: 100px;
@@ -169,18 +196,18 @@
         }
     </style>
 
-    <p style="text-align: start;margin-top:15px">
-        <button style="margin-right: 10px;" wire:click="open" class="button">ADD Vendors</button>
-        <button style="margin-right: 10px;" wire:click="addPO" class="button">ADD PO</button>
+    <p style="text-align: start;">
+        <button style="margin-right: 5px;" wire:click="open" class="button">ADD Vendors</button>
+        <button style="margin-right: 5px;" wire:click="addPO" class="button">ADD PO</button>
 
     </p>
     @if(session()->has('vendor'))
     <div id="successAlert" style="text-align: center;" class="alert alert-success">
         {{ session('vendor') }}
     </div>
-    @elseif(session()->has('sales-order'))
+    @elseif(session()->has('purchase-order'))
     <div id="purchaseOrderAlert" style="text-align: center;" class="alert alert-success">
-        {{ session('sales-order') }}
+        {{ session('purchase-order') }}
     </div>
     @endif
     <script>
@@ -246,77 +273,7 @@
             </div>
 
             @elseif (!$vendors->isEmpty())
-            @if($soList=="true")
-            <div style="text-align: end;">
-                <button wire:click="closeSOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
-            </div>
-            <!-- resources/views/livewire/purchase-order-table.blade.php -->
 
-            <div>
-                <style>
-                    /* Add your custom CSS styles here */
-                    .table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 20px;
-                    }
-
-                    th,
-                    td {
-                        border: 1px solid #ddd;
-                        padding: 8px;
-                        text-align: left;
-                        font-size: 12px;
-                        /* Set font size to 12px */
-                    }
-
-                    th {
-                        background-color: #f2f2f2;
-                    }
-
-                    tr:hover {
-                        background-color: #f5f5f5;
-                    }
-                </style>
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>SO Number</th>
-                            <th>Vendor ID</th>
-                            <th>Customer ID</th>
-                            <th>Customer Name</th>
-                            <th>Rate</th>
-                            <th>End Client Timesheet Required</th>
-                            <th>Time Sheet Type</th>
-                            <th>Time Sheet Begins</th>
-                            <th>Invoice Type</th>
-                            <th>Payment Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($showSOLists as $salesOrder)
-                        <tr>
-                            <td>{{ $salesOrder->so_number }}</td>
-                            <td>{{ $salesOrder->vendor_id }}</td>
-                            <td>{{ $salesOrder->customer_id }}</td>
-                            <td>{{ $salesOrder->customer->customer_company_name }}</td>
-                            <td>{{ $salesOrder->rate }}</td>
-                            <td>{{ $salesOrder->end_client_timesheet_required }}</td>
-                            <td>{{ $salesOrder->time_sheet_type }}</td>
-                            <td>{{ $salesOrder->time_sheet_begins }}</td>
-                            <td>{{ $salesOrder->invoice_type }}</td>
-                            <td>{{ $salesOrder->payment_type }}</td>
-                        </tr>
-                        @empty
-                        <div style="text-align: center; margin-top: 10px;">Sales Orders Not Found</div>
-                        @endforelse
-
-                    </tbody>
-                </table>
-            </div>
-
-            @else
             <!-- Display details of the first person in the list -->
             @php
             $firstPerson = $vendors->first();
@@ -360,7 +317,6 @@
                     </div>
                 </div>
             </div>
-            @endif
             @endif
         </div>
     </div>
@@ -508,35 +464,42 @@
                         </style>
                         <form wire:submit.prevent="savePurchaseOrder">
                             @csrf
+
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="vendorName" style="font-size: 12px;">Consultant Name:</label>
-                                <select style="font-size: 12px;" class="form-control" id="vendorName" wire:model="customerId">
+                                <select wire:change="selectedConsultantId" style="font-size: 12px;" class="form-control" wire:model="consultantName">
                                     <option style="font-size: 12px;" value="">Select Consultant</option>
-                                    @foreach($customers as $customer)
-                                    <option style="font-size: 12px;" value="{{ $customer->customer_id }}">{{ $customer->customer_company_name }}</option>
+                                    @foreach($employees as $employee)
+                                    <option style="font-size: 12px;" value="{{ $employee->emp_id }}">{{ $employee->first_name }} {{ $employee->last_name }}</option>
                                     @endforeach
                                 </select>
-                                @error('customerId') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                                @error('consultant_name') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                             </div>
 
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="rate">Job Title:</label>
                                 <div class="input-group">
-                                    <input style="font-size: 12px;" type="number" class="form-control" id="rate" wire:model="rate">
-                                    @error('rate') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                                </div>
+                                    <input style="font-size: 12px;" type="text" class="form-control" id="rate" wire:model="job_title" readonly>
+                                </div> <br>
+                                @error('job_title') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+
                             </div>
 
 
                             <div class="row mb-2">
                                 <div class="col">
                                     <label style="font-size: 12px;" for="start_date">Start Date:</label>
-                                    <input style="font-size: 12px;" type="date" wire:model="startDate" id="start_date" class="form-control">
-                                </div>
+                                    <input style="font-size: 12px;" type="date" wire:model="startDate" class="form-control">
+                                </div> <br>
+                                @error('startDate') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+
                                 <div class="col">
                                     <label style="font-size: 12px;" for="end_date">End Date:</label>
-                                    <input style="font-size: 12px;" type="date" wire:model="endDate" id="end_date" class="form-control">
-                                </div>
+                                    <input style="font-size: 12px;" type="date" wire:model="endDate" class="form-control">
+
+                                </div> <br>
+                                @error('endDate') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+
                             </div>
 
 
@@ -555,6 +518,17 @@
                                     </select>
                                     @error('rateType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label style="font-size: 12px;" for="vendorName" style="font-size: 12px;">Vendor Name:</label>
+                                <select style="font-size: 12px;" class="form-control" id="vendorName" wire:model="vendorName">
+                                    <option style="font-size: 12px;" value="">Select Vendor</option>
+                                    @foreach($vendors as $vendor)
+                                    <option style="font-size: 12px;" value="{{ $vendor->vendor_id }}">{{ $vendor->vendor_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('vendorName') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                             </div>
 
                             <div class="form-group">
@@ -612,25 +586,12 @@
                                 @error('invoiceType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label style="font-size: 12px;" for="paymentType">Payment Type:</label>
-                                <select style="font-size: 12px;" class="form-control" id="paymentType" wire:model="paymentType">
-                                    <option style="font-size: 12px;">Select Payment Type</option>
-                                    <option style="font-size: 12px;" value="Credit Card">Credit Card</option>
-                                    <option style="font-size: 12px;" value="Bank Transfer">Bank Transfer</option>
-                                    <option style="font-size: 12px;" value="Paypal">PayPal</option>
-                                    <option style="font-size: 12px;" value="Check">Check</option>
-                                    <option style="font-size: 12px;" value="Cash">Cash</option>
-                                    <option style="font-size: 12px;" value="Other">Other</option>
-                                    <!-- Add more options as needed -->
-                                </select>
-                                @error('paymentType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
-                            </div>
+
                             <div class="form-group">
                                 <label style="font-size: 12px;" for="paymentType">Payment Terms:</label>
-                                <input style="font-size: 12px;" type="text" class="form-control" id="rate" wire:model="rate" placeholder="Ex: Net 0,Net 10,........">
+                                <input style="font-size: 12px;" type="text" class="form-control" id="rate" wire:model="paymentTerms" placeholder="Ex: Net 0,Net 10,........">
 
-                                @error('paymentType') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
+                                @error('paymentTerms') <span class="error" style="font-size: 12px;">{{ $message }}</span> @enderror
                             </div>
                             <div style="text-align: center;">
                                 <button style="margin-top: 15px;font-size:12px" type="submit" class="btn btn-success">Submit Purchase Order</button>
@@ -647,82 +608,9 @@
     @endif
 
     <!-- Everyone tab content -->
-    @if($soList=="true")
-    <div style="text-align: end;">
-        <button wire:click="closeSOList" style="background-color: rgb(2, 17, 79);color:white;border-radius:5px;border:none">Back</button>
-    </div>
-    <!-- resources/views/livewire/purchase-order-table.blade.php -->
 
-    <div>
-        <style>
-            /* Add your custom CSS styles here */
-            .table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }
-
-            th,
-            td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-                font-size: 12px;
-                /* Set font size to 12px */
-            }
-
-            th {
-                background-color: #f2f2f2;
-                font-size: 12px;
-
-            }
-
-            tr:hover {
-                background-color: #f5f5f5;
-                font-size: 12px;
-
-            }
-        </style>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>SO Number</th>
-                    <th>Vendor ID</th>
-                    <th>Customer ID</th>
-                    <th>Customer Name</th>
-                    <th>Rate</th>
-                    <th>End Client Timesheet Required</th>
-                    <th>Time Sheet Type</th>
-                    <th>Time Sheet Begins</th>
-                    <th>Invoice Type</th>
-                    <th>Payment Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($showSOLists as $salesOrder)
-                <tr>
-                    <td>{{ $salesOrder->so_number }}</td>
-                    <td>{{ $salesOrder->vendor_id }}</td>
-                    <td>{{ $salesOrder->customer_id }}</td>
-                    <td>{{ $salesOrder->customer->customer_company_name }}</td>
-                    <td>{{ $salesOrder->rate }}</td>
-                    <td>{{ $salesOrder->end_client_timesheet_required }}</td>
-                    <td>{{ $salesOrder->time_sheet_type }}</td>
-                    <td>{{ $salesOrder->time_sheet_begins }}</td>
-                    <td>{{ $salesOrder->invoice_type }}</td>
-                    <td>{{ $salesOrder->payment_type }}</td>
-                </tr>
-                @empty
-                <div style="text-align: center; margin-top: 10px;">Sales Orders Not Found</div>
-                @endforelse
-
-            </tbody>
-        </table>
-    </div>
-    @else
-    <div class="row" style="margin-top: 15px;">
-        <div class="col-md-3" style="background-color:#f2f2f2; height: auto; padding: 5px;margin-right:5px;max-height:500px;overflow-y:auto">
+    <div class="row" style="margin-top: 15px;height:300px">
+        <div class="col-md-3" style="background-color:#f2f2f2; height: auto; padding: 5px;margin-right:5px;max-height:300px;overflow-y:auto">
             <div class="container" style="margin-top: 8px;margin-bottom:8px">
                 <div class="row">
                     <div class="col" style="margin: 0px; padding: 0px">
@@ -738,7 +626,7 @@
                 </div>
             </div>
 
-            <div class="row" style="font-size: 13px;">
+            <div class="row" style="font-size: 13px">
                 @if ($allVendors->isEmpty())
                 <div class="container" style="text-align: center; color: gray;">No Vendors Found</div>
                 @else
@@ -762,30 +650,120 @@
         </div>
 
         <!-- Details of the selected person -->
-        <div class="col-md-8" style="height:auto; background-color: #f2f2f2; padding: 5px">
+        <div class="col-md-8" style="background-color: #f2f2f2; padding: 5px;max-height:300px;overflow-y:auto">
+            @php
+            $selectedPerson = $selectedVendor ?? $vendors->first();
+            $isActive = $selectedPerson->status == 'active';
+            @endphp
             <div style="text-align: start;">
-                <button wire:click="$set('activeButton', 'Bills')" style="{{ $activeButton === 'Bills' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="showBills('{{$selectedPerson->vendor_id}}')" style="{{ $activeButton === 'Bills' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 5px; border-radius: 5px; border: none;">
                     Bills & Sent Payments
                 </button>
 
-                <button wire:click="$set('activeButton', 'PO')" style="{{ $activeButton === 'PO' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="updateAndShowPoList('{{$selectedPerson->vendor_id}}')" style="{{ $activeButton === 'PO' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }} margin-right: 5px; border-radius: 5px; border: none;">
                     PO
                 </button>
 
-                <button wire:click="$set('activeButton', 'EmailActivities')" style="{{ $activeButton === 'EmailActivities' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="$set('activeButton', 'EmailActivities')" style="{{ $activeButton === 'EmailActivities' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 5px; border-radius: 5px; border: none;">
                     Email Activities
                 </button>
-                <button wire:click="$set('activeButton', 'Notes')" style="{{ $activeButton === 'Notes' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="$set('activeButton', 'Notes')" style="{{ $activeButton === 'Notes' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 5px; border-radius: 5px; border: none;">
                     Notes
                 </button>
-                <button wire:click="$set('activeButton', 'Contacts')" style="{{ $activeButton === 'Contacts' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 10px; border-radius: 5px; border: none;">
+                <button wire:click="$set('activeButton', 'Contacts')" style="{{ $activeButton === 'Contacts' ? 'background-color: rgb(2, 17, 79); color: white;' : 'background-color: grey; color: white;' }}margin-right: 5px; border-radius: 5px; border: none;">
                     Contacts
                 </button>
             </div>
+            @if($activeButton=="PO")
+
+            <!-- resources/views/livewire/purchase-order-table.blade.php -->
+
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>PO Number</th>
+                            <th>Vendor ID</th>
+                            <th>Vendor Name</th>
+                            <th>Employee Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Time Sheet Type</th>
+                            <th>Time Sheet Begins</th>
+                            <th>Invoice Type</th>
+                            <th>Payment Terms</th>
+                            <th>PO By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($showPOLists as $salesOrder)
+                        <tr>
+                            <td>{{ $salesOrder->po_number }}</td>
+                            <td>{{ $salesOrder->vendor_id }}</td>
+                            <td>{{ $salesOrder->ven->vendor_name }}</td>
+                            <td>{{ $salesOrder->emp->first_name }} {{ $salesOrder->emp->last_name }}</td>
+                            <td>{{ $salesOrder->start_date }}</td>
+                            <td>{{ $salesOrder->end_date }}</td>
+                            <td>{{ $salesOrder->time_sheet_type }}</td>
+                            <td>{{ $salesOrder->time_sheet_begins }}</td>
+                            <td>{{ $salesOrder->invoice_type }}</td>
+                            <td>{{ $salesOrder->payment_terms }}</td>
+                            <td>{{ $salesOrder->com->company_name }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="11" style="text-align: center;">PurchaseOrders Not Found</td>
+                        </tr>
+                        @endforelse
+
+                    </tbody>
+                </table>
+            </div>
+            @endif
+
+            @if($activeButton=="Bills")
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Bill Number</th>
+                        <th>Vendor ID</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                        <th>Payment Terms</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Currency</th>
+                        <th>Notes</th>
+                        <th>Billed By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($bills as $bill)
+                    <tr>
+                        <td>{{ $bill->bill_number }}</td>
+                        <td>{{ $bill->vendor_id }}</td>
+                        <td>{{ $bill->amount }}</td>
+                        <td>{{ $bill->due_date }}</td>
+                        <td>{{ $bill->payment_terms }}</td>
+                        <td>{{ $bill->description }}</td>
+                        <td>{{ $bill->status }}</td>
+                        <td>{{ $bill->currency }}</td>
+                        <td>{{ $bill->notes }}</td>
+                        <td>{{ $bill->company->company_name }}</td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="10" style="text-align: center;">Bills Not Found</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+            @endif
+
 
 
         </div>
     </div>
-    @endif
     <!-- End of Everyone tab content -->
 </div>

@@ -12,20 +12,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchase_orders', function (Blueprint $table) {
+        Schema::create('sales_orders', function (Blueprint $table) {
             $table->id();
-            $table->string('po_number')->nullable()->default(null)->unique();
-            $table->string('customer_id'); // Assuming a 'vendors' table exists
-            $table->string('vendor_id'); // Assuming a 'vendors' table exists
+            $table->string('so_number')->nullable()->default(null)->unique();
+            $table->string('emp_id');
+            $table->string('job_title');
+            $table->string('start_date'); // Assuming a 'vendors' table exists
+            $table->string('end_date'); // Assuming a 'vendors' table exists
             $table->string('rate');
+            $table->string('customer_id'); // Assuming a 'vendors' table exists
             $table->string('end_client_timesheet_required')->nullable();
             $table->string('time_sheet_type')->nullable();
             $table->string('time_sheet_begins')->nullable();
             $table->string('invoice_type');
-            $table->string('payment_type');
-            $table->foreign('vendor_id')
-                ->references('vendor_id')
-                ->on('vendor_details')
+            $table->string('payment_terms');
+            $table->string('company_id');
+            $table->foreign('company_id')
+                ->references('company_id')
+                ->on('company_details')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
             $table->foreign('customer_id')
@@ -33,18 +37,23 @@ return new class extends Migration
                 ->on('customer_details')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
+            $table->foreign('emp_id')
+                ->references('emp_id')
+                ->on('emp_details')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->timestamps();
         });
         $triggerSQL = <<<SQL
-        CREATE TRIGGER generate_po_number BEFORE INSERT ON purchase_orders FOR EACH ROW
+        CREATE TRIGGER generate_so_number BEFORE INSERT ON sales_orders FOR EACH ROW
         BEGIN
             -- Check if hr_id is NULL
-            IF NEW.po_number IS NULL THEN
+            IF NEW.so_number IS NULL THEN
                 -- Find the maximum hr_id value in the hr_details table
-                SET @max_id := IFNULL((SELECT MAX(CAST(SUBSTRING(po_number, 3) AS UNSIGNED)) + 1 FROM purchase_orders), 100000);
+                SET @max_id := IFNULL((SELECT MAX(CAST(SUBSTRING(so_number, 3) AS UNSIGNED)) + 1 FROM sales_orders), 100000);
 
                 -- Increment the max_id and assign it to the new hr_id
-                SET NEW.po_number = CONCAT('PO', LPAD(@max_id, 6, '0'));
+                SET NEW.so_number = CONCAT('11', LPAD(@max_id, 6, '0'));
             END IF;
         END;
     SQL;
@@ -57,6 +66,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchase_orders');
+        Schema::dropIfExists('sales_orders');
     }
 };

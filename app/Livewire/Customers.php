@@ -2,9 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\Bill;
 use App\Models\CompanyDetails;
 use App\Models\CustomerDetails;
 use App\Models\EmpDetails;
+use App\Models\Invoice;
 use App\Models\PurchaseOrder;
 use App\Models\SalesOrder;
 use App\Models\VendorDetails;
@@ -31,19 +33,33 @@ class Customers extends Component
 
     public $selectedCustomer;
     public $customerId;
-    public $poList = false;
-    public $showPOLists;
+    public $soList = false;
+    public $showSOLists;
 
-    public function showPoList($customerId)
+    public function updateAndShowSoList($customerId)
     {
-        $this->showPOLists = PurchaseOrder::with('vendor')->where('customer_id', $customerId)->get();
-        $this->poList = true;
+        $this->activeButton = 'SO';
+        $this->showSoList($customerId);
     }
-    public function closePOList()
+    public $invoices;
+    public function showInvoices($customerId){
+        $companyId = auth()->user()->company_id;
+
+        $this->activeButton = 'Invoices';
+        $this->invoices = Invoice::with('customer','company')->where('company_id',$companyId)->where('customer_id',$customerId)->orderBy('created_at','desc')->get();
+    }
+    public function showSoList($customerId)
     {
-        $this->poList = false;
+        $companyId = auth()->user()->company_id;
+
+        $this->showSOLists = SalesOrder::with('cus','com','emp')->where('company_id',$companyId)->where('customer_id', $customerId)->orderBy('created_at','desc')->get();
+        $this->soList = true;
     }
-    public $job_title, $startDate, $endDate, $consultant_name, $customerName;
+    public function closeSOList()
+    {
+        $this->soList = false;
+    }
+    public $job_title, $startDate, $endDate, $consultant_name, $customerName, $paymentTerms;
     public function saveSalesOrder()
     {
         $this->validate([
@@ -54,7 +70,7 @@ class Customers extends Component
             'timeSheetType' => 'required',
             'timeSheetBegins' => 'required',
             'invoiceType' => 'required',
-            'paymentType' => 'required',
+            'paymentTerms' => 'required',
             'consultant_name' => 'required',
             'customerName' => 'required',
             'startDate' => 'required',
@@ -75,7 +91,7 @@ class Customers extends Component
             'time_sheet_type' => $this->timeSheetType,
             'time_sheet_begins' => $this->timeSheetBegins,
             'invoice_type' => $this->invoiceType,
-            'payment_type' => $this->paymentType,
+            'payment_terms' => $this->paymentTerms,
         ]);
         session()->flash('sales-order', 'Sales order submitted successfully.');
         $this->so = false;
@@ -146,7 +162,7 @@ class Customers extends Component
         $this->show = false;
     }
     public $edit = false;
-    public $activeButton = 'Invoices';
+    public $activeButton = 'EmailActivities';
 
     public $selectedCustomerId;
     public function editCustomers($customerId)
@@ -237,8 +253,7 @@ class Customers extends Component
 
         $this->vendors = VendorDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
         $this->employees = EmpDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
-        $this->customers = CustomerDetails::with('company')
-            ->where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
+        $this->customers = CustomerDetails::where('company_id', $companyId)->orderBy('created_at', 'desc')->get();
         $this->allCustomers = $this->filteredPeoples ?: $this->customers;
         return view('livewire.customers');
     }

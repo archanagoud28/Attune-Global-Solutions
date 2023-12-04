@@ -35,10 +35,11 @@ class PageTitle extends Component
             'vendor-page' => 'Vendors',
             'vendor-pages' => 'Vendors',
             'employee-list-page' => 'Employees',
-            'sales-or-purchase-orders' =>'Sales/Purchase Orders',
             'time-sheet-display' => 'Time Sheets',
             'time-sheets-display' => 'Time Sheets',
-            'employee-pages' => 'Employees'
+            'employee-pages' => 'Employees',
+            'salesOrPurchase' => 'Sales / Purchase Orders',
+            'billsOrInvoices' => 'Bills / Invoices',
             // Add more mappings as needed
         ];
 
@@ -50,5 +51,4 @@ class PageTitle extends Component
     {
         return view('livewire.page-title');
     }
-
 }

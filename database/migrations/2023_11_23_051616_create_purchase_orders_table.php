@@ -12,15 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales_orders', function (Blueprint $table) {
+        Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
-            $table->string('so_number')->nullable()->default(null)->unique();
+            $table->string('po_number')->nullable()->default(null)->unique();
             $table->string('emp_id');
             $table->string('job_title');
             $table->string('start_date'); // Assuming a 'vendors' table exists
             $table->string('end_date'); // Assuming a 'vendors' table exists
             $table->string('rate');
-            $table->string('customer_id'); // Assuming a 'vendors' table exists
+            $table->string('vendor_id'); // Assuming a 'vendors' table exists
             $table->string('end_client_timesheet_required')->nullable();
             $table->string('time_sheet_type')->nullable();
             $table->string('time_sheet_begins')->nullable();
@@ -32,9 +32,9 @@ return new class extends Migration
                 ->on('company_details')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
-            $table->foreign('customer_id')
-                ->references('customer_id')
-                ->on('customer_details')
+            $table->foreign('vendor_id')
+                ->references('vendor_id')
+                ->on('vendor_details')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
             $table->foreign('emp_id')
@@ -45,15 +45,15 @@ return new class extends Migration
             $table->timestamps();
         });
         $triggerSQL = <<<SQL
-        CREATE TRIGGER generate_so_number BEFORE INSERT ON sales_orders FOR EACH ROW
+        CREATE TRIGGER generate_po_number BEFORE INSERT ON purchase_orders FOR EACH ROW
         BEGIN
             -- Check if hr_id is NULL
-            IF NEW.so_number IS NULL THEN
+            IF NEW.po_number IS NULL THEN
                 -- Find the maximum hr_id value in the hr_details table
-                SET @max_id := IFNULL((SELECT MAX(CAST(SUBSTRING(so_number, 3) AS UNSIGNED)) + 1 FROM sales_orders), 100000);
+                SET @max_id := IFNULL((SELECT MAX(CAST(SUBSTRING(po_number, 3) AS UNSIGNED)) + 1 FROM purchase_orders), 100000);
 
                 -- Increment the max_id and assign it to the new hr_id
-                SET NEW.so_number = CONCAT('SO', LPAD(@max_id, 6, '0'));
+                SET NEW.po_number = CONCAT('22', LPAD(@max_id, 6, '0'));
             END IF;
         END;
     SQL;
@@ -66,6 +66,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sales_orders');
+        Schema::dropIfExists('purchase_orders');
     }
 };

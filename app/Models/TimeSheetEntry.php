@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TimeSheetEntry extends Model
 {
-    use HasFactory;
+   
+ use HasFactory;
     protected $table = 'time_sheet_entries';
  
     public $timestamps = false;
