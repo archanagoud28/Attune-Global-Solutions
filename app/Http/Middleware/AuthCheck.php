@@ -23,19 +23,16 @@ class AuthCheck
         } else if (auth()->guard('employee')->check()) {
             session(['user_type' => 'employee']);
             return redirect('/');
-        }else if (auth()->guard('vendor')->check()) {
+        } else if (auth()->guard('vendor')->check()) {
             session(['user_type' => 'vendor']);
             return redirect('/');
-        }
-        else if (auth()->guard('customer')->check()) {
+        } else if (auth()->guard('customer')->check()) {
             session(['user_type' => 'customer']);
             return redirect('/');
-        }
-        else if (auth()->guard('contractor')->check()) {
+        } else if (auth()->guard('contractor')->check()) {
             session(['user_type' => 'contractor']);
             return redirect('/');
-        }
-        else {
+        } else {
             session(['user_type' => 'guest']);
             return $next($request);
         }
