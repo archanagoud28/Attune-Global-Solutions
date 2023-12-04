@@ -107,7 +107,7 @@
     </style>
 
     <body>
-        <p style="text-align: start;margin-top:15px">
+        <p style="text-align: start">
             <button wire:click="show" style="margin-right: 10px;" class="button">ADD Bill</button>
             <button wire:click="showInvoice" style="margin-right: 10px;" class="button">ADD Invoice</button>
         </p>

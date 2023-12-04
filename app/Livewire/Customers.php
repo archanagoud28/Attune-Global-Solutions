@@ -162,7 +162,7 @@ class Customers extends Component
         $this->show = false;
     }
     public $edit = false;
-    public $activeButton = '';
+    public $activeButton = 'EmailActivities';
 
     public $selectedCustomerId;
     public function editCustomers($customerId)

@@ -35,14 +35,23 @@
             align-items: center;
             margin-right: 15px;
             margin-left: 15px;
+            padding: 4px;
+
+        }
+        .menu-link > i {
+            margin-left: 8px;
         }
 
 
-        .menu-link:hover,
+        .menu-link:hover{
+           
+           border-radius: 4px;
+            background-color:#fff3;
+        }
         .menu-link.active {
             color: rgb(2, 17, 79);
             background-color: white;
-            padding: 2px;
+           border-radius: 4px
         }
 
 
@@ -56,6 +65,7 @@
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
+            overflow: hidden;
         }
 
 
@@ -69,43 +79,43 @@
         .col-md-2 {
             background-color: rgb(2, 17, 79);
             color: white;
-            position: fixed;
+            /* position: fixed; */
             top: 0;
             left: 0;
-            height: 100%;
-            width: 17%;
+            height: 100vh;
+            /* width: 17%; */
         }
 
 
-        .col-md-10 {
+        /* .col-md-10 {
             margin-left: 17%;
-        }
+        } */
 
 
         .row-header {
             background-color: rgb(2, 17, 79);
             height: 50px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 83%;
-            margin-left: 17%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            /* position: fixed; */
+            /* top: 0;
+            left: 0; */
+            /* width: 83%; */
+            /* margin-left: 17%; */
+            /* display: flex; */
+            /* justify-content: center;
+            align-items: center; */ 
         }
 
 
         .row-content {
             background-color: #fff;
-            margin-top: 20px;
+            margin-top: 2px;
 
 
         }
 
 
         .overflow-auto {
-            height: auto;
+            height: calc(100vh - 60px);
             overflow: auto;
         }
  
@@ -113,22 +123,54 @@
         color: rgb(2, 17, 79);
         font-size:12px;
         background-color: white;
-        padding: 2px;
+        border-radius: 4px;
         /* width:97% You can adjust the text color for the active state */
+    }
+    @media only screen and (max-width: 768px) {
+        .displayNone {
+            display: none !important;
+        }
+        .displayBlock {
+            display: block !important;
+        }
+        #col-md-2 {
+            position: absolute;
+            /* background: #fff; */
+            border: 1px solid #e0dddd;
+            border-radius:0px;
+            height: auto; 
+            width: fit-content; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            top: 3.1em;
+            z-index: 1000;
+        }
+        .setHeight {
+            height: calc(90vh - 80px);
+            overflow: scroll;
+        }
+        .fullContaint {
+            width: 100% !important;
+        }
+    }
+    @media only screen and (min-width: 769px) {
+        .hideHamburger {
+            display: none !important;
+        }
+       
     }
     </style>
 </head>
 
 
 <body>
+    <div class="row m-0">
     @guest
     @livewire('hr-login')
     @else
         @if(Auth::guard('hr')->check())
-        <div class="container-fluid">
-            <div class="col-md-2">
+            <div class="col-md-2 displayNone" id="col-md-2">
                 <img src="{{asset('/images/CMSLogo.png')}}" style="width: 200px; height: 70px; margin: 8px auto;" alt="">
-                <div style="margin-top:15px;">
+                <div style="margin-top:15px;" class="setHeight">
                 <a class="menu-link {{ Request::is('/') ? 'active' : '' }}" href="/"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
  
                 <a class="menu-link {{ Request::is('customers') ? 'active' : '' }}" href="/customers"><i class="fas fa-mobile-alt"></i><span class="icon-text"> Customers</span></a><br>
@@ -139,7 +181,7 @@
 
                 <a class="menu-link {{ Request::is('contractor-page') ? 'active' : '' }}" href="contractor-page"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br>
 
-                <a class="menu-link {{ Request::is('sales-purchase-orders') ? 'active' : '' }}" href="/salesOrPurchase"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> Sales / Purchase Orders</span></a><br>
+                <a class="menu-link {{ Request::is('sales-purchase-orders') ? 'active' : '' }}" href="/salesOrPurchase"><i class="fas fa-file-invoice-dollar"></i><span class="icon-text"> SO / PO</span></a><br>
 
                 <a class="menu-link {{ Request::is('bills') ? 'active' : '' }}" href="/billsOrInvoices"><i class="fas fa-file-invoice"></i><span class="icon-text"> Bills / Invoices</span></a><br>
 
@@ -147,9 +189,8 @@
 
                 </div>
             </div>
-        </div>
         @elseif(Auth::guard('vendor')->check())
-            <div class="container-fluid">
+            <div class="row">
                 <div class="col-md-2">
                     <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
                      <div  style="margin-top:30px;">
@@ -204,10 +245,11 @@
 
         @endif
 
-        <div class="col-md-10">
+        <div class="col-md-10 p-0 fullContaint">
              <div class="row-header" style="z-index: 1000;">
-             <div style="display:flex;align-items: center;margin-left:10px;width:200px ">@livewire('page-title')</div>
-            <div style="display: flex; align-items: center; color: white; margin-left: 55%;  padding: 5px; gap: 15px;">
+             <i class="fas fa-bars hideHamburger mt-3" style="float: left; color: #fff; font-size: 20px; margin: 0px 10px; cursor: pointer;" onclick="myMenu()"></i>
+             <div class="mt-2 ms-2 fs-4" style="float: left">@livewire('page-title')</div>
+            <div class="mt-1" style="float: right; display: flex; align-items: center; color: white; padding: 5px; gap: 15px;">
             <div style="flex-grow: 1; white-space: nowrap;">@livewire('user-login-info')</div>
                 <div>@livewire('log-out')</div>
             </div>
@@ -220,6 +262,7 @@
             </div>
         </div>
     @endif
+</div>
 
 
     @livewireScripts
@@ -240,7 +283,11 @@
 
 
     <!-- Add this script inside the head tag or at the end of the body tag -->
-
+<script>
+    function myMenu() {
+        document.getElementById("col-md-2").classList.toggle("displayBlock");
+    }
+</script>
 
 </body>
 

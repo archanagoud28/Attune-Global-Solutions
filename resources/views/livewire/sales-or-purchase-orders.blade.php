@@ -84,7 +84,7 @@
     </html>
 
     <body>
-        <p style="text-align: start;margin-top:15px">
+        <p style="text-align: start;">
             <button style="margin-right: 10px;" wire:click="addSO" class="button">ADD SO</button>
             <button style="margin-right: 10px;" wire:click="addPO" class="button">ADD PO</button>
         </p>

@@ -196,7 +196,7 @@
         }
     </style>
 
-    <p style="text-align: start;margin-top:15px">
+    <p style="text-align: start;">
         <button style="margin-right: 5px;" wire:click="open" class="button">ADD Vendors</button>
         <button style="margin-right: 5px;" wire:click="addPO" class="button">ADD PO</button>
 

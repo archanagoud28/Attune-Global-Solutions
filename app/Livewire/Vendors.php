@@ -66,7 +66,7 @@ class Vendors extends Component
         $this->employeeSkillsPairs[] = ['employees' => '', 'skills' => ''];
     }
 
-    public $activeButton = '';
+    public $activeButton = 'EmailActivities';
 
     public function removePair($index)
     {
