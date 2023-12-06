@@ -94,17 +94,6 @@
 
         .row-header {
             background-color: rgb(2, 17, 79);
-<<<<<<<<< Temporary merge branch 1
-            height: 50px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 83%;
-            margin-left: 17%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-=========
             /* height: 50px; */
             /* position: fixed; */
             /* top: 0;
@@ -201,14 +190,9 @@
                 </div>
             </div>
         @elseif(Auth::guard('vendor')->check())
-<<<<<<<<< Temporary merge branch 1
-            <div class="container-fluid">
-                <div class="col-md-2">
-=========
                 <div class="col-md-2 displayNone" id="col-md-2">
->>>>>>>>> Temporary merge branch 2
-                    <img src="{{asset('/images/logonobg.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
-                     <div  style="margin-top:30px;">
+                    <img src="{{asset('/images/CMSLogo.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
+                     <div  style="margin-top:15px;">
                       <a class="menu-link {{ Request::is('vendor-home') ? 'active' : '' }}" href="/vendor-home"><i class="fas fa-home"></i><span class="icon-text"> Home</span></a><br>
 
                      <a class="menu-link {{ Request::is('vendor-pages') ? 'active' : '' }}" href="/vendor-pages"><i class="fas fa-university"></i><span class="icon-text"> Vendors</span></a><br>
@@ -236,12 +220,7 @@
                         <a class="menu-link" href="contractor-pages"><i class="fas fa-user-tie"></i><span class="icon-text"> Contractors</span></a><br> --}}
                       </div>
                 </div>
-<<<<<<<<< Temporary merge branch 1
-            </div>
- 
-=========
 
->>>>>>>>> Temporary merge branch 2
             @elseif(Auth::guard('employee')->check())
                 <div class="col-md-2 displayNone" id="col-md-2">
                     <img src="{{asset('/images/CMSLogo.png')}}" style="width: 200px; height: 50px; margin: 8px auto;" alt="">
@@ -255,22 +234,11 @@
                     <a class="menu-link" href="time-sheets-display"><i class="fas fa-user-tie"></i><span class="icon-text">Time Sheets</span></a><br> --}}
                     </div>
                 </div>
-<<<<<<<<< Temporary merge branch 1
-            </div>
- 
-=========
 
->>>>>>>>> Temporary merge branch 2
         @endif
 
         <div class="col-md-10 p-0 fullContaint">
              <div class="row-header" style="z-index: 1000;">
-<<<<<<<<< Temporary merge branch 1
-             <div style="display:flex;align-items: center; ">@livewire('page-title')</div>
-            <div style="display: flex; align-items: center; color: white; margin-left: 62%;  padding: 5px; gap: 15px;">
-            <div style="flex-grow: 1; white-space: nowrap;">@livewire('user-login-info')</div>
-                <div>@livewire('log-out')</div>
-=========
              
             <div class="m-0 row" style="color: white; padding: 5px;">
                 <div class="col-md-3 p-0 fs-4 m-auto">
@@ -279,7 +247,6 @@
                 </div>
                 <div style="margin: auto; text-align: right;" class="col-md-6 p-0">@livewire('user-login-info')</div>
                 <div class="col-md-3 p-0" style="text-align: right;">@livewire('log-out')</div>
->>>>>>>>> Temporary merge branch 2
             </div>
         </div>
  

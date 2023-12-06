@@ -18,6 +18,8 @@ class TimeSheetEntry extends Model
         'regular',
         'casual',
         'sick',
+        'holiday',
+        'vacation'
     ];
  
     public function employee()

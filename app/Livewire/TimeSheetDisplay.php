@@ -23,6 +23,8 @@ class TimeSheetDisplay extends Component
     public $regular=[];
     public $casual=[];// Initialize as an empty array
     public $sick=[];
+    public $holiday=[];
+    public $vacation=[];
     public $currentWeekStart;
     public $currentWeekEnd;
     public $currentWeekDates = [];
@@ -48,6 +50,8 @@ class TimeSheetDisplay extends Component
             $this->hours[$entry->day]['regular'] = $entry->regular;
             $this->hours[$entry->day]['casual'] = $entry->casual;
             $this->hours[$entry->day]['sick'] = $entry->sick;
+            $this->hours[$entry->day]['holiday'] = $entry->holiday;
+            $this->hours[$entry->day]['vacation'] = $entry->vacation;
             $today = Carbon::now();
             $this->setWeekDates(now());
         $this->currentWeekStart = $today->startOfWeek()->format('d-m-Y');
@@ -137,6 +141,8 @@ class TimeSheetDisplay extends Component
                     'regular' => $hours['regular'] ?? 0,
                     'casual' => $hours['casual'] ?? 0,
                     'sick' => $hours['sick'] ?? 0,
+                    'holiday' => $hours['holiday'] ?? 0,
+                    'vacation' => $hours['vacation'] ?? 0,
                     // Add other fields as needed
                 ];
     
